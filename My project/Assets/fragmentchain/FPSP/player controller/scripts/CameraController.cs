@@ -59,7 +59,7 @@ public class CameraController : MonoBehaviour
     }
     void Update()
     {
-        if (!controller.isPaused)
+        if (!controller.isPaused && Input.GetMouseButton(0))
         {
             CamRotationUnwrap();
 

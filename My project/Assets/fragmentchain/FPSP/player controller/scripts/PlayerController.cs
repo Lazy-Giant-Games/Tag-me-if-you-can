@@ -171,31 +171,35 @@ public class PlayerController : MonoBehaviour
             case Status.idle:
                 transform.localScale = new Vector3(1, 1, 1);
                 movement.slideReady = true;
-                if (input.PressedJump())
+                if (input.PressedJump() || input.pressJumpFromTrigger)
                 {
+                    input.pressJumpFromTrigger = false;
                     movement.GroundedJump(groundedJumpForce);
                 }
                 break;
             case Status.walking:
                 transform.localScale = new Vector3(1, 1, 1);
                 movement.slideReady = true;
-                if (input.PressedJump())
+                if (input.PressedJump() || input.pressJumpFromTrigger)
                 {
-                    movement.GroundedJump(groundedJumpForce);
+                input.pressJumpFromTrigger = false;
+                movement.GroundedJump(groundedJumpForce);
                 }
                 break;
             case Status.crouching:
                 transform.localScale = new Vector3(1, 0.7f, 1);
-                if (input.PressedJump())
+                if (input.PressedJump() || input.pressJumpFromTrigger)
                 {
-                    movement.GroundedJump(groundedJumpForce);
+                input.pressJumpFromTrigger = false;
+                movement.GroundedJump(groundedJumpForce);
                 }
                 break;
             case Status.sliding:
                 transform.localScale = new Vector3(1, 0.5f, 1);
-                if (input.PressedJump() && groundDetector.isGrounded)
+                if ((input.PressedJump() || input.pressJumpFromTrigger) && groundDetector.isGrounded)
                 {
-                    movement.SlideJump(groundedJumpForce, rb.velocity * slideJumpRange);
+                input.pressJumpFromTrigger = false;
+                movement.SlideJump(groundedJumpForce, rb.velocity * slideJumpRange);
                 }
                 break;
             case Status.wallrunning:
@@ -242,9 +246,10 @@ public class PlayerController : MonoBehaviour
                     wallrunNormalOld = Vector3.zero;
                     wallrunCamLerp = 0.0f;
                 }
-                if (input.PressedJump())
+                if (input.PressedJump() || input.pressJumpFromTrigger)
                 {
-                    wallrunGravity = 0.0f;
+                input.pressJumpFromTrigger = false;
+                wallrunGravity = 0.0f;
                     wallrunTimer = 0.0f;
                     rb.velocity = new Vector3(rb.velocity.x, 0, rb.velocity.z);
                     movement.WallJump(wallJumpHeight, wallJumpRange, wallJumpPushoff, new Vector3(cam.transform.forward.x, 0, cam.transform.forward.z), wallrunDetector.contactR ? -transform.right : transform.right);
@@ -257,9 +262,10 @@ public class PlayerController : MonoBehaviour
                 break;
             case (Status.airborne):
                 transform.localScale = new Vector3(1, 1, 1);
-                if (input.PressedJump() && airJumpChargeAvailable > 0)
+                if ((input.PressedJump() || input.pressJumpFromTrigger) && airJumpChargeAvailable > 0)
                 {
-                    airJumpChargeAvailable--;
+                input.pressJumpFromTrigger = false;
+                airJumpChargeAvailable--;
                     movement.AirborneJump(airborneJumpForce, airborneJumpControl, cam.transform.forward);
                 }
                 if (input.ReleasedDash() && dashCooldownTimer >= dashCooldown)
@@ -358,11 +364,11 @@ public class PlayerController : MonoBehaviour
         {
             ChangeStatus(Status.walking);
         }
-        if (groundDetector.isGrounded && input.PressedCrouch() && new Vector3 (rb.velocity.x, 0, rb.velocity.z).magnitude < slideThreshold && !movement.isDashing)
+        if (groundDetector.isGrounded && (input.PressedCrouch() || input.pressSlideFromTrigger) && new Vector3 (rb.velocity.x, 0, rb.velocity.z).magnitude < slideThreshold && !movement.isDashing)
         {
             ChangeStatus(Status.crouching);
         }
-        if (input.PressedCrouch() && new Vector3 (rb.velocity.x, 0, rb.velocity.z).magnitude > slideThreshold && !movement.isDashing)
+        if ((input.PressedCrouch() || input.pressSlideFromTrigger) && new Vector3 (rb.velocity.x, 0, rb.velocity.z).magnitude > slideThreshold && !movement.isDashing)
         {
             ChangeStatus(Status.sliding);
         }

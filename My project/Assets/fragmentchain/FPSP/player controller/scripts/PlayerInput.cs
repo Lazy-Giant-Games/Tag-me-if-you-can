@@ -19,13 +19,21 @@ public class PlayerInput : MonoBehaviour
     private int moveInputDirX = 0;
     private int moveInputDirZ = 0;
 
+    public bool isPlayer;
 
+    public bool pressJumpFromTrigger;
+    public bool pressSlideFromTrigger;
 
     public Vector2 InputDir()
     {
         moveInputDirX = 0;
         moveInputDirZ = 0;
-        if (Input.GetKey(forward)) { moveInputDirZ += 1; }
+        if (isPlayer) {
+            moveInputDirZ += 1;
+        } else {
+            if (Input.GetKey(forward)) { moveInputDirZ += 1; }
+        }
+        
         if (Input.GetKey(backward)) { moveInputDirZ -= 1; }
         moveInputDirZ = Mathf.Clamp(moveInputDirZ, -1, 1);
 
