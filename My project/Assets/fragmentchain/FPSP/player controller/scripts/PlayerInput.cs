@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class PlayerInput : MonoBehaviour
 {
+    public PlayerAnimator animator;
     [Header("Controls")]
     public string forward;
     public string backward;
