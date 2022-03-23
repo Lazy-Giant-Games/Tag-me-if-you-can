@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.InputSystem;
 
 public class PlayerInput : MonoBehaviour
 {
@@ -32,14 +33,14 @@ public class PlayerInput : MonoBehaviour
         if (isPlayer) {
             moveInputDirZ += 1;
         } else {
-            if (Input.GetKey(forward)) { moveInputDirZ += 1; }
+            if (Keyboard.current.wKey.isPressed) { moveInputDirZ += 1; }
         }
         
-        if (Input.GetKey(backward)) { moveInputDirZ -= 1; }
+        if (Keyboard.current.rKey.isPressed) { moveInputDirZ -= 1; }
         moveInputDirZ = Mathf.Clamp(moveInputDirZ, -1, 1);
 
-        if (Input.GetKey(right)) { moveInputDirX += 1; }
-        if (Input.GetKey(left)) { moveInputDirX -= 1; }
+        if (Keyboard.current.dKey.isPressed) { moveInputDirX += 1; }
+        if (Keyboard.current.aKey.isPressed) { moveInputDirX -= 1; }
         moveInputDirX = Mathf.Clamp(moveInputDirX, -1, 1);
 
         moveInputDir = new Vector2(moveInputDirX, moveInputDirZ);
@@ -48,27 +49,27 @@ public class PlayerInput : MonoBehaviour
     }
     public bool PressedJump()
     {
-        if (Input.GetKeyDown(jump)) { return true; }
+        if (Keyboard.current.spaceKey.isPressed) { return true; }
         return false;
     }
     public bool PressedWalk()
     {
-        if (Input.GetKey(slowWalk)) { return true; }
+        if (Keyboard.current.leftShiftKey.isPressed) { return true; }
         return false;
     }
     public bool PressedCrouch()
     {
-        if (Input.GetKey(crouch)) { return true; }
+        if (Keyboard.current.leftCtrlKey.isPressed) { return true; }
         return false;
     }
     public bool HoldDash()
     {
-        if (Input.GetKey(dash)) { return true; }
+        if (Keyboard.current.tabKey.isPressed) { return true; }
         return false;
     }
     public bool ReleasedDash()
     {
-        if (Input.GetKeyUp(dash)) { return true; }
+        if (Keyboard.current.tabKey.isPressed) { return true; }
         return false;
     }
 }

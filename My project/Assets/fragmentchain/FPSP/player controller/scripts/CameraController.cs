@@ -1,7 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-
+using UnityEngine.InputSystem;
 public class CameraController : MonoBehaviour
 {
 
@@ -59,7 +59,8 @@ public class CameraController : MonoBehaviour
     }
     void Update()
     {
-        if (!controller.isPaused && Input.GetMouseButton(0))
+        
+        if (!controller.isPaused && Mouse.current.leftButton.isPressed)
         {
             CamRotationUnwrap();
 
@@ -97,29 +98,40 @@ public class CameraController : MonoBehaviour
             SpeedLines();
         }
     }
+
+    Vector2 inputLook = Vector2.zero;
+	public void OnMove(InputAction.CallbackContext value) {
+		
+	}
+
+    public void OnLook(InputAction.CallbackContext value) {
+        Debug.LogError(inputLook);
+        inputLook = value.ReadValue<Vector2>();
+    }
+
     void DefaultCameraUpdate()//Moves the FPP camera according to player input
     {
-        transform.Rotate(0f, (Input.GetAxis("Mouse X") * mouseSensitivity) * 100 * Time.deltaTime, 0f, Space.World); // Player body is rotated, cam inherits rotation
+        transform.Rotate(0f, (inputLook.x * mouseSensitivity) * 100 * Time.deltaTime, 0f, Space.World); // Player body is rotated, cam inherits rotation
 
         //Camera Pitch Clamping system
         if (currentCamPitch >= -65 && currentCamPitch <= 70)
         {
-            cam.transform.Rotate(-(Input.GetAxis("Mouse Y") * mouseSensitivity) * 100 * Time.deltaTime, 0f, 0f);
+            cam.transform.Rotate(-(inputLook.y * mouseSensitivity) * 100 * Time.deltaTime, 0f, 0f);
         }
         else if (currentCamPitch >= 70)
         {
             cam.transform.Rotate(50 * Time.deltaTime, 0f, 0f);
-            if (Input.GetAxis("Mouse Y") < 0)
+            if (inputLook.y < 0)
             {
-                cam.transform.Rotate(-(Input.GetAxis("Mouse Y") * mouseSensitivity) * 100 * Time.deltaTime, 0f, 0f);
+                cam.transform.Rotate(-(inputLook.y * mouseSensitivity) * 100 * Time.deltaTime, 0f, 0f);
             }
         }
         else if (currentCamPitch <= -65)
         {
             cam.transform.Rotate(-50 * Time.deltaTime, 0f, 0f);
-            if (Input.GetAxis("Mouse Y") > 0)
+            if (inputLook.y > 0)
             {
-                cam.transform.Rotate(-(Input.GetAxis("Mouse Y") * mouseSensitivity) * 100 * Time.deltaTime, 0f, 0f);
+                cam.transform.Rotate(-(inputLook.y * mouseSensitivity) * 100 * Time.deltaTime, 0f, 0f);
             }
         }
 
@@ -127,32 +139,35 @@ public class CameraController : MonoBehaviour
     }
     void WallrunCameraUpdate()
     {  
-        cam.transform.Rotate(0f, (Input.GetAxis("Mouse X") * mouseSensitivity) * 100 * Time.deltaTime, 0f, Space.World); // Only cam is rotated, not the player body
+        cam.transform.Rotate(0f, (inputLook.x * mouseSensitivity) * 100 * Time.deltaTime, 0f, Space.World); // Only cam is rotated, not the player body
 
         //Camera Pitch Clamping system
         if (currentCamPitch >= -65 && currentCamPitch <= 70)
         {
-            cam.transform.Rotate(-(Input.GetAxis("Mouse Y") * mouseSensitivity) * 100 * Time.deltaTime, 0f, 0f);
+            cam.transform.Rotate(-(inputLook.y * mouseSensitivity) * 100 * Time.deltaTime, 0f, 0f);
         }
         else if (currentCamPitch >= 70)
         {
             cam.transform.Rotate(50 * Time.deltaTime, 0f, 0f);
-            if (Input.GetAxis("Mouse Y") < 0)
+            if (inputLook.y < 0)
             {
-                cam.transform.Rotate(-(Input.GetAxis("Mouse Y") * mouseSensitivity) * 100 * Time.deltaTime, 0f, 0f);
+                cam.transform.Rotate(-(inputLook.y * mouseSensitivity) * 100 * Time.deltaTime, 0f, 0f);
             }
         }
         else if (currentCamPitch <= -65)
         {
             cam.transform.Rotate(-50 * Time.deltaTime, 0f, 0f);
-            if (Input.GetAxis("Mouse Y") > 0)
+            if (inputLook.y > 0)
             {
-                cam.transform.Rotate(-(Input.GetAxis("Mouse Y") * mouseSensitivity) * 100 * Time.deltaTime, 0f, 0f);
+                cam.transform.Rotate(-(inputLook.y * mouseSensitivity) * 100 * Time.deltaTime, 0f, 0f);
             }
         }
 
         return;
     }
+
+
+
     void mouseSensToTimescale()
     {
         mouseSensitivity = initialMouseSensitivity / Time.timeScale;
