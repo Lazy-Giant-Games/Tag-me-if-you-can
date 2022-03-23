@@ -196,7 +196,7 @@ public class PlayerController : MonoBehaviour
                 }
                 break;
             case Status.sliding:
-                //transform.localScale = new Vector3(1, 0.5f, 1);
+                transform.localScale = new Vector3(1, 0.5f, 1);
                 if ((input.PressedJump() || input.pressJumpFromTrigger) && groundDetector.isGrounded)
                 {
                 input.pressJumpFromTrigger = false;
