@@ -33,6 +33,14 @@ public class PostGameUIView : MVCUIView {
     }
     #endregion
 
+    public void ShowWinUI() {
+        UIModel.goWin.SetActive(true);
+    }
+
+    public void ShowLoseUI() {
+        UIModel.goWin.SetActive(false);
+    }
+
     #region Subscribe/Unsubscribe for IListener
     public void Subscribe(IListener p_listener) {
         UIModel.onClickPlay += p_listener.OnClickPlay;

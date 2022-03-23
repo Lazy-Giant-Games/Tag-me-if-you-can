@@ -5,7 +5,7 @@ using UnityEngine;
 
 public class FrontDetector : MonoBehaviour
 {
-    
+    public PlayerAnimator animator;
     public float obstacleMaxDistance;
     public float obstacleMinAngle;
     public float distanceToObstacle;
@@ -34,6 +34,7 @@ public class FrontDetector : MonoBehaviour
     public float wallAngle;
 
     public Transform playerLowPoint;
+    private bool m_isClimbing = false;
 
     void Start()
     {
@@ -65,24 +66,26 @@ public class FrontDetector : MonoBehaviour
         {
             rayPosition.y += subdivision;
             Debug.DrawRay(rayPosition, transform.TransformDirection(Vector3.forward));
-            if (Physics.Raycast(rayPosition, transform.TransformDirection(Vector3.forward), out hit, obstacleMaxDistance, layerMask))
-            {
+            if (Physics.Raycast(rayPosition, transform.TransformDirection(Vector3.forward), out hit, obstacleMaxDistance, layerMask)) {
                 obstacleDetected = true;
-                if (GetAngleToPlane(hit.normal, Vector3.down) > obstacleMinAngle)
-                {
+                
+                if (GetAngleToPlane(hit.normal, Vector3.down) > obstacleMinAngle) {
                     obstacleZone[rayCount] = true;
                     distanceToObstacle = hit.distance / this.transform.localScale.y;
                     angleToPlayer = GetAngleToPlane(hit.normal, transform.TransformDirection(Vector3.forward));
                     wallAngle = GetWallAngle(hit.normal);
                 }
-            }
-            else if (Physics.Raycast(rayPosition + transform.forward * (distanceToObstacle + 0.08f), transform.TransformDirection(Vector3.down), out hit, 5, layerMask) && !heightChecked && obstacleDetected)
-            {
+            } else if (Physics.Raycast(rayPosition + transform.forward * (distanceToObstacle + 0.08f), transform.TransformDirection(Vector3.down), out hit, 5, layerMask) && !heightChecked && obstacleDetected) {
                 Debug.DrawRay(rayPosition + transform.forward * (distanceToObstacle + 0.08f), transform.TransformDirection(Vector3.down));
                 obstacleHeightInWorld = rayPosition.y - hit.distance;
                 obstacleHeightFromPlayer = rayPosition.y - hit.distance - playerLowPoint.transform.position.y;
                 heightChecked = true;
                 pointOnObstacle = hit.point;
+                if (!m_isClimbing) {
+                    m_isClimbing = true;
+                    animator.PlayClimb();
+                }
+
             }
             rayCount++;
         }

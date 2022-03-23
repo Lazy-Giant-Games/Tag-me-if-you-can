@@ -17431,7 +17431,7 @@ MonoBehaviour:
   crouch: left ctrl
   dash: left shift
   moveInputDir: {x: 0, y: 0}
-  isPlayer: 1
+  isPlayer: 0
   pressJumpFromTrigger: 0
   pressSlideFromTrigger: 0
 --- !u!114 &7974160765152675809
@@ -17446,6 +17446,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1075085aa085f6f42963978e264640ce, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  animator: {fileID: 2337716306038076511}
   obstacleMaxDistance: 2
   obstacleMinAngle: 0
   distanceToObstacle: 0

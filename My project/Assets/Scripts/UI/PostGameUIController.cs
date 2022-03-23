@@ -26,6 +26,7 @@ namespace TagMeIfYouCan {
                 m_postGameUIView.Subscribe(this);
 
                 InitUI(p_ui.UIModel, p_ui);
+                HideUI();
             });
         }
 
