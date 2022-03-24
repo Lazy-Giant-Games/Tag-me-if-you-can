@@ -12173,11 +12173,11 @@ MonoBehaviour:
   climbSpeed: 40
   climbHeight: 2
   climbFriction: 5
-  vaultApproachDistance: 0.3
+  vaultApproachDistance: 2
   maxVaultApproachAngle: 38
   maxVaultWallAngle: 110
   minVaultWallAngle: 80
-  vaultDistance: 0.2
+  vaultDistance: 1
   vaultHeight: 1.5
   vaultCamLerpSpeed: 0.2
   dashSlowMoFactor: 0.1
