@@ -105,7 +105,7 @@ public class CameraController : MonoBehaviour
 	}
 
     public void OnLook(InputAction.CallbackContext value) {
-        Debug.LogError(inputLook);
+        //Debug.LogError(inputLook);
         inputLook = value.ReadValue<Vector2>();
     }
 

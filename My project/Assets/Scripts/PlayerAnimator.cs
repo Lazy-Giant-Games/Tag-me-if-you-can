@@ -30,7 +30,10 @@ public class PlayerAnimator : MonoBehaviour {
     }
 
     public void PlayClimb() {
-        myAnimator.SetTrigger("trigClimb");
+        if (myAnimator.GetCurrentAnimatorClipInfo(0)[0].clip.name != "Wall_Vertical_Boost") {
+            myAnimator.SetTrigger("trigClimb");
+        }
+        
     }
 
     public void PlayClimbExit() {
@@ -38,7 +41,10 @@ public class PlayerAnimator : MonoBehaviour {
     }
 
     public void PlaySlide() {
-        myAnimator.SetTrigger("trigSlide");
+        if (myAnimator.GetCurrentAnimatorClipInfo(0)[0].clip.name != "Esc_Slide_All") {
+            myAnimator.SetTrigger("trigSlide");
+        }
+        
     }
 
     public void WallRunLeft() {
