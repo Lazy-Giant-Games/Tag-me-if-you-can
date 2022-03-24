@@ -7,6 +7,7 @@ public class JumpTrigger : AnimationTrigger {
 	public float jumpForce = 550f;
 	public enum JUMP_ANIMATION { LOW_JUMP = 0, HIGH_JUMP }
 	public JUMP_ANIMATION jumpAnimationToPlay;
+
 	public override void DoInputForPlayer(PlayerInput p_input) {
 		p_input.pressJumpFromTrigger = true;
 		p_input.isPlayer = false;
@@ -22,10 +23,12 @@ public class JumpTrigger : AnimationTrigger {
 		} else {
 			p_input.animator.PlayLowJump();
 		}
-		
-
 		rb.AddForce((p_input.transform.forward + p_input.transform.up) * jumpForce);
 		StartCoroutine(CheckIfGrounded(pc, p_input, rb));
+
+		if (playCutsceneCamera) {
+			p_input.GetComponent<CutSceneCamera>().DoCutSceneCameraForJump();
+		}
 	}
 
 	IEnumerator CheckIfGrounded(PlayerController pc, PlayerInput pi, Rigidbody rb) {

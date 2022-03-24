@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class AnimationTrigger : MonoBehaviour {
 
+	public bool playCutsceneCamera;
 	private void OnTriggerEnter(Collider other) {
 		PlayerInput pi = other.GetComponent<PlayerInput>();
 		if (pi != null && pi.isPlayer) {
