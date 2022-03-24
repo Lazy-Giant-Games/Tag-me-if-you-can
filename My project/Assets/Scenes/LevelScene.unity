@@ -10991,6 +10991,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: PlayerPrefabURP (1)
       objectReference: {fileID: 0}
+    - target: {fileID: 2790459930074149169, guid: 2ea04fcfbc7179b45bcf66dff17662ec, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 100
+      objectReference: {fileID: 0}
     - target: {fileID: 2841642849134674463, guid: 2ea04fcfbc7179b45bcf66dff17662ec, type: 3}
       propertyPath: m_RootOrder
       value: 9
