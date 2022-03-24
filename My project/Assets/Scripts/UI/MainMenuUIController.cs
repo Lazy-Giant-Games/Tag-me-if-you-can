@@ -9,6 +9,11 @@ namespace TagMeIfYouCan {
         private MainMenuUIModel m_mainMenuUIModel;
         private MainMenuUIView m_mainMenuUIView;
 
+        [SerializeField]
+        private IngameUIController m_ingameUIController;
+        [SerializeField]
+        private PlayerController m_playerController;
+
         #region Mono Calls
         private void Start() {
             InstantiateUI();
@@ -30,7 +35,7 @@ namespace TagMeIfYouCan {
         }
 
         #region IngameUIView.IListener
-         public void OnClickPlay() { HideUI(); }
+         public void OnClickPlay() { HideUI(); m_ingameUIController.InstantiateUI(); m_playerController.enabled = true; }
         #endregion
     }
 }
