@@ -68,12 +68,15 @@ public class FrontDetector : MonoBehaviour
             Debug.DrawRay(rayPosition, transform.TransformDirection(Vector3.forward));
             if (Physics.Raycast(rayPosition, transform.TransformDirection(Vector3.forward), out hit, obstacleMaxDistance, layerMask)) {
                 obstacleDetected = true;
-                
+
                 if (GetAngleToPlane(hit.normal, Vector3.down) > obstacleMinAngle) {
                     obstacleZone[rayCount] = true;
                     distanceToObstacle = hit.distance / this.transform.localScale.y;
                     angleToPlayer = GetAngleToPlane(hit.normal, transform.TransformDirection(Vector3.forward));
                     wallAngle = GetWallAngle(hit.normal);
+                    Debug.LogError("A HERE");
+                } else {
+                    Debug.LogError("C HERE");
                 }
             } else if (Physics.Raycast(rayPosition + transform.forward * (distanceToObstacle + 0.08f), transform.TransformDirection(Vector3.down), out hit, 5, layerMask) && !heightChecked && obstacleDetected) {
                 Debug.DrawRay(rayPosition + transform.forward * (distanceToObstacle + 0.08f), transform.TransformDirection(Vector3.down));
@@ -81,10 +84,7 @@ public class FrontDetector : MonoBehaviour
                 obstacleHeightFromPlayer = rayPosition.y - hit.distance - playerLowPoint.transform.position.y;
                 heightChecked = true;
                 pointOnObstacle = hit.point;
-                if (!m_isClimbing) {
-                    m_isClimbing = true;
-                    animator.PlayClimb();
-                }
+                Debug.LogError("B HERE");
 
             }
             rayCount++;
