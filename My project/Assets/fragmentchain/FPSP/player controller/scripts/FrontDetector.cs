@@ -74,7 +74,6 @@ public class FrontDetector : MonoBehaviour
                     distanceToObstacle = hit.distance / this.transform.localScale.y;
                     angleToPlayer = GetAngleToPlane(hit.normal, transform.TransformDirection(Vector3.forward));
                     wallAngle = GetWallAngle(hit.normal);
-                    Debug.LogError("A HERE");
                 } else {
                     Debug.LogError("C HERE");
                 }
