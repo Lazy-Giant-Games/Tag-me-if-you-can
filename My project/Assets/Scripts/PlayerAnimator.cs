@@ -14,7 +14,9 @@ public class PlayerAnimator : MonoBehaviour {
     }
 
     public void PlayRun() {
-        myAnimator.SetTrigger("trigRun");
+        if (myAnimator.GetCurrentAnimatorClipInfo(0)[0].clip.name != "Mvm_Boost_Root") {
+            myAnimator.SetTrigger("trigRun");
+        }
     }
 
     public void PlayFalling() {
@@ -33,7 +35,6 @@ public class PlayerAnimator : MonoBehaviour {
         if (myAnimator.GetCurrentAnimatorClipInfo(0)[0].clip.name != "Wall_Vertical_Boost") {
             myAnimator.SetTrigger("trigClimb");
         }
-        
     }
 
     public void PlayClimbExit() {

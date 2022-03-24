@@ -5,7 +5,7 @@ using UnityEngine;
 
 public class FrontDetector : MonoBehaviour
 {
-    public PlayerAnimator animator;
+    //public PlayerAnimator animator;
     public float obstacleMaxDistance;
     public float obstacleMinAngle;
     public float distanceToObstacle;
@@ -74,8 +74,6 @@ public class FrontDetector : MonoBehaviour
                     distanceToObstacle = hit.distance / this.transform.localScale.y;
                     angleToPlayer = GetAngleToPlane(hit.normal, transform.TransformDirection(Vector3.forward));
                     wallAngle = GetWallAngle(hit.normal);
-                } else {
-                    Debug.LogError("C HERE");
                 }
             } else if (Physics.Raycast(rayPosition + transform.forward * (distanceToObstacle + 0.08f), transform.TransformDirection(Vector3.down), out hit, 5, layerMask) && !heightChecked && obstacleDetected) {
                 Debug.DrawRay(rayPosition + transform.forward * (distanceToObstacle + 0.08f), transform.TransformDirection(Vector3.down));
@@ -83,8 +81,6 @@ public class FrontDetector : MonoBehaviour
                 obstacleHeightFromPlayer = rayPosition.y - hit.distance - playerLowPoint.transform.position.y;
                 heightChecked = true;
                 pointOnObstacle = hit.point;
-                Debug.LogError("B HERE");
-
             }
             rayCount++;
         }
