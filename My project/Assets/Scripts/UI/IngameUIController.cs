@@ -9,6 +9,11 @@ namespace TagMeIfYouCan {
         private IngameUIModel m_ingameUIModel;
         private IngameUIView m_ingameUIView;
 
+        public Transform enemyTransform;
+        public Transform playerTransform;
+        private float m_targetDistance = 10f;
+        private float m_maxDistance = 100f;
+
         #region Mono Calls
 
         private void OnDestroy() {
@@ -26,8 +31,16 @@ namespace TagMeIfYouCan {
             });
         }
 
-        #region IngameUIView.IListener
-        public void OnClickRestart() { SceneManager.LoadScene("LevelScene"); }
+		private void Update() {
+            if (m_ingameUIView != null) {
+                float fillAmount = m_targetDistance / Vector3.Distance(playerTransform.position, enemyTransform.position);
+                fillAmount = Mathf.Clamp(fillAmount, 0f, 1f);
+                m_ingameUIView.UpdateNearProgressBarValue(fillAmount);
+            }
+        }
+
+		#region IngameUIView.IListener
+		public void OnClickRestart() { SceneManager.LoadScene("LevelScene"); }
         #endregion
     }
 }

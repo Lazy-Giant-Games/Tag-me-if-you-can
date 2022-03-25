@@ -9,8 +9,18 @@ namespace TagMeIfYouCan {
         private PostGameUIModel m_postGameUIModel;
         private PostGameUIView m_postGameUIView;
 
+        [SerializeField]
+        private IngameUIController m_ingameUIController;
+
         #region Mono Calls
-        private void Start() {
+        private void OnEnable() {
+            FallingGameOver.OnFalling += OnFell;
+		}
+
+		private void OnDisable() {
+            FallingGameOver.OnFalling -= OnFell;
+        }
+		private void Start() {
             InstantiateUI();
         }
 
@@ -28,6 +38,12 @@ namespace TagMeIfYouCan {
                 InitUI(p_ui.UIModel, p_ui);
                 HideUI();
             });
+        }
+
+        void OnFell() {
+            m_ingameUIController.HideUI();
+            ShowUI();
+            m_postGameUIView.ShowLoseUI();
         }
 
         #region IngameUIView.IListener

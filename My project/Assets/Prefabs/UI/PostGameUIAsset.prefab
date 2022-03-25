@@ -394,7 +394,7 @@ GameObject:
   m_Component:
   - component: {fileID: 5654123015292428003}
   - component: {fileID: 5424349827719752370}
-  - component: {fileID: 2473617299854954511}
+  - component: {fileID: 6666914565342068025}
   m_Layer: 5
   m_Name: Parent
   m_TagString: Untagged
@@ -432,7 +432,7 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 6394994841283253008}
   m_CullTransparentMesh: 1
---- !u!114 &2473617299854954511
+--- !u!114 &6666914565342068025
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -445,7 +445,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 1, g: 1, b: 1, a: 0.05490196}
+  m_Color: {r: 1, g: 1, b: 1, a: 0.18431373}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1

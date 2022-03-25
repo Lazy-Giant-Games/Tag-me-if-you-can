@@ -18,9 +18,10 @@ public class PlayerAnimator : MonoBehaviour {
             myAnimator.SetTrigger("trigRun");
         }
     }
-
     public void PlayFalling() {
-        myAnimator.SetTrigger("trigFalling");
+        if (myAnimator.GetCurrentAnimatorClipInfo(0)[0].clip.name != "Jump_Down_C_Loop") {
+            myAnimator.SetTrigger("trigFalling");
+        }
     }
 
     public void PlayHighJump() {

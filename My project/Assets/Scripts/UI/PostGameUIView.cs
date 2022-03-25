@@ -35,9 +35,11 @@ public class PostGameUIView : MVCUIView {
 
     public void ShowWinUI() {
         UIModel.goWin.SetActive(true);
+        UIModel.goLose.SetActive(false);
     }
 
     public void ShowLoseUI() {
+        UIModel.goLose.SetActive(true);
         UIModel.goWin.SetActive(false);
     }
 

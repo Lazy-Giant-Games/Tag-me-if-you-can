@@ -23,7 +23,7 @@ public class JumpTrigger : AnimationTrigger {
 		} else {
 			p_input.animator.PlayLowJump();
 		}
-		rb.AddForce((p_input.transform.forward + p_input.transform.up) * jumpForce);
+		rb.AddForce((p_input.transform.forward) * jumpForce);
 		StartCoroutine(CheckIfGrounded(pc, p_input, rb));
 
 		if (playCutsceneCamera) {
@@ -35,10 +35,8 @@ public class JumpTrigger : AnimationTrigger {
 		GroundDetector gd = GameObject.FindObjectOfType<GroundDetector>();
 		yield return new WaitForSeconds(0.5f);
 		while (!gd.isGrounded) {
-			Debug.LogError(gd.isGrounded);
 			yield return 0;
 		}
-		Debug.LogError(gd.isGrounded);
 		pc.enabled = true;
 		pi.isPlayer = true;
 		rb.useGravity = false;
