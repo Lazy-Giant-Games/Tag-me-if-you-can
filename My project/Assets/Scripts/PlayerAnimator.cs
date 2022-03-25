@@ -5,7 +5,9 @@ using UnityEngine;
 public class PlayerAnimator : MonoBehaviour {
     public Animator myAnimator;
     private GroundDetector m_groundDetector;
+    public bool isPlayer;
 
+    public static bool isNearEnemy;
 	private void Awake() {
         m_groundDetector = GetComponentInChildren<GroundDetector>();
     }
@@ -14,8 +16,20 @@ public class PlayerAnimator : MonoBehaviour {
     }
 
     public void PlayRun() {
-        if (myAnimator.GetCurrentAnimatorClipInfo(0)[0].clip.name != "Mvm_Boost_Root") {
-            myAnimator.SetTrigger("trigRun");
+        if (isPlayer) {
+            if (isNearEnemy) {
+                PlayTagRun();
+            } else {
+                if (myAnimator.GetCurrentAnimatorClipInfo(0)[0].clip.name != "Mvm_Boost_Root") {
+                    myAnimator.SetTrigger("trigRun");
+                }
+            }
+        }
+    }
+
+    public void PlayTagRun() {
+        if (myAnimator.GetCurrentAnimatorClipInfo(0)[0].clip.name != "Esc_Slide_All") {
+            myAnimator.SetTrigger("trigSlide");
         }
     }
     public void PlayFalling() {

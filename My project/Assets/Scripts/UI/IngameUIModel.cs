@@ -9,7 +9,6 @@ public class IngameUIModel : MVCUIModel {
     public Button btnRestart;
 
     public Image imgGameProgressBar; //how near the player to enemy
-    public Image imgDistanceProgressBar; //how near the enemy to the finish line
 
     private void OnEnable() {
         btnRestart.onClick.AddListener(OnClickRestart);

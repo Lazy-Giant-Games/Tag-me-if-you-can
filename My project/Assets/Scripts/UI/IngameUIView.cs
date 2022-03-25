@@ -33,10 +33,6 @@ public class IngameUIView : MVCUIView {
     }
     #endregion
 
-    public void UpdateNearProgressBarValue(float p_value) {
-        UIModel.imgDistanceProgressBar.fillAmount = p_value;
-    }
-
     public void UpdateGameProgressBarValue(float p_value) {
         UIModel.imgGameProgressBar.fillAmount = p_value;
     }
