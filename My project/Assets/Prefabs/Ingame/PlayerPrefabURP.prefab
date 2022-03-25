@@ -466,9 +466,9 @@ MonoBehaviour:
   isPaused: 0
   friction: 20
   gravity: 2
-  walkSpeed: 110
+  walkSpeed: 55
   moveRampUpTime: 1
-  walkSpeedIncrease: 190
+  walkSpeedIncrease: 95
   crouchSpeed: 45
   slideStrenght: 2.8
   slideFrictionMod: 35
@@ -491,19 +491,19 @@ MonoBehaviour:
   airborneJumpForce: 40
   airFrictionMod: 28
   airControlSpeed: 12
-  climbApproachDistance: 0.3
+  climbApproachDistance: 1
   maxClimbApproachAngle: 25
-  maxClimbWallAngle: 110
-  minClimbWallAngle: 80
+  maxClimbWallAngle: 120
+  minClimbWallAngle: 60
   climbSpeed: 40
   climbHeight: 2
   climbFriction: 5
   vaultApproachDistance: 2
   maxVaultApproachAngle: 38
-  maxVaultWallAngle: 110
-  minVaultWallAngle: 80
+  maxVaultWallAngle: 135
+  minVaultWallAngle: 45
   vaultDistance: 1
-  vaultHeight: 1.5
+  vaultHeight: 2
   vaultCamLerpSpeed: 0.2
   dashSlowMoFactor: 0.1
   dashSpeed: 0.1
