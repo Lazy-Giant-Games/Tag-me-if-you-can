@@ -18,7 +18,7 @@ public class FallingGameOver : MonoBehaviour {
 			Debug.DrawLine(transform.position, hit.point, Color.cyan);
 			m_floatingTimer = 0f;
 		} else {
-			m_animator.PlayFalling();
+			//m_animator.PlayFalling();
 			if (!isDead) {
 				m_floatingTimer += Time.deltaTime;
 				if (m_floatingTimer >= 2f) {

@@ -9,6 +9,7 @@ public class JumpTrigger : AnimationTrigger {
 	public JUMP_ANIMATION jumpAnimationToPlay;
 
 	public override void DoInputForPlayer(PlayerInput p_input) {
+		Debug.LogError("JUMP");
 		p_input.pressJumpFromTrigger = true;
 		p_input.isPlayer = false;
 		PlayerController pc = p_input.GetComponent<PlayerController>();
@@ -27,7 +28,7 @@ public class JumpTrigger : AnimationTrigger {
 		StartCoroutine(CheckIfGrounded(pc, p_input, rb));
 
 		if (playCutsceneCamera) {
-			p_input.GetComponent<CutSceneCamera>().DoCutSceneCameraForJump();
+			p_input.GetComponent<CutSceneCamera>().DoCutSceneCameraForJump(pc.transform);
 		}
 	}
 

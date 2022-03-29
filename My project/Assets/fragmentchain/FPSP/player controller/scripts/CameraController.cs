@@ -60,7 +60,7 @@ public class CameraController : MonoBehaviour
     void Update()
     {
         
-        if (!controller.isPaused && Mouse.current.leftButton.isPressed)
+        if (!controller.isPaused && Mouse.current.leftButton.isPressed && !CutSceneCamera.IsOnCutScene)
         {
             CamRotationUnwrap();
 
@@ -105,6 +105,9 @@ public class CameraController : MonoBehaviour
 	}
 
     public void OnLook(InputAction.CallbackContext value) {
+		if (CutSceneCamera.IsOnCutScene) {
+            return;
+		}
         //Debug.LogError(inputLook);
         inputLook = value.ReadValue<Vector2>();
     }

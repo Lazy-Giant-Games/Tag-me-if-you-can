@@ -26,9 +26,17 @@ public class WallrunDetector : MonoBehaviour
         layerMask = ~layerMask;
         RaycastHit hit;
         if (Physics.Raycast(this.transform.position, transform.TransformDirection(Vector3.right), out hit, wallrunDist, layerMask)) {
+            if (hit.collider.gameObject.layer == 11) {
+                Debug.LogError(hit.collider.gameObject.name + " -- " + hit.collider.gameObject.layer);
+                return;
+            }
             wallNormal = hit.normal;
             contactR = true;
         } else if (Physics.Raycast(this.transform.position, transform.TransformDirection(Vector3.left), out hit, wallrunDist, layerMask)) {
+            if (hit.collider.gameObject.layer == 11) {
+                Debug.LogError(hit.collider.gameObject.name + " -- " + hit.collider.gameObject.layer);
+                return;
+            }
             wallNormal = hit.normal;
             contactL = true;
             

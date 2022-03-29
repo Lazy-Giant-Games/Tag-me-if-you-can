@@ -15,10 +15,15 @@ namespace TagMeIfYouCan {
         #region Mono Calls
         private void OnEnable() {
             FallingGameOver.OnFalling += OnFell;
-		}
+            //GroundDetector.OnFatalFall += OnFell;
+            EnemyProgressBar.OnCaptured += OnCapture;
+
+        }
 
 		private void OnDisable() {
             FallingGameOver.OnFalling -= OnFell;
+            //GroundDetector.OnFatalFall -= OnFell;
+            EnemyProgressBar.OnCaptured -= OnCapture;
         }
 		private void Start() {
             InstantiateUI();
@@ -46,8 +51,14 @@ namespace TagMeIfYouCan {
             m_postGameUIView.ShowLoseUI();
         }
 
+        void OnCapture() {
+            m_ingameUIController.HideUI();
+            ShowUI();
+            m_postGameUIView.ShowWinUI();
+        }
+
         #region IngameUIView.IListener
-        public void OnClickPlay() { HideUI(); }
+        public void OnClickPlay() { SceneManager.LoadScene("GameLevel"); }
         #endregion
     }
 }

@@ -67,6 +67,10 @@ public class FrontDetector : MonoBehaviour
             rayPosition.y += subdivision;
             Debug.DrawRay(rayPosition, transform.TransformDirection(Vector3.forward));
             if (Physics.Raycast(rayPosition, transform.TransformDirection(Vector3.forward), out hit, obstacleMaxDistance, layerMask)) {
+                if (hit.collider.gameObject.layer == 11) {
+                    Debug.LogError(hit.collider.gameObject.name + " -- " + hit.collider.gameObject.layer);
+                    return;
+                }
                 obstacleDetected = true;
 
                 if (GetAngleToPlane(hit.normal, Vector3.down) > obstacleMinAngle) {
@@ -76,6 +80,11 @@ public class FrontDetector : MonoBehaviour
                     wallAngle = GetWallAngle(hit.normal);
                 }
             } else if (Physics.Raycast(rayPosition + transform.forward * (distanceToObstacle + 0.08f), transform.TransformDirection(Vector3.down), out hit, 5, layerMask) && !heightChecked && obstacleDetected) {
+                
+                if (hit.collider.gameObject.layer == 11) {
+                    Debug.LogError(hit.collider.gameObject.name + " -- " + hit.collider.gameObject.layer);
+                    return;
+                }
                 Debug.DrawRay(rayPosition + transform.forward * (distanceToObstacle + 0.08f), transform.TransformDirection(Vector3.down));
                 obstacleHeightInWorld = rayPosition.y - hit.distance;
                 obstacleHeightFromPlayer = rayPosition.y - hit.distance - playerLowPoint.transform.position.y;

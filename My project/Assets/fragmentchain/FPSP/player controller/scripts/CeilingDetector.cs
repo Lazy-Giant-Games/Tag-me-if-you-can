@@ -27,6 +27,10 @@ public class CeilingDetector : MonoBehaviour
         RaycastHit hit;
         if (Physics.Raycast(this.transform.position, Vector3.up, out hit, 20.0f, layerMask))
         {
+            if (hit.collider.gameObject.layer == 11) {
+                Debug.LogError(hit.collider.gameObject.name + " -- " + hit.collider.gameObject.layer);
+                return;
+            }
             groundAngle = GetAngle(hit.normal);
             distToCeiling = hit.distance;
         }

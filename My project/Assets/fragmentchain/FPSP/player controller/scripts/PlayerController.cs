@@ -188,7 +188,7 @@ public class PlayerController : MonoBehaviour
                 }
                 break;
             case Status.crouching:
-                transform.localScale = new Vector3(1, 0.7f, 1);
+                transform.localScale = new Vector3(1, 1f, 1);
                 if (input.PressedJump() || input.pressJumpFromTrigger)
                 {
                 input.pressJumpFromTrigger = false;
@@ -368,7 +368,7 @@ public class PlayerController : MonoBehaviour
             ChangeStatus(Status.walking);
             animator.PlayRun();
         }
-        if (groundDetector.isGrounded && (input.PressedCrouch() || input.pressSlideFromTrigger) && new Vector3 (rb.velocity.x, 0, rb.velocity.z).magnitude < slideThreshold && !movement.isDashing)
+        if (groundDetector.isGrounded && (input.PressedCrouch()) && new Vector3 (rb.velocity.x, 0, rb.velocity.z).magnitude < slideThreshold && !movement.isDashing)
         {
             ChangeStatus(Status.crouching);
         }
@@ -376,6 +376,7 @@ public class PlayerController : MonoBehaviour
         {
             ChangeStatus(Status.sliding);
             animator.PlaySlide();
+            input.pressSlideFromTrigger = false;
         }
         if(input.InputDir().y > 0 && groundDetector.distToGround >= 0.5f && (wallrunDetector.contactR || wallrunDetector.contactL) && (currentCamRotation.y >= -wallrunMaxAngle && currentCamRotation.y <= wallrunMaxAngle) && new Vector3(rb.velocity.x, 0, rb.velocity.z).magnitude > wallrunSpeedThreshold && rb.velocity.y < 2.1 && wallrunReady && !movement.isDashing)
         {
@@ -394,7 +395,7 @@ public class PlayerController : MonoBehaviour
         if (ceilingDetector.distToCeiling > 2 && input.InputDir().y > 0 && frontDetector.obstacleDetected && frontDetector.angleToPlayer < maxVaultApproachAngle && frontDetector.wallAngle > minVaultWallAngle && frontDetector.wallAngle < maxVaultWallAngle && frontDetector.obstacleHeightFromPlayer <= vaultHeight && frontDetector.distanceToObstacle < vaultApproachDistance && !movement.isDashing)
         {
             ChangeStatus(Status.vaulting);
-            animator.PlaySlide(); //change with vault
+            animator.PlayVault(); //change with vault
         }
         if((status == Status.airborne || status == Status.dashholding) && input.HoldDash() && !movement.isDashing && dashCooldownTimer >= dashCooldown)
         {

@@ -8,6 +8,7 @@ public class PlayerAnimator : MonoBehaviour {
     public bool isPlayer;
 
     public static bool isNearEnemy;
+    public bool isOnHighJump;
 	private void Awake() {
         m_groundDetector = GetComponentInChildren<GroundDetector>();
     }
@@ -15,12 +16,17 @@ public class PlayerAnimator : MonoBehaviour {
         myAnimator.SetTrigger("trigIdle");
     }
 
+    public void PlayRoll() {
+        myAnimator.SetTrigger("trigRoll");
+    }
+
     public void PlayRun() {
         if (isPlayer) {
             if (isNearEnemy) {
                 PlayTagRun();
             } else {
-                if (myAnimator.GetCurrentAnimatorClipInfo(0)[0].clip.name != "Mvm_Boost_Root") {
+                
+                if (myAnimator.GetCurrentAnimatorClipInfo(0)[0].clip.name != "Mvm_Boost_Root" && !isOnHighJump) {
                     myAnimator.SetTrigger("trigRun");
                 }
             }
@@ -33,12 +39,14 @@ public class PlayerAnimator : MonoBehaviour {
         }
     }
     public void PlayFalling() {
-        if (myAnimator.GetCurrentAnimatorClipInfo(0)[0].clip.name != "Jump_Down_C_Loop") {
+        Debug.LogError(isOnHighJump);
+        if (myAnimator.GetCurrentAnimatorClipInfo(0)[0].clip.name != "Jump_Down_C_Loop" && !isOnHighJump) {
             myAnimator.SetTrigger("trigFalling");
         }
     }
 
     public void PlayHighJump() {
+        isOnHighJump = true;
         myAnimator.SetTrigger("trigHighJump");
     }
 
@@ -58,11 +66,27 @@ public class PlayerAnimator : MonoBehaviour {
 
     public void PlaySlide() {
         if (myAnimator.GetCurrentAnimatorClipInfo(0)[0].clip.name != "Esc_Slide_All") {
+            isOnHighJump = false;
             myAnimator.SetTrigger("trigSlide");
+            myAnimator.SetBool("isSliding", true);
         }
-        
     }
 
+    public void PlayVault() {
+        if (myAnimator.GetCurrentAnimatorClipInfo(0)[0].clip.name != "Esc_Slide_All") {
+            isOnHighJump = false;
+            myAnimator.SetTrigger("trigSlide");
+        }
+    }
+
+    public void SlideOffAfterSec(float p_timer) {
+        StartCoroutine(SlideOff(p_timer));
+	}
+
+    IEnumerator SlideOff(float p_timer) {
+        yield return new WaitForSeconds(p_timer);
+        myAnimator.SetBool("isSliding", false);
+    }
     public void WallRunLeft() {
         myAnimator.SetTrigger("trigWallRunLeft");
     }
