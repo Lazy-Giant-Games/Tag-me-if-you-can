@@ -4,7 +4,8 @@ using UnityEngine;
 
 public class JumpTrigger : AnimationTrigger {
 
-	public float jumpForce = 550f;
+	public float jumpForceForward = 225f;
+	public float jumpForceUpward = 225f;
 	public enum JUMP_ANIMATION { LOW_JUMP = 0, HIGH_JUMP }
 	public JUMP_ANIMATION jumpAnimationToPlay;
 
@@ -21,15 +22,17 @@ public class JumpTrigger : AnimationTrigger {
 		rb.useGravity = true;
 		if (jumpAnimationToPlay == JUMP_ANIMATION.HIGH_JUMP) {
 			p_input.animator.PlayHighJump();
+			if (playCutsceneCamera) {
+				p_input.GetComponent<CutSceneCamera>().DoCutSceneCameraForJump(pc.transform);
+			}
 		} else {
 			p_input.animator.PlayLowJump();
+			if (playCutsceneCamera) {
+				p_input.GetComponent<CutSceneCamera>().DoCutSceneCameraForJump(pc.transform, false);
+			}
 		}
-		rb.AddForce((p_input.transform.forward) * jumpForce);
+		rb.AddForce(((p_input.transform.forward) * jumpForceForward+ ((p_input.transform.up) * jumpForceUpward)));
 		StartCoroutine(CheckIfGrounded(pc, p_input, rb));
-
-		if (playCutsceneCamera) {
-			p_input.GetComponent<CutSceneCamera>().DoCutSceneCameraForJump(pc.transform);
-		}
 	}
 
 	IEnumerator CheckIfGrounded(PlayerController pc, PlayerInput pi, Rigidbody rb) {
