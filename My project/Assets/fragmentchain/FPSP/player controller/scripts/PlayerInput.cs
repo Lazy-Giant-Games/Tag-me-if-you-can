@@ -22,6 +22,7 @@ public class PlayerInput : MonoBehaviour
     private int moveInputDirZ = 0;
 
     public bool isPlayer;
+    public bool isAI;
 
     public bool pressJumpFromTrigger;
     public bool pressSlideFromTrigger;

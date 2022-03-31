@@ -14,18 +14,17 @@ public class CutSceneCamera : MonoBehaviour {
 	private void Start() {
 		m_initialLocalRotation = Camera.main.transform.localEulerAngles;
 	}
-	public void DoCutSceneCameraForSlide(Transform p_targetLook) {
+	public void DoCutSceneCameraForSlide(Transform p_controller) {
 		Debug.LogError("SLIDE");
 		IsOnCutScene = true;
 		Time.timeScale = 1f;
-		PlayerController pc = GameObject.FindObjectOfType<PlayerController>();
 		//LeanTween.rotate(Camera.main.gameObject, pc.transform.position - Camera.main.transform.position, 1f);
 		LeanTween.moveLocal(Camera.main.gameObject, slidePosition.localPosition, 0.25f).setOnComplete(() => {
-			StartCoroutine(WaitTilGrounded(p_targetLook, false, true));
+			StartCoroutine(WaitTilGrounded(p_controller.transform, true));
 		});
 	}
 
-	IEnumerator WaitTilGrounded(Transform p_targetLook, bool p_playRoll = true, bool p_dontCheckGrounded = false) {
+	IEnumerator WaitTilGrounded(Transform p_targetLook, bool p_dontCheckGrounded = false) {
 		
 		yield return new WaitForSeconds(0.1f);
 		if (!p_dontCheckGrounded) {
@@ -42,25 +41,19 @@ public class CutSceneCamera : MonoBehaviour {
 			}
 		}
 		
-		if (p_playRoll) {
-			Debug.LogError("THIS");
-			p_targetLook.GetComponent<PlayerController>().animator.PlayRoll();
-		}
-		
 		LeanTween.moveLocal(Camera.main.gameObject, initialPosition.localPosition, 1f).setIgnoreTimeScale(true);
 		LeanTween.rotateLocal(Camera.main.gameObject, m_initialLocalRotation, 1f).setIgnoreTimeScale(true);
 		Time.timeScale = 1f;
 		IsOnCutScene = false;
 	}
 
-	public void DoCutSceneCameraForJump(Transform p_targetLook, bool p_doRollJump = true) {
+	public void DoCutSceneCameraForJump(PlayerController p_controller) {
 		Debug.LogError("JUMP");
 		IsOnCutScene = true;
 		Time.timeScale = 1f;
-		PlayerController pc = GameObject.FindObjectOfType<PlayerController>();
 		//LeanTween.rotate(Camera.main.gameObject, pc.transform.position - Camera.main.transform.position, 1f);
 		LeanTween.moveLocal(Camera.main.gameObject, jumpPosition.localPosition, 0.25f).setOnComplete(() => {
-			StartCoroutine(WaitTilGrounded(p_targetLook, p_doRollJump));
+			StartCoroutine(WaitTilGrounded(p_controller.transform));
 		});
 	}
 }
