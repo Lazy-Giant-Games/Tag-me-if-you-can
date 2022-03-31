@@ -50,9 +50,9 @@ public class AIMovement : MonoBehaviour {
 		GetComponent<CommandControlledBot>().StartPlay();
 	}
 
-	public void ReduceSpeed(float p_reduceValue = 0.4f) {
+	public void ReduceSpeed(float p_reduceValue = 0.45f) {
 		moveSpeed -= p_reduceValue;
-		moveSpeed = Mathf.Clamp(moveSpeed, 4f, 20f);
+		moveSpeed = Mathf.Clamp(moveSpeed, 2f, 20f);
 	}
 	private void Update() {
 		//animator.SetYVelocityInAnimator(MyRigidBody.velocity.y);
