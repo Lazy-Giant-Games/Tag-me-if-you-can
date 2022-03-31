@@ -25,10 +25,14 @@ public class PlayerAnimator : MonoBehaviour {
             if (isNearEnemy) {
                 PlayTagRun();
             } else {
-                
+
                 if (myAnimator.GetCurrentAnimatorClipInfo(0)[0].clip.name != "Mvm_Boost_Root" && !isOnHighJump) {
                     myAnimator.SetTrigger("trigRun");
                 }
+            }
+        } else {
+            if (myAnimator.GetCurrentAnimatorClipInfo(0)[0].clip.name != "Mvm_Boost_Root" && !isOnHighJump) {
+                myAnimator.SetTrigger("trigRun");
             }
         }
     }
@@ -104,7 +108,8 @@ public class PlayerAnimator : MonoBehaviour {
     }
 
 	private void Update() {
-        ContinueToRunning(m_groundDetector.isGrounded);
-
+        if (isPlayer) {
+            ContinueToRunning(m_groundDetector.isGrounded);
+        }
     }
 }
