@@ -10,7 +10,7 @@ Material:
   m_Name: Main_Building_Mat
   m_Shader: {fileID: 4800000, guid: bee44b4a58655ee4cbff107302a3e131, type: 3}
   m_ShaderKeywords: DR_OUTLINE_ON _CELPRIMARYMODE_SINGLE _TEXTUREBLENDINGMODE_MULTIPLY
-    _UNITYSHADOWMODE_MULTIPLY
+    _UNITYSHADOWMODE_NONE
   m_LightmapFlags: 4
   m_EnableInstancingVariants: 0
   m_DoubleSidedGI: 0
@@ -132,9 +132,9 @@ Material:
     - _QueueOffset: 0
     - _ReceiveShadows: 1
     - _RimEnabled: 0
-    - _SelfShadingSize: 0.539
+    - _SelfShadingSize: 0.42
     - _SelfShadingSizeExtra: 0.513
-    - _ShadowEdgeSize: 0.354
+    - _ShadowEdgeSize: 0.381
     - _ShadowEdgeSizeExtra: 0.327
     - _Smoothness: 0
     - _SmoothnessTextureChannel: 0
@@ -145,7 +145,7 @@ Material:
     - _TextureBlendingMode: 0
     - _TextureImpact: 1
     - _UVSec: 0
-    - _UnityShadowMode: 1
+    - _UnityShadowMode: 0
     - _UnityShadowOcclusion: 0
     - _UnityShadowPower: 0.969
     - _UnityShadowSharpness: 1
