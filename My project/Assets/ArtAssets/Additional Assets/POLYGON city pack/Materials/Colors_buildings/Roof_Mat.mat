@@ -166,7 +166,7 @@ Material:
     - _LightmapDirection: {r: 0, g: 1, b: 0, a: 0}
     - _OutlineColor: {r: 0.4811321, g: 0.4811321, b: 0.4811321, a: 1}
     - _SpecColor: {r: 0.7924528, g: 0.7924528, b: 0.7924528, a: 1}
-    - _UnityShadowColor: {r: 0.21698111, g: 0.21698111, b: 0.21698111, a: 1}
+    - _UnityShadowColor: {r: 0, g: 0, b: 0, a: 1}
   m_BuildTextureStacks: []
 --- !u!114 &5800358512636367765
 MonoBehaviour:
