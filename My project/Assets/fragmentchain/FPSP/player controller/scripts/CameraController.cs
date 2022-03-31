@@ -4,7 +4,7 @@ using UnityEngine;
 using UnityEngine.InputSystem;
 public class CameraController : MonoBehaviour
 {
-
+    public static bool GameStarted;
     [Header("Mouse Sensitivity")]
         [Range(0.0f, 20.0f)]
     public float mouseSensitivity;
@@ -60,7 +60,7 @@ public class CameraController : MonoBehaviour
     void Update()
     {
         
-        if (!controller.isPaused && Mouse.current.leftButton.isPressed && !CutSceneCamera.IsOnCutScene)
+        if (!controller.isPaused && Mouse.current.leftButton.isPressed && !CutSceneCamera.IsOnCutScene && GameStarted)
         {
             CamRotationUnwrap();
 

@@ -14,6 +14,9 @@ namespace TagMeIfYouCan {
         [SerializeField]
         private PlayerController m_playerController;
 
+        [SerializeField]
+        private CommandControlledBot m_ai;
+
         #region Mono Calls
         private void Start() {
             InstantiateUI();
@@ -35,7 +38,13 @@ namespace TagMeIfYouCan {
         }
 
         #region IngameUIView.IListener
-         public void OnClickPlay() { HideUI(); m_ingameUIController.InstantiateUI(); m_playerController.enabled = true; }
+         public void OnClickPlay() { 
+            HideUI(); 
+            m_ingameUIController.InstantiateUI(); 
+            m_playerController.enabled = true;
+            m_ai.StartPlay();
+            CameraController.GameStarted = true;
+        }
         #endregion
     }
 }

@@ -17,7 +17,6 @@ public class CommandControlledBot : MonoBehaviour {
     }
     private void Start() {
         m_AIPlayer = GetComponent<NavMeshAgent>();
-        StartPlay();
     }
     private void Update() {
         ProcessCommands();
@@ -29,6 +28,24 @@ public class CommandControlledBot : MonoBehaviour {
         AddMoveCommand(nodeTraverser.runningNodes[0].position);
         AddJumpCommand(nodeTraverser.jumpingNodes[0].position, nodeTraverser.jumpingNodes[1].position);
         AddMoveCommand(nodeTraverser.runningNodes[1].position);
+        AddJumpCommand(nodeTraverser.jumpingNodes[2].position, nodeTraverser.jumpingNodes[3].position);
+        AddMoveCommand(nodeTraverser.runningNodes[2].position);
+        AddJumpCommand(nodeTraverser.jumpingNodes[4].position, nodeTraverser.jumpingNodes[5].position);
+        AddMoveCommand(nodeTraverser.runningNodes[3].position);
+        AddClimbCommand(nodeTraverser.climbingNodes[0].position, nodeTraverser.climbingNodes[1].position);
+        AddMoveCommand(nodeTraverser.runningNodes[4].position);
+        AddClimbCommand(nodeTraverser.climbingNodes[2].position, nodeTraverser.climbingNodes[3].position);
+        AddMoveCommand(nodeTraverser.runningNodes[5].position);
+        AddJumpCommand(nodeTraverser.jumpingNodes[6].position, nodeTraverser.jumpingNodes[7].position);
+        AddJumpCommand(nodeTraverser.jumpingNodes[8].position, nodeTraverser.jumpingNodes[9].position);
+        AddMoveCommand(nodeTraverser.runningNodes[6].position);
+        AddJumpCommand(nodeTraverser.jumpingNodes[10].position, nodeTraverser.jumpingNodes[11].position);
+        AddMoveCommand(nodeTraverser.runningNodes[7].position);
+        AddMoveCommand(nodeTraverser.runningNodes[8].position);
+        AddJumpCommand(nodeTraverser.jumpingNodes[12].position, nodeTraverser.jumpingNodes[13].position);
+        AddMoveCommand(nodeTraverser.runningNodes[9].position);
+        AddMoveCommand(nodeTraverser.runningNodes[10].position);
+        AddMoveCommand(nodeTraverser.runningNodes[11].position);
     }
 
     private void ProcessCommands() {
@@ -42,6 +59,7 @@ public class CommandControlledBot : MonoBehaviour {
 
         m_currentCommand = m_commands.Dequeue();
         m_currentCommand.Execute();
+        
     }
 
     public void ClearAllCommand() {
@@ -69,6 +87,11 @@ public class CommandControlledBot : MonoBehaviour {
         JumpCommand mc = new JumpCommand(p_startingPoint, p_destinationPoint, m_AIPlayer, this, p_checkDistance);
         m_commands.Enqueue(mc);
     }
+
+    public void AddClimbCommand(Vector3 p_startingPoint, Vector3 p_destinationPoint, float p_checkDistance = 1f) {
+        ClimbCommand mc = new ClimbCommand(p_startingPoint, p_destinationPoint, m_AIPlayer, this, p_checkDistance);
+        m_commands.Enqueue(mc);
+    }
 }
 internal class MoveCommand : Command {
     private Vector3 m_destination;
@@ -85,14 +108,15 @@ internal class MoveCommand : Command {
         //m_character.Warp(m_character.transform.position);
     }
     public override void Execute() {
+        m_aiMovement.ReduceSpeed();
         m_aiMovement.animator.PlayRun();
         m_aiMovement.StartCoroutine(Move());
     }
 
     IEnumerator Move() {
-        Quaternion lookRotation = Quaternion.LookRotation((m_destination - m_aiMovement.transform.position).normalized);
+        //Quaternion lookRotation = Quaternion.LookRotation((m_destination - m_aiMovement.transform.position).normalized);
         while (Vector3.Distance(m_character.transform.position, m_destination) > m_checkDistance) {
-            m_aiMovement.transform.rotation = Quaternion.Lerp(m_character.transform.rotation, lookRotation, Time.deltaTime * 10f);
+            //m_aiMovement.transform.rotation = Quaternion.Lerp(m_character.transform.rotation, lookRotation, Time.deltaTime * 10f);
 
             //instant
             //m_aiMovement.transform.rotation = lookRotation;
@@ -122,12 +146,14 @@ internal class JumpCommand : Command {
         //m_character.Warp(m_character.transform.position);
     }
     public override void Execute() {
+        m_aiMovement.ReduceSpeed();
         m_aiMovement.animator.PlayHighJump();
-        m_aiMovement.StartCoroutine(Move());
+        m_aiMovement.StartCoroutine(Jump());
     }
 
-    IEnumerator Move() {
-        m_aiMovement.transform.LookAt(m_destinationPoint, m_aiMovement.transform.up);
+    IEnumerator Jump() {
+        m_character.transform.position = m_startingPoint;
+        //m_aiMovement.transform.LookAt(m_destinationPoint, m_aiMovement.transform.up);
         while (Vector3.Distance(m_character.transform.position, m_destinationPoint) > m_checkDistance) {
             //m_aiMovement.transform.rotation = Quaternion.Lerp(m_character.transform.rotation, lookRotation, Time.deltaTime * 90f);
 
@@ -139,6 +165,46 @@ internal class JumpCommand : Command {
         }
         m_aiMovement.animator.PlayRoll();
     }
-    public override bool IsFinished => Vector3.Distance(m_character.transform.position, m_startingPoint) <= m_checkDistance || m_aiMovement.IsCaptured;
+    public override bool IsFinished => Vector3.Distance(m_character.transform.position, m_destinationPoint) <= m_checkDistance || m_aiMovement.IsCaptured;
+    public override void PrematurelyFinish() { m_character.isStopped = true; }
+}
+internal class ClimbCommand : Command {
+    private Vector3 m_startingPoint;
+    private Vector3 m_destinationPoint;
+    private readonly NavMeshAgent m_character;
+    private readonly CommandControlledBot m_ccb;
+    private float m_checkDistance;
+    private AIMovement m_aiMovement;
+    public ClimbCommand(Vector3 p_startingPoint, Vector3 p_destinationPoint, NavMeshAgent m_mover, CommandControlledBot p_ccb, float p_checkDistance = 0.5f) {
+        m_ccb = p_ccb;
+        m_startingPoint = p_startingPoint;
+        m_destinationPoint = p_destinationPoint;
+        m_character = m_mover;
+        m_aiMovement = p_ccb.GetComponent<AIMovement>();
+        m_checkDistance = p_checkDistance;
+        //m_character.Warp(m_character.transform.position);
+    }
+    public override void Execute() {
+        m_aiMovement.animator.PlayHighJump();
+        m_aiMovement.StartCoroutine(Jump());
+    }
+
+    IEnumerator Jump() {
+        m_aiMovement.ReduceSpeed();
+        m_character.transform.position = m_startingPoint;
+        //m_aiMovement.transform.LookAt(m_destinationPoint, m_aiMovement.transform.up);
+        m_aiMovement.animator.PlayClimb();
+        while (Vector3.Distance(m_character.transform.position, m_destinationPoint) > m_checkDistance) {
+            //m_aiMovement.transform.rotation = Quaternion.Lerp(m_character.transform.rotation, lookRotation, Time.deltaTime * 90f);
+
+            //instant
+            //m_aiMovement.transform.rotation = lookRotation;
+            //m_aiMovement.transform.LookAt(m_destination, m_aiMovement.transform.up);
+            m_character.transform.position = Vector3.MoveTowards(m_character.transform.position, m_destinationPoint, m_aiMovement.moveSpeed * Time.deltaTime);
+            yield return 0;
+        }
+        m_aiMovement.animator.PlayClimbExit();
+    }
+    public override bool IsFinished => Vector3.Distance(m_character.transform.position, m_destinationPoint) <= m_checkDistance || m_aiMovement.IsCaptured;
     public override void PrematurelyFinish() { m_character.isStopped = true; }
 }
