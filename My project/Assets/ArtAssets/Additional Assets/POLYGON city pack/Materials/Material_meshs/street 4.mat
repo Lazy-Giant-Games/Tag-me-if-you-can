@@ -21,7 +21,7 @@ Material:
     serializedVersion: 3
     m_TexEnvs:
     - _BaseMap:
-        m_Texture: {fileID: 2800000, guid: 3dff680b780a2bf4898db59c61713bc8, type: 3}
+        m_Texture: {fileID: 0}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _BumpMap:
@@ -133,7 +133,7 @@ Material:
     - _RimEnabled: 0
     - _SelfShadingSize: 0.5
     - _SelfShadingSizeExtra: 0.6
-    - _ShadowEdgeSize: 0.05
+    - _ShadowEdgeSize: 0.102
     - _ShadowEdgeSizeExtra: 0.05
     - _Smoothness: 0
     - _SmoothnessTextureChannel: 0
@@ -142,7 +142,7 @@ Material:
     - _SrcBlend: 1
     - _Surface: 0
     - _TextureBlendingMode: 0
-    - _TextureImpact: 0.637
+    - _TextureImpact: 0.617
     - _UVSec: 0
     - _UnityShadowMode: 1
     - _UnityShadowOcclusion: 0
@@ -152,9 +152,9 @@ Material:
     - _WorkflowMode: 1
     - _ZWrite: 1
     m_Colors:
-    - _BaseColor: {r: 1, g: 1, b: 1, a: 1}
+    - _BaseColor: {r: 0.5471698, g: 0.5471698, b: 0.5471698, a: 1}
     - _Color: {r: 1, g: 1, b: 1, a: 1}
-    - _ColorDim: {r: 1, g: 1, b: 1, a: 1}
+    - _ColorDim: {r: 0.54901963, g: 0.54901963, b: 0.54901963, a: 1}
     - _ColorDimCurve: {r: 0.85023, g: 0.85034, b: 0.8504499, a: 0.85056}
     - _ColorDimExtra: {r: 0.85023, g: 0.85034, b: 0.8504499, a: 0.85056}
     - _ColorDimSteps: {r: 0.85023, g: 0.85034, b: 0.8504499, a: 0.85056}
