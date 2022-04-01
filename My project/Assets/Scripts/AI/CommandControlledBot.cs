@@ -32,28 +32,32 @@ public class CommandControlledBot : MonoBehaviour {
         AddMoveCommand(nodeTraverser.runningNodes[1].position);
         AddJumpCommand(nodeTraverser.jumpingNodes[2].position, nodeTraverser.jumpingNodes[3].position);
         AddMoveCommand(nodeTraverser.runningNodes[2].position);
-        //AddJumpCommand(nodeTraverser.jumpingNodes[4].position, nodeTraverser.jumpingNodes[5].position);
         AddMoveCommand(nodeTraverser.runningNodes[3].position);
-        AddClimbCommand(nodeTraverser.climbingNodes[0].position, nodeTraverser.climbingNodes[1].position);
+        AddJumpCommand(nodeTraverser.jumpingNodes[4].position, nodeTraverser.jumpingNodes[5].position);
+        ////AddClimbCommand(nodeTraverser.climbingNodes[0].position, nodeTraverser.climbingNodes[1].position);
         AddMoveCommand(nodeTraverser.runningNodes[4].position);
-        AddClimbCommand(nodeTraverser.climbingNodes[2].position, nodeTraverser.climbingNodes[3].position);
-        AddMoveCommand(nodeTraverser.runningNodes[5].position);
+        ////AddClimbCommand(nodeTraverser.climbingNodes[2].position, nodeTraverser.climbingNodes[3].position);
         AddJumpCommand(nodeTraverser.jumpingNodes[6].position, nodeTraverser.jumpingNodes[7].position);
+        AddMoveCommand(nodeTraverser.runningNodes[5].position);
+        
         AddJumpCommand(nodeTraverser.jumpingNodes[8].position, nodeTraverser.jumpingNodes[9].position);
         AddMoveCommand(nodeTraverser.runningNodes[6].position);
         AddJumpCommand(nodeTraverser.jumpingNodes[10].position, nodeTraverser.jumpingNodes[11].position);
         AddMoveCommand(nodeTraverser.runningNodes[7].position);
         AddMoveCommand(nodeTraverser.runningNodes[8].position);
-        AddJumpCommand(nodeTraverser.jumpingNodes[12].position, nodeTraverser.jumpingNodes[13].position);
         AddMoveCommand(nodeTraverser.runningNodes[9].position);
-        AddVaultCommand(nodeTraverser.vaultNodes[0].position, nodeTraverser.vaultNodes[1].position, nodeTraverser.vaultNodes[2].position);
+        AddJumpCommand(nodeTraverser.jumpingNodes[12].position, nodeTraverser.jumpingNodes[13].position);
         AddMoveCommand(nodeTraverser.runningNodes[10].position);
-        AddVaultCommand(nodeTraverser.vaultNodes[3].position, nodeTraverser.vaultNodes[4].position, nodeTraverser.vaultNodes[5].position);
+        AddVaultCommand(nodeTraverser.vaultNodes[0].position, nodeTraverser.vaultNodes[1].position, nodeTraverser.vaultNodes[2].position);
+        
         AddMoveCommand(nodeTraverser.runningNodes[11].position);
+        AddVaultCommand(nodeTraverser.vaultNodes[3].position, nodeTraverser.vaultNodes[4].position, nodeTraverser.vaultNodes[5].position);
+
         AddMoveCommand(nodeTraverser.runningNodes[12].position);
         AddMoveCommand(nodeTraverser.runningNodes[13].position);
-        AddVaultCommand(nodeTraverser.vaultNodes[6].position, nodeTraverser.vaultNodes[7].position, nodeTraverser.vaultNodes[8].position);
         AddMoveCommand(nodeTraverser.runningNodes[14].position);
+        AddVaultCommand(nodeTraverser.vaultNodes[6].position, nodeTraverser.vaultNodes[7].position, nodeTraverser.vaultNodes[8].position);
+        
         AddMoveCommand(nodeTraverser.runningNodes[15].position);
         StartedRunning = true;
     }
@@ -123,6 +127,11 @@ internal class MoveCommand : Command {
         //m_character.Warp(m_character.transform.position);
     }
     public override void Execute() {
+        if (m_aiMovement.IsCaptured) {
+            m_aiMovement.moveSpeed = 0f;
+            m_aiMovement.animator.PlayIdle();
+            return;
+        }
         m_aiMovement.ReduceSpeed();
         m_aiMovement.animator.PlayRun();
         m_aiMovement.StartCoroutine(Move());
@@ -130,6 +139,7 @@ internal class MoveCommand : Command {
 
     IEnumerator Move() {
         //Quaternion lookRotation = Quaternion.LookRotation((m_destination - m_aiMovement.transform.position).normalized);
+        m_aiMovement.transform.LookAt(m_destination, m_aiMovement.transform.up);
         while (Vector3.Distance(m_character.transform.position, m_destination) > m_checkDistance) {
             //m_aiMovement.transform.rotation = Quaternion.Lerp(m_character.transform.rotation, lookRotation, Time.deltaTime * 10f);
 
@@ -161,6 +171,11 @@ internal class JumpCommand : Command {
         //m_character.Warp(m_character.transform.position);
     }
     public override void Execute() {
+        if (m_aiMovement.IsCaptured) {
+            m_aiMovement.moveSpeed = 0f;
+            m_aiMovement.animator.PlayIdle();
+            return;
+        }
         m_aiMovement.ReduceSpeed();
         m_aiMovement.animator.PlayHighJump();
         m_aiMovement.StartCoroutine(Jump());
@@ -175,7 +190,7 @@ internal class JumpCommand : Command {
             //instant
             //m_aiMovement.transform.rotation = lookRotation;
             //m_aiMovement.transform.LookAt(m_destination, m_aiMovement.transform.up);
-            m_character.transform.position = Vector3.MoveTowards(m_character.transform.position, m_destinationPoint, m_aiMovement.moveSpeed * Time.deltaTime);
+            m_character.transform.position = Vector3.MoveTowards(m_character.transform.position, m_destinationPoint, (m_aiMovement.moveSpeed / 1.5f) * Time.deltaTime);
             yield return 0;
         }
         m_aiMovement.animator.PlayRoll();
@@ -200,6 +215,11 @@ internal class ClimbCommand : Command {
         //m_character.Warp(m_character.transform.position);
     }
     public override void Execute() {
+        if (m_aiMovement.IsCaptured) {
+            m_aiMovement.moveSpeed = 0f;
+            m_aiMovement.animator.PlayIdle();
+            return;
+        }
         m_aiMovement.animator.PlayHighJump();
         m_aiMovement.StartCoroutine(Jump());
     }
@@ -245,6 +265,11 @@ internal class VaultCommand : Command {
         //m_character.Warp(m_character.transform.position);
     }
     public override void Execute() {
+        if (m_aiMovement.IsCaptured) {
+            m_aiMovement.moveSpeed = 0f;
+            m_aiMovement.animator.PlayIdle();
+            return;
+        }
         Vault();
     }
 

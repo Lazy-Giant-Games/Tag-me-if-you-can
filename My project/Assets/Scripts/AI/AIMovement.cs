@@ -28,6 +28,11 @@ public class AIMovement : MonoBehaviour {
 		MyCollider = GetComponent<Collider>();
 	}
 
+	public void SetCaptured() {
+		moveSpeed = 0f;
+		animator.PlayIdle();
+		IsCaptured = true;
+	}
 	private void Start() {
 		IsGrounded = true;
 	}
@@ -50,7 +55,7 @@ public class AIMovement : MonoBehaviour {
 		GetComponent<CommandControlledBot>().StartPlay();
 	}
 
-	public void ReduceSpeed(float p_reduceValue = 0.05f) {
+	public void ReduceSpeed(float p_reduceValue = 0.175f) {
 		moveSpeed -= p_reduceValue;
 		moveSpeed = Mathf.Clamp(moveSpeed, 2f, 20f);
 	}
