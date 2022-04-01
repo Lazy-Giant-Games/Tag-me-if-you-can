@@ -6,4 +6,5 @@ public class NodeTraverser : MonoBehaviour {
     public List<Transform> runningNodes = new List<Transform>();
     public List<Transform> jumpingNodes = new List<Transform>();
     public List<Transform> climbingNodes = new List<Transform>();
+    public List<Transform> vaultNodes = new List<Transform>();
 }

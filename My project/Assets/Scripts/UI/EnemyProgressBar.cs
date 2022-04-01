@@ -7,21 +7,20 @@ public class EnemyProgressBar : MonoBehaviour
     public Image imgDistanceProgressBar;
     public Transform enemyTransform;
     public Transform playerTransform;
-
+    public Text textDistance;
     public static Action OnCaptured;
 
     private void Update() {
+        float fillAmount = 4f / Vector3.Distance(playerTransform.position, enemyTransform.position);
+        fillAmount = Mathf.Clamp(fillAmount, 0f, 1f);
+
+        textDistance.text = (100f - (fillAmount * 100f)).ToString("0") + "m";
         if (Vector3.Distance(playerTransform.position, enemyTransform.position) < 15f) {
-            ShowCircularProgressBar();
-            float fillAmount = 4f / Vector3.Distance(playerTransform.position, enemyTransform.position);
-            fillAmount = Mathf.Clamp(fillAmount, 0f, 1f);
-            UpdateNearProgressBarValue(fillAmount);
             PlayerAnimator.isNearEnemy = true;
             if (fillAmount >= 1f) {
                 OnCaptured?.Invoke();
             }
         } else {
-            HideCircularProgressBar();
             PlayerAnimator.isNearEnemy = false;
         }
     }

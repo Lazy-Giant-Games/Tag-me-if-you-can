@@ -12,6 +12,8 @@ public class CommandControlledBot : MonoBehaviour {
     public AIMovement aiMovement;
 
     public NodeTraverser nodeTraverser;
+
+    public bool StartedRunning { set; get; }
     private void Awake() {
         aiMovement = GetComponent<AIMovement>();
     }
@@ -30,7 +32,7 @@ public class CommandControlledBot : MonoBehaviour {
         AddMoveCommand(nodeTraverser.runningNodes[1].position);
         AddJumpCommand(nodeTraverser.jumpingNodes[2].position, nodeTraverser.jumpingNodes[3].position);
         AddMoveCommand(nodeTraverser.runningNodes[2].position);
-        AddJumpCommand(nodeTraverser.jumpingNodes[4].position, nodeTraverser.jumpingNodes[5].position);
+        //AddJumpCommand(nodeTraverser.jumpingNodes[4].position, nodeTraverser.jumpingNodes[5].position);
         AddMoveCommand(nodeTraverser.runningNodes[3].position);
         AddClimbCommand(nodeTraverser.climbingNodes[0].position, nodeTraverser.climbingNodes[1].position);
         AddMoveCommand(nodeTraverser.runningNodes[4].position);
@@ -44,8 +46,16 @@ public class CommandControlledBot : MonoBehaviour {
         AddMoveCommand(nodeTraverser.runningNodes[8].position);
         AddJumpCommand(nodeTraverser.jumpingNodes[12].position, nodeTraverser.jumpingNodes[13].position);
         AddMoveCommand(nodeTraverser.runningNodes[9].position);
+        AddVaultCommand(nodeTraverser.vaultNodes[0].position, nodeTraverser.vaultNodes[1].position, nodeTraverser.vaultNodes[2].position);
         AddMoveCommand(nodeTraverser.runningNodes[10].position);
+        AddVaultCommand(nodeTraverser.vaultNodes[3].position, nodeTraverser.vaultNodes[4].position, nodeTraverser.vaultNodes[5].position);
         AddMoveCommand(nodeTraverser.runningNodes[11].position);
+        AddMoveCommand(nodeTraverser.runningNodes[12].position);
+        AddMoveCommand(nodeTraverser.runningNodes[13].position);
+        AddVaultCommand(nodeTraverser.vaultNodes[6].position, nodeTraverser.vaultNodes[7].position, nodeTraverser.vaultNodes[8].position);
+        AddMoveCommand(nodeTraverser.runningNodes[14].position);
+        AddMoveCommand(nodeTraverser.runningNodes[15].position);
+        StartedRunning = true;
     }
 
     private void ProcessCommands() {
@@ -90,6 +100,11 @@ public class CommandControlledBot : MonoBehaviour {
 
     public void AddClimbCommand(Vector3 p_startingPoint, Vector3 p_destinationPoint, float p_checkDistance = 1f) {
         ClimbCommand mc = new ClimbCommand(p_startingPoint, p_destinationPoint, m_AIPlayer, this, p_checkDistance);
+        m_commands.Enqueue(mc);
+    }
+
+    public void AddVaultCommand(Vector3 p_startingPoint, Vector3 p_midPoint, Vector3 p_destinationPoint, float p_checkDistance = 1f) {
+        VaultCommand mc = new VaultCommand(p_startingPoint, p_midPoint, p_destinationPoint, m_AIPlayer, this, p_checkDistance);
         m_commands.Enqueue(mc);
     }
 }
@@ -206,5 +221,41 @@ internal class ClimbCommand : Command {
         m_aiMovement.animator.PlayClimbExit();
     }
     public override bool IsFinished => Vector3.Distance(m_character.transform.position, m_destinationPoint) <= m_checkDistance || m_aiMovement.IsCaptured;
+    public override void PrematurelyFinish() { m_character.isStopped = true; }
+}
+
+internal class VaultCommand : Command {
+    private Vector3 m_startingPoint;
+    private Vector3 m_midPoint;
+    private Vector3 m_destinationPoint;
+    private readonly NavMeshAgent m_character;
+    private readonly CommandControlledBot m_ccb;
+    private float m_checkDistance;
+    private AIMovement m_aiMovement;
+
+    private bool m_isFinished = false;
+    public VaultCommand(Vector3 p_startingPoint, Vector3 p_midPoint, Vector3 p_destinationPoint, NavMeshAgent m_mover, CommandControlledBot p_ccb, float p_checkDistance = 0.5f) {
+        m_ccb = p_ccb;
+        m_startingPoint = p_startingPoint;
+        m_midPoint = p_midPoint;
+        m_destinationPoint = p_destinationPoint;
+        m_character = m_mover;
+        m_aiMovement = p_ccb.GetComponent<AIMovement>();
+        m_checkDistance = p_checkDistance;
+        //m_character.Warp(m_character.transform.position);
+    }
+    public override void Execute() {
+        Vault();
+    }
+
+    void Vault() {
+        m_aiMovement.ReduceSpeed();
+        m_character.transform.position = m_startingPoint;
+        //m_aiMovement.transform.LookAt(m_destinationPoint, m_aiMovement.transform.up);
+        m_aiMovement.animator.PlayVault();
+        LeanTween.move(m_aiMovement.gameObject, m_startingPoint, 0f).setOnComplete(() => LeanTween.move(m_aiMovement.gameObject, m_midPoint, 0.5f).setOnComplete(() => LeanTween.move(m_aiMovement.gameObject, m_destinationPoint, 0.5f).setOnComplete(() => m_isFinished = true)));
+
+    }
+    public override bool IsFinished => m_isFinished || m_aiMovement.IsCaptured;
     public override void PrematurelyFinish() { m_character.isStopped = true; }
 }
