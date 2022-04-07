@@ -14,17 +14,7 @@ public class CutSceneCamera : MonoBehaviour {
 	private void Start() {
 		m_initialLocalRotation = Camera.main.transform.localEulerAngles;
 	}
-	public void DoCutSceneCameraForSlide(Transform p_controller) {
-		Debug.LogError("SLIDE");
-		IsOnCutScene = true;
-		Time.timeScale = 1f;
-		//LeanTween.rotate(Camera.main.gameObject, pc.transform.position - Camera.main.transform.position, 1f);
-		LeanTween.moveLocal(Camera.main.gameObject, slidePosition.localPosition, 0.25f).setOnComplete(() => {
-			StartCoroutine(WaitTilGrounded(p_controller.transform, true));
-		});
-	}
-
-	IEnumerator WaitTilGrounded(Transform p_targetLook, bool p_dontCheckGrounded = false) {
+	IEnumerator WaitTilGrounded(Transform p_targetLook, PlayerInput p_pi, bool p_dontCheckGrounded = false) {
 		
 		yield return new WaitForSeconds(0.1f);
 		if (!p_dontCheckGrounded) {
@@ -41,19 +31,30 @@ public class CutSceneCamera : MonoBehaviour {
 			}
 		}
 		
-		LeanTween.moveLocal(Camera.main.gameObject, initialPosition.localPosition, 1f).setIgnoreTimeScale(true);
+		LeanTween.moveLocal(Camera.main.gameObject, initialPosition.localPosition, 1f).setIgnoreTimeScale(true).setOnComplete(() => p_pi.animator.forceDontShowFakeHands = false);
 		LeanTween.rotateLocal(Camera.main.gameObject, m_initialLocalRotation, 1f).setIgnoreTimeScale(true);
 		Time.timeScale = 1f;
 		IsOnCutScene = false;
 	}
 
-	public void DoCutSceneCameraForJump(PlayerController p_controller) {
+	public void DoCutSceneCameraForSlide(Transform p_controller, PlayerInput p_pi) {
+		Debug.LogError("SLIDE");
+		IsOnCutScene = true;
+		Time.timeScale = 1f;
+		p_pi.animator.forceDontShowFakeHands = true;
+		//LeanTween.rotate(Camera.main.gameObject, pc.transform.position - Camera.main.transform.position, 1f);
+		LeanTween.moveLocal(Camera.main.gameObject, slidePosition.localPosition, 0.25f).setOnComplete(() => {
+			StartCoroutine(WaitTilGrounded(p_controller.transform, p_pi, true));
+		});
+	}
+	public void DoCutSceneCameraForJump(PlayerController p_controller, PlayerInput p_pi) {
 		Debug.LogError("JUMP");
 		IsOnCutScene = true;
 		Time.timeScale = 1f;
+		p_pi.animator.forceDontShowFakeHands = true;
 		//LeanTween.rotate(Camera.main.gameObject, pc.transform.position - Camera.main.transform.position, 1f);
 		LeanTween.moveLocal(Camera.main.gameObject, jumpPosition.localPosition, 0.25f).setOnComplete(() => {
-			StartCoroutine(WaitTilGrounded(p_controller.transform));
+			StartCoroutine(WaitTilGrounded(p_controller.transform, p_pi));
 		});
 	}
 }

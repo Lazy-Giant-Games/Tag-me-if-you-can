@@ -42,6 +42,7 @@ namespace TagMeIfYouCan {
             HideUI(); 
             m_ingameUIController.InstantiateUI(); 
             m_playerController.enabled = true;
+            m_playerController.animator.PlayRun();
             m_ai.StartPlay();
             CameraController.GameStarted = true;
         }

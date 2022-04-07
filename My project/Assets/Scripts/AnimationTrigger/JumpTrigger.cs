@@ -25,13 +25,13 @@ public class JumpTrigger : AnimationTrigger {
 			p_input.animator.PlayHighJump();
 			m_doRoll = true;
 			if (playCutsceneCamera) {
-				p_input.GetComponent<CutSceneCamera>().DoCutSceneCameraForJump(pc);
+				p_input.GetComponent<CutSceneCamera>().DoCutSceneCameraForJump(pc, p_input);
 			}
 		} else {
 			p_input.animator.PlayLowJump();
 			m_doRoll = false;
 			if (playCutsceneCamera) {
-				p_input.GetComponent<CutSceneCamera>().DoCutSceneCameraForJump(pc);
+				p_input.GetComponent<CutSceneCamera>().DoCutSceneCameraForJump(pc, p_input);
 			}
 		}
 		rb.AddForce(((p_input.transform.forward) * jumpForceForward+ ((p_input.transform.up) * jumpForceUpward)));
@@ -39,6 +39,7 @@ public class JumpTrigger : AnimationTrigger {
 	}
 
 	IEnumerator CheckIfGrounded(PlayerController pc, PlayerInput pi, Rigidbody rb) {
+		//pi.animator.forceDontShowFakeHands = true;
 		GroundDetector gd = pc.GetComponentInChildren<GroundDetector>();
 		yield return new WaitForSeconds(0.5f);
 		while (!gd.isGrounded) {
@@ -51,6 +52,7 @@ public class JumpTrigger : AnimationTrigger {
 		pc.enabled = true;
 		pi.isPlayer = true;
 		rb.useGravity = false;
+		//pi.animator.forceDontShowFakeHands = false;
 	}
 
 	public override void DoInputForAI(PlayerInput p_input) {
