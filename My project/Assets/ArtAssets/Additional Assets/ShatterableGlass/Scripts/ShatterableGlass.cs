@@ -228,6 +228,7 @@ public class ShatterableGlass : MonoBehaviour
         foreach (Figure Fig in Figures)
         {
             GameObject Obj = new GameObject("GlassGib");
+            Obj.layer = LayerMask.NameToLayer("IgnoreFrontDetector");
             // Apply original glass's transform.
             Obj.transform.rotation = transform.rotation;
             Obj.transform.position = transform.position;
@@ -254,7 +255,7 @@ public class ShatterableGlass : MonoBehaviour
                 Fig.GenerateCollider(GlassThickness, Obj);
 
                 Rigidbody Rig = Obj.AddComponent<Rigidbody>();
-
+                
                 // Apply Force. Closer to HitPoint - greater force.
                 Rig.AddForce(ForceDirrection * Random.Range(Force, Force * 1.5f) / Fig.ForceScale);
 
@@ -266,12 +267,13 @@ public class ShatterableGlass : MonoBehaviour
                     float AfterSecondsMargin = AfterSeconds * 0.1f;
                     Destroy(Obj, Random.Range(AfterSeconds - AfterSecondsMargin, AfterSeconds + AfterSecondsMargin));
                 }
+                
             }
             else if (SlightlyRotateGibs)
                 // Slightly rotate gib. 
                 // Rotation around glass's center.
                 Obj.transform.Rotate(new Vector3(Random.Range(-0.5f, 0.5f), Random.Range(-0.5f, 0.5f), Random.Range(-0.5f, 0.5f)));
-
+            Obj.GetComponent<Collider>().isTrigger = true;
         }
 
         // Play sound, if AudioSource component is attached.
