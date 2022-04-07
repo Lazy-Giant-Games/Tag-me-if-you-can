@@ -543,7 +543,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2b45c9da047c162459826436704abcd0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  myAnimator: {fileID: 5866666020547350863}
+  myAnimator: {fileID: 0}
   isPlayer: 1
   isOnHighJump: 0
   goFakeHands: {fileID: 6139049484170303902}
@@ -7294,7 +7294,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3762774323554757277, guid: af60d6da752574948bc47fe3b07982d0, type: 3}
       propertyPath: m_LocalPosition.y
-      value: -0.02
+      value: -0.09200147
       objectReference: {fileID: 0}
     - target: {fileID: 3762774323554757277, guid: af60d6da752574948bc47fe3b07982d0, type: 3}
       propertyPath: m_LocalPosition.z
@@ -7470,7 +7470,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4346724648393427977, guid: af60d6da752574948bc47fe3b07982d0, type: 3}
       propertyPath: m_LocalPosition.y
-      value: -0.95
+      value: -1.108
       objectReference: {fileID: 0}
     - target: {fileID: 4346724648393427977, guid: af60d6da752574948bc47fe3b07982d0, type: 3}
       propertyPath: m_LocalPosition.z
@@ -8610,7 +8610,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7911468180838343308, guid: af60d6da752574948bc47fe3b07982d0, type: 3}
       propertyPath: m_LocalPosition.y
-      value: -0.078
+      value: -0.15
       objectReference: {fileID: 0}
     - target: {fileID: 8018119881944343615, guid: af60d6da752574948bc47fe3b07982d0, type: 3}
       propertyPath: m_LocalPosition.x
@@ -9065,11 +9065,6 @@ PrefabInstance:
 --- !u!4 &6202367152556189104 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 4346724648393427977, guid: af60d6da752574948bc47fe3b07982d0, type: 3}
-  m_PrefabInstance: {fileID: 7656566978983061945}
-  m_PrefabAsset: {fileID: 0}
---- !u!95 &5866666020547350863 stripped
-Animator:
-  m_CorrespondingSourceObject: {fileID: 4263504428512917750, guid: af60d6da752574948bc47fe3b07982d0, type: 3}
   m_PrefabInstance: {fileID: 7656566978983061945}
   m_PrefabAsset: {fileID: 0}
 --- !u!1 &6139049484170303902 stripped

@@ -44,9 +44,6 @@ public class PlayerAnimator : MonoBehaviour {
                 }
             }
         } else {
-            if (!goFakeHands.activeSelf) {
-                //ShowFakeHands();
-            }
             if (myAnimator.GetCurrentAnimatorClipInfo(0)[0].clip.name != "Mvm_Boost_Root" && !isOnHighJump) {
                 myAnimator.SetTrigger("trigRun");
             }
@@ -139,21 +136,24 @@ public class PlayerAnimator : MonoBehaviour {
         if (!CameraController.GameStarted) {
             return;
         }
-        if (forceDontShowFakeHands) {
-            HideFakeHands();
-            return;
-        } 
-        if (myAnimator.GetBool("isSliding")) {
-            HideFakeHands();
-            return;
-        } else {
-            goFakeHands.SetActive(true);
+        if (isPlayer) {
+            if (forceDontShowFakeHands) {
+                HideFakeHands();
+                return;
+            }
+            if (myAnimator.GetBool("isSliding")) {
+                HideFakeHands();
+                return;
+            } else {
+                goFakeHands.SetActive(true);
+            }
+            if (m_groundDetector.isGrounded) {
+                ShowFakeHands();
+            } else {
+                HideFakeHands();
+            }
         }
-        if (m_groundDetector.isGrounded) {
-            ShowFakeHands();
-        } else {
-            HideFakeHands();
-        }
+        
         if (isPlayer) {
             ContinueToRunning(m_groundDetector.isGrounded);
         }
