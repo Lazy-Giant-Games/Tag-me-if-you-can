@@ -336,6 +336,7 @@ GameObject:
   - component: {fileID: 488790221147872857}
   - component: {fileID: 45171207}
   - component: {fileID: 45171218}
+  - component: {fileID: 488790221598163306}
   m_Layer: 9
   m_Name: PlayerPrefabURP
   m_TagString: Player
@@ -350,7 +351,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 488790221147872871}
-  m_LocalRotation: {x: -0, y: -0.38268277, z: -0, w: 0.92387986}
+  m_LocalRotation: {x: 0, y: -0.38268343, z: 0, w: 0.92387956}
   m_LocalPosition: {x: -126.34, y: 120.115, z: 29.999998}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
@@ -675,6 +676,20 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 616938f0145505e4fbe90134ea4de97f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &488790221598163306
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 488790221147872871}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2dc48e930d144164b896c8b90ca26d72, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  goGlassVFX1: {fileID: 198538890628169488}
+  goGlassVFX2: {fileID: 2855529465519084486}
 --- !u!1 &1133441712096572885
 GameObject:
   m_ObjectHideFlags: 0
@@ -848,6 +863,18 @@ Transform:
   m_Father: {fileID: 6900910562886974453}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &2790459930856368035
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3811141769431458903}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 400df876cf240394ab021f9300719e36, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &6087830598092254180
 GameObject:
   m_ObjectHideFlags: 0
@@ -10904,18 +10931,6 @@ MonoBehaviour:
   contactR: 0
   contactL: 0
   wallNormal: {x: 0, y: 0, z: 0}
---- !u!114 &2790459930856368035
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3811141769431458903}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 400df876cf240394ab021f9300719e36, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1001 &1739966792
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -10923,13 +10938,17 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 2841642849134674463}
     m_Modifications:
+    - target: {fileID: 1116395081, guid: 990ce8da5db516343b9d9233a8cf7685, type: 3}
+      propertyPath: m_PlayOnAwake
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 1364846237022580, guid: 990ce8da5db516343b9d9233a8cf7685, type: 3}
       propertyPath: m_Name
       value: Glass_Shatter_FX
       objectReference: {fileID: 0}
     - target: {fileID: 1364846237022580, guid: 990ce8da5db516343b9d9233a8cf7685, type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 4944217224439380, guid: 990ce8da5db516343b9d9233a8cf7685, type: 3}
       propertyPath: m_RootOrder
@@ -10975,11 +10994,28 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 88.974
       objectReference: {fileID: 0}
+    - target: {fileID: 198538891237013080, guid: 990ce8da5db516343b9d9233a8cf7685, type: 3}
+      propertyPath: playOnAwake
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 198538891237013080, guid: 990ce8da5db516343b9d9233a8cf7685, type: 3}
+      propertyPath: autoRandomSeed
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 198538891237013080, guid: 990ce8da5db516343b9d9233a8cf7685, type: 3}
+      propertyPath: CollisionModule.enabled
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 990ce8da5db516343b9d9233a8cf7685, type: 3}
 --- !u!4 &4944216579845916 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 4944217224439380, guid: 990ce8da5db516343b9d9233a8cf7685, type: 3}
+  m_PrefabInstance: {fileID: 1739966792}
+  m_PrefabAsset: {fileID: 0}
+--- !u!198 &198538890628169488 stripped
+ParticleSystem:
+  m_CorrespondingSourceObject: {fileID: 198538891237013080, guid: 990ce8da5db516343b9d9233a8cf7685, type: 3}
   m_PrefabInstance: {fileID: 1739966792}
   m_PrefabAsset: {fileID: 0}
 --- !u!1001 &2693639638197020062
@@ -10989,13 +11025,17 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 2841642849134674463}
     m_Modifications:
+    - target: {fileID: 1116395081, guid: 990ce8da5db516343b9d9233a8cf7685, type: 3}
+      propertyPath: m_PlayOnAwake
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 1364846237022580, guid: 990ce8da5db516343b9d9233a8cf7685, type: 3}
       propertyPath: m_Name
       value: Glass_Shatter_FX
       objectReference: {fileID: 0}
     - target: {fileID: 1364846237022580, guid: 990ce8da5db516343b9d9233a8cf7685, type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 4944217224439380, guid: 990ce8da5db516343b9d9233a8cf7685, type: 3}
       propertyPath: m_RootOrder
@@ -11041,11 +11081,28 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 88.974
       objectReference: {fileID: 0}
+    - target: {fileID: 198538891237013080, guid: 990ce8da5db516343b9d9233a8cf7685, type: 3}
+      propertyPath: playOnAwake
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 198538891237013080, guid: 990ce8da5db516343b9d9233a8cf7685, type: 3}
+      propertyPath: autoRandomSeed
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 198538891237013080, guid: 990ce8da5db516343b9d9233a8cf7685, type: 3}
+      propertyPath: CollisionModule.enabled
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 990ce8da5db516343b9d9233a8cf7685, type: 3}
 --- !u!4 &2697702665470591946 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 4944217224439380, guid: 990ce8da5db516343b9d9233a8cf7685, type: 3}
+  m_PrefabInstance: {fileID: 2693639638197020062}
+  m_PrefabAsset: {fileID: 0}
+--- !u!198 &2855529465519084486 stripped
+ParticleSystem:
+  m_CorrespondingSourceObject: {fileID: 198538891237013080, guid: 990ce8da5db516343b9d9233a8cf7685, type: 3}
   m_PrefabInstance: {fileID: 2693639638197020062}
   m_PrefabAsset: {fileID: 0}
 --- !u!1001 &2790459930073754529
@@ -14140,14 +14197,14 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 4346724648393427977, guid: af60d6da752574948bc47fe3b07982d0, type: 3}
   m_PrefabInstance: {fileID: 4026112104543639739}
   m_PrefabAsset: {fileID: 0}
---- !u!95 &933543718959997005 stripped
-Animator:
-  m_CorrespondingSourceObject: {fileID: 4263504428512917750, guid: af60d6da752574948bc47fe3b07982d0, type: 3}
-  m_PrefabInstance: {fileID: 4026112104543639739}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1 &624945107203270812 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 4572244213697179687, guid: af60d6da752574948bc47fe3b07982d0, type: 3}
+  m_PrefabInstance: {fileID: 4026112104543639739}
+  m_PrefabAsset: {fileID: 0}
+--- !u!95 &933543718959997005 stripped
+Animator:
+  m_CorrespondingSourceObject: {fileID: 4263504428512917750, guid: af60d6da752574948bc47fe3b07982d0, type: 3}
   m_PrefabInstance: {fileID: 4026112104543639739}
   m_PrefabAsset: {fileID: 0}
 --- !u!1001 &7656566978983061945
