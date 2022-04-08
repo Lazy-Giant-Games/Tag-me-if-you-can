@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
-
+using UnityEngine.InputSystem;
 public class AIMovement : MonoBehaviour {
 
 	public bool IsGameDone { set; get; }
@@ -22,6 +22,7 @@ public class AIMovement : MonoBehaviour {
 	public bool IsGrounded { set; get; }
 	public bool IsCaptured { set; get; }
 
+	private float m_initialSpeed;
 	private void Awake() {
 		MyRigidBody = GetComponent<Rigidbody>();
 		MyNavMeshAgent = GetComponent<NavMeshAgent>();
@@ -34,6 +35,7 @@ public class AIMovement : MonoBehaviour {
 		IsCaptured = true;
 	}
 	private void Start() {
+		m_initialSpeed = moveSpeed;
 		IsGrounded = true;
 	}
 	public void DisablePortalMovement() {
@@ -59,7 +61,20 @@ public class AIMovement : MonoBehaviour {
 		moveSpeed -= p_reduceValue;
 		moveSpeed = Mathf.Clamp(moveSpeed, 2f, 20f);
 	}
+
+	public void IncreaseSpeed(float p_reduceValue = 0f) {
+		moveSpeed += p_reduceValue;
+		moveSpeed = Mathf.Clamp(moveSpeed, 2f, 20f);
+	}
 	private void Update() {
-		//animator.SetYVelocityInAnimator(MyRigidBody.velocity.y);
+		if (Keyboard.current.leftArrowKey.isPressed) {
+			ReduceSpeed(0.15f);
+		}
+		if (Keyboard.current.rightArrowKey.isPressed) {
+			IncreaseSpeed(0.15f);
+		}
+		if (Keyboard.current.upArrowKey.isPressed) {
+			moveSpeed = m_initialSpeed;
+		}
 	}
 }
