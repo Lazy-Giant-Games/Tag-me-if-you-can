@@ -2,6 +2,7 @@
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using System.Collections;
+using System.Collections.Generic;
 
 namespace TagMeIfYouCan {
     public class MainMenuUIController : MVCUIController, MainMenuUIView.IListener {
@@ -23,6 +24,8 @@ namespace TagMeIfYouCan {
         private AIAnimationSequence m_aiGirlAnimation;
 
         public GameObject runnerObject;
+
+        public List<GameObject> emojis = new List<GameObject>();
 
         #region Mono Calls
         private void Start() {
@@ -54,6 +57,7 @@ namespace TagMeIfYouCan {
             
             m_aiBoyAnimation.PlayShock();
             m_aiGirlAnimation.PlayShock();
+            emojis.ForEach((eachObject) => eachObject.SetActive(true));
         }
         #endregion
 
@@ -63,6 +67,7 @@ namespace TagMeIfYouCan {
         }
 
         IEnumerator OnReadyPlay() {
+            yield return new WaitForSeconds(0.5f);
             runnerObject.SetActive(true);
             m_ai.StartPlay();
             m_aiBoyAnimation.transform.parent.gameObject.SetActive(false);

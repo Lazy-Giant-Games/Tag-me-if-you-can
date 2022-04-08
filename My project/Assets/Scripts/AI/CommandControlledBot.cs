@@ -25,11 +25,9 @@ public class CommandControlledBot : MonoBehaviour {
     }
 
     IEnumerator IncreaseSpeedInterval() {
-        float speed = 64f;
-        while (aiMovement.moveSpeed < m_initialSpeed) {
-            m_initialSpeed += Time.deltaTime * speed;
-            yield return 0;
-        }
+        yield return new WaitForSeconds(3f);
+        aiMovement.moveSpeed += 5f;
+        yield return new WaitForSeconds(1f);
         aiMovement.moveSpeed = m_initialSpeed;
     }
     private void Update() {

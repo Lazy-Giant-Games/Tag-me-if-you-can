@@ -17,6 +17,7 @@ public class CutSceneCamera : MonoBehaviour {
 
 	public static CutSceneCamera Instance = null;
 
+	public Camera cutSceneCamera;
 	private void OnEnable() {
 		if (Instance == null) {
 			Instance = this;
@@ -30,7 +31,9 @@ public class CutSceneCamera : MonoBehaviour {
 	}
 	private void Start() {
 		m_initialLocalRotation = Camera.main.transform.localEulerAngles;
-		//m_initialPos = Camera.main.transform.position;
+		m_initialPos = Camera.main.transform.position;
+		//Camera.main.enabled = false;
+		cutSceneCamera.enabled = true;
 		//Camera.main.transform.position = cutscenePosition.position;
 	}
 	IEnumerator WaitTilGrounded(Transform p_targetLook, PlayerInput p_pi, bool p_dontCheckGrounded = false) {
@@ -78,11 +81,12 @@ public class CutSceneCamera : MonoBehaviour {
 	}
 
 	public void GoToFPSCamera() {
-		//Camera.main.transform.parent = initialPosition;
-		//Camera.main.transform.localPosition = Vector3.zero;
-		//Camera.main.transform.localEulerAngles = Vector3.zero;
-		return;
-		LeanTween.moveLocal(Camera.main.gameObject, m_initialPos, 0.25f);
-		LeanTween.rotateLocal(Camera.main.gameObject, m_initialLocalRotation, 0.25f);
+		//Camera.main.transform.position = m_initialPos;
+		//Camera.main.transform.localEulerAngles = m_initialLocalRotation;
+		LeanTween.move(cutSceneCamera.gameObject, Camera.main.transform.position, 0.45f).setOnComplete(() => {
+			//Camera.main.enabled = true;
+			cutSceneCamera.enabled = false;
+		});
+		//LeanTween.rotateLocal(Camera.main.gameObject, m_initialLocalRotation, 0.25f);
 	}
 }
