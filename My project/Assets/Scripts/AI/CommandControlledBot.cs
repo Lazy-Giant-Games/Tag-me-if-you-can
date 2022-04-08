@@ -30,35 +30,54 @@ public class CommandControlledBot : MonoBehaviour {
         AddMoveCommand(nodeTraverser.runningNodes[0].position);
         AddJumpCommand(nodeTraverser.jumpingNodes[0].position, nodeTraverser.jumpingNodes[1].position);
         AddMoveCommand(nodeTraverser.runningNodes[1].position);
+        
         AddJumpCommand(nodeTraverser.jumpingNodes[2].position, nodeTraverser.jumpingNodes[3].position);
-        AddMoveCommand(nodeTraverser.runningNodes[2].position);
-        AddMoveCommand(nodeTraverser.runningNodes[3].position);
+        AddMoveCommand(nodeTraverser.runningNodes[2].position, 1f);
         AddJumpCommand(nodeTraverser.jumpingNodes[4].position, nodeTraverser.jumpingNodes[5].position);
+
+        AddMoveCommand(nodeTraverser.runningNodes[3].position, 1f);
+        
         ////AddClimbCommand(nodeTraverser.climbingNodes[0].position, nodeTraverser.climbingNodes[1].position);
-        AddMoveCommand(nodeTraverser.runningNodes[4].position);
+        AddMoveCommand(nodeTraverser.runningNodes[4].position, 1f);
         ////AddClimbCommand(nodeTraverser.climbingNodes[2].position, nodeTraverser.climbingNodes[3].position);
         AddJumpCommand(nodeTraverser.jumpingNodes[6].position, nodeTraverser.jumpingNodes[7].position);
-        AddMoveCommand(nodeTraverser.runningNodes[5].position);
-        
+        AddMoveCommand(nodeTraverser.runningNodes[5].position, 1f);
         AddJumpCommand(nodeTraverser.jumpingNodes[8].position, nodeTraverser.jumpingNodes[9].position);
         AddMoveCommand(nodeTraverser.runningNodes[6].position);
-        AddJumpCommand(nodeTraverser.jumpingNodes[10].position, nodeTraverser.jumpingNodes[11].position);
         AddMoveCommand(nodeTraverser.runningNodes[7].position);
-        AddMoveCommand(nodeTraverser.runningNodes[8].position);
+        AddMoveCommand(nodeTraverser.runningNodes[8].position, 1f);
         AddMoveCommand(nodeTraverser.runningNodes[9].position);
-        AddJumpCommand(nodeTraverser.jumpingNodes[12].position, nodeTraverser.jumpingNodes[13].position);
-        AddMoveCommand(nodeTraverser.runningNodes[10].position);
-        AddVaultCommand(nodeTraverser.vaultNodes[0].position, nodeTraverser.vaultNodes[1].position, nodeTraverser.vaultNodes[2].position);
-        
-        AddMoveCommand(nodeTraverser.runningNodes[11].position);
-        AddVaultCommand(nodeTraverser.vaultNodes[3].position, nodeTraverser.vaultNodes[4].position, nodeTraverser.vaultNodes[5].position);
+        AddJumpCommand(nodeTraverser.jumpingNodes[10].position, nodeTraverser.jumpingNodes[11].position);
+        AddMoveCommand(nodeTraverser.runningNodes[10].position, 1f);
 
+        AddJumpCommand(nodeTraverser.jumpingNodes[12].position, nodeTraverser.jumpingNodes[13].position);
+        AddMoveCommand(nodeTraverser.runningNodes[11].position);
+        AddJumpCommand(nodeTraverser.jumpingNodes[14].position, nodeTraverser.jumpingNodes[15].position);
         AddMoveCommand(nodeTraverser.runningNodes[12].position);
-        AddMoveCommand(nodeTraverser.runningNodes[13].position);
+        AddMoveCommand(nodeTraverser.runningNodes[13].position, 1f);
         AddMoveCommand(nodeTraverser.runningNodes[14].position);
+        AddJumpCommand(nodeTraverser.jumpingNodes[16].position, nodeTraverser.jumpingNodes[17].position);
+        AddMoveCommand(nodeTraverser.runningNodes[15].position);
+        AddMoveCommand(nodeTraverser.runningNodes[16].position);
+        AddMoveCommand(nodeTraverser.runningNodes[17].position);
+        AddVaultCommand(nodeTraverser.vaultNodes[0].position, nodeTraverser.vaultNodes[1].position, nodeTraverser.vaultNodes[2].position);
+        AddMoveCommand(nodeTraverser.runningNodes[18].position);
+        AddMoveCommand(nodeTraverser.runningNodes[19].position);
+        AddMoveCommand(nodeTraverser.runningNodes[20].position);
+        AddMoveCommand(nodeTraverser.runningNodes[21].position);
+        AddMoveCommand(nodeTraverser.runningNodes[22].position, 0.5f);
+        AddMoveCommand(nodeTraverser.runningNodes[23].position);
+        AddVaultCommand(nodeTraverser.vaultNodes[3].position, nodeTraverser.vaultNodes[4].position, nodeTraverser.vaultNodes[5].position);
+        AddMoveCommand(nodeTraverser.runningNodes[24].position, 0.5f);
+        AddMoveCommand(nodeTraverser.runningNodes[25].position);
+        /*
+        
+        
+        
+        
         AddVaultCommand(nodeTraverser.vaultNodes[6].position, nodeTraverser.vaultNodes[7].position, nodeTraverser.vaultNodes[8].position);
         
-        AddMoveCommand(nodeTraverser.runningNodes[15].position);
+        */
         StartedRunning = true;
     }
 
@@ -92,8 +111,8 @@ public class CommandControlledBot : MonoBehaviour {
         StopCoroutine("AddRandomCommand");
         StartCoroutine("AddRandomCommand");
     }
-    public void AddMoveCommand(Vector3 p_destination, float p_checkDistance = 1f) {
-        MoveCommand mc = new MoveCommand(p_destination, m_AIPlayer, this, p_checkDistance);
+    public void AddMoveCommand(Vector3 p_destination, float p_speedReducer = 0f, float p_checkDistance = 1f) {
+        MoveCommand mc = new MoveCommand(p_destination, m_AIPlayer, this, p_checkDistance, p_speedReducer);
         m_commands.Enqueue(mc);
     }
 
@@ -118,12 +137,14 @@ internal class MoveCommand : Command {
     private readonly CommandControlledBot m_ccb;
     private float m_checkDistance;
     private AIMovement m_aiMovement;
-    public MoveCommand(Vector3 p_destination, NavMeshAgent m_mover, CommandControlledBot p_ccb, float p_checkDistance) {
+    private float m_speedReducer;
+    public MoveCommand(Vector3 p_destination, NavMeshAgent m_mover, CommandControlledBot p_ccb, float p_checkDistance, float p_speedReducer = 0f) {
         m_ccb = p_ccb;
         m_destination = p_destination;
         m_character = m_mover;
         m_aiMovement = p_ccb.GetComponent<AIMovement>();
         m_checkDistance = p_checkDistance;
+        m_speedReducer = p_speedReducer; ;
         //m_character.Warp(m_character.transform.position);
     }
     public override void Execute() {
@@ -132,7 +153,7 @@ internal class MoveCommand : Command {
             m_aiMovement.animator.PlayIdle();
             return;
         }
-        m_aiMovement.ReduceSpeed();
+        m_aiMovement.ReduceSpeed(m_speedReducer);
         m_aiMovement.animator.PlayRun();
         m_aiMovement.StartCoroutine(Move());
     }

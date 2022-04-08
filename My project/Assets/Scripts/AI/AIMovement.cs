@@ -55,7 +55,7 @@ public class AIMovement : MonoBehaviour {
 		GetComponent<CommandControlledBot>().StartPlay();
 	}
 
-	public void ReduceSpeed(float p_reduceValue = 0.175f) {
+	public void ReduceSpeed(float p_reduceValue = 0f) {
 		moveSpeed -= p_reduceValue;
 		moveSpeed = Mathf.Clamp(moveSpeed, 2f, 20f);
 	}
