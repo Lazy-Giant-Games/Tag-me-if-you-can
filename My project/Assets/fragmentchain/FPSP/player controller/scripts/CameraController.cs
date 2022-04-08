@@ -41,9 +41,7 @@ public class CameraController : MonoBehaviour
     private PlayerController controller;
     private Camera cam;
     private PlayerMovement movement;
-    private ParticleSystem speedLines;
-
-
+    public ParticleSystem speedLines;
 
     void Start()
     {
@@ -51,7 +49,7 @@ public class CameraController : MonoBehaviour
         cam = Camera.main;
         controller = GetComponent<PlayerController>();
         movement = GetComponent<PlayerMovement>();
-        speedLines = GameObject.Find("SpeedLines").GetComponent<ParticleSystem>();
+        //speedLines = GameObject.Find("SpeedLines").GetComponent<ParticleSystem>();
 
         //Initial Values
         initialMouseSensitivity = mouseSensitivity;

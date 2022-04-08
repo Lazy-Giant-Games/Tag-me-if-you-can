@@ -414,7 +414,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 488790221147872871}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: f4b5518d6e82a1345933117f843edb4f, type: 3}
   m_Name: 
@@ -428,6 +428,7 @@ MonoBehaviour:
   headbobHorizontalStrength: 0.03
   headbobSpeed: 24
   speedLinesMaxSpeed: 9
+  speedLines: {fileID: 8839877012951279611}
 --- !u!114 &5384375171531267202
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -987,7 +988,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &6087830598228246306
 Transform:
   m_ObjectHideFlags: 0
@@ -5968,7 +5969,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &1029049732752821042
 Transform:
   m_ObjectHideFlags: 0

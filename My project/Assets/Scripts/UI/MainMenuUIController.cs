@@ -24,6 +24,7 @@ namespace TagMeIfYouCan {
         private AIAnimationSequence m_aiGirlAnimation;
 
         public GameObject runnerObject;
+        public GameObject speedLines;
 
         public List<GameObject> emojis = new List<GameObject>();
 
@@ -74,7 +75,11 @@ namespace TagMeIfYouCan {
             CutSceneCamera.Instance.GoToFPSCamera();
             yield return new WaitForSeconds(0.5f);
             CameraController.GameStarted = true;
+            speedLines.SetActive(true);
+            m_playerController.GetComponent<CameraController>().enabled = true;
             m_playerController.enabled = true;
+            
+            
             m_playerController.animator.PlayRun();
             
         }
