@@ -12,18 +12,31 @@ public class CommandControlledBot : MonoBehaviour {
     public AIMovement aiMovement;
 
     public NodeTraverser nodeTraverser;
-
+    private float m_initialSpeed;
     public bool StartedRunning { set; get; }
     private void Awake() {
         aiMovement = GetComponent<AIMovement>();
+        m_AIPlayer = GetComponent<NavMeshAgent>();
+        m_initialSpeed = aiMovement.moveSpeed;
+        aiMovement.moveSpeed /= 2f;
     }
     private void Start() {
-        m_AIPlayer = GetComponent<NavMeshAgent>();
+        StartCoroutine(IncreaseSpeedInterval());
+    }
+
+    IEnumerator IncreaseSpeedInterval() {
+        float speed = 64f;
+        while (aiMovement.moveSpeed < m_initialSpeed) {
+            m_initialSpeed += Time.deltaTime * speed;
+            yield return 0;
+        }
+        aiMovement.moveSpeed = m_initialSpeed;
     }
     private void Update() {
         ProcessCommands();
     }
 
+    
     public void StartPlay() {
         //GameManager.Instance.OnPlayClicked -= StartPlay;
         //StartAcceptingRandomCommand();
@@ -71,9 +84,6 @@ public class CommandControlledBot : MonoBehaviour {
         AddMoveCommand(nodeTraverser.runningNodes[24].position, 0.5f);
         AddMoveCommand(nodeTraverser.runningNodes[25].position);
         /*
-        
-        
-        
         
         AddVaultCommand(nodeTraverser.vaultNodes[6].position, nodeTraverser.vaultNodes[7].position, nodeTraverser.vaultNodes[8].position);
         

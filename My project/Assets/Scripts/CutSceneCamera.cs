@@ -7,15 +7,34 @@ public class CutSceneCamera : MonoBehaviour {
 	public Transform initialPosition;
 	public Transform slidePosition;
 	public Transform jumpPosition;
+	public Transform cutscenePosition;
 
 	private Vector3 m_initialLocalRotation;
 
 	public GroundDetector droundDetector;
+
+	Vector3 m_initialPos;
+
+	public static CutSceneCamera Instance = null;
+
+	private void OnEnable() {
+		if (Instance == null) {
+			Instance = this;
+		}
+	}
+
+	private void OnDisable() {
+		if (Instance == this) {
+			Instance = null;
+		}
+	}
 	private void Start() {
 		m_initialLocalRotation = Camera.main.transform.localEulerAngles;
+		//m_initialPos = Camera.main.transform.position;
+		//Camera.main.transform.position = cutscenePosition.position;
 	}
 	IEnumerator WaitTilGrounded(Transform p_targetLook, PlayerInput p_pi, bool p_dontCheckGrounded = false) {
-		
+
 		yield return new WaitForSeconds(0.1f);
 		if (!p_dontCheckGrounded) {
 			while (!droundDetector.isGrounded) {
@@ -30,7 +49,7 @@ public class CutSceneCamera : MonoBehaviour {
 				yield return 0f;
 			}
 		}
-		
+
 		LeanTween.moveLocal(Camera.main.gameObject, initialPosition.localPosition, 1f).setIgnoreTimeScale(true).setOnComplete(() => p_pi.animator.forceDontShowFakeHands = false);
 		LeanTween.rotateLocal(Camera.main.gameObject, m_initialLocalRotation, 1f).setIgnoreTimeScale(true);
 		Time.timeScale = 1f;
@@ -56,5 +75,14 @@ public class CutSceneCamera : MonoBehaviour {
 		LeanTween.moveLocal(Camera.main.gameObject, jumpPosition.localPosition, 0.25f).setOnComplete(() => {
 			StartCoroutine(WaitTilGrounded(p_controller.transform, p_pi));
 		});
+	}
+
+	public void GoToFPSCamera() {
+		//Camera.main.transform.parent = initialPosition;
+		//Camera.main.transform.localPosition = Vector3.zero;
+		//Camera.main.transform.localEulerAngles = Vector3.zero;
+		return;
+		LeanTween.moveLocal(Camera.main.gameObject, m_initialPos, 0.25f);
+		LeanTween.rotateLocal(Camera.main.gameObject, m_initialLocalRotation, 0.25f);
 	}
 }

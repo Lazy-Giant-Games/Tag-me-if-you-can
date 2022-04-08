@@ -51,7 +51,7 @@ namespace TagMeIfYouCan {
             HideUI();
             m_ingameUIController.InstantiateUI();
             
-            CameraController.GameStarted = true;
+            
             m_aiBoyAnimation.PlayShock();
             m_aiGirlAnimation.PlayShock();
         }
@@ -66,9 +66,10 @@ namespace TagMeIfYouCan {
             runnerObject.SetActive(true);
             m_ai.StartPlay();
             m_aiBoyAnimation.transform.parent.gameObject.SetActive(false);
+            CutSceneCamera.Instance.GoToFPSCamera();
             yield return new WaitForSeconds(0.5f);
-            
-			m_playerController.enabled = true;
+            CameraController.GameStarted = true;
+            m_playerController.enabled = true;
             m_playerController.animator.PlayRun();
             
         }
