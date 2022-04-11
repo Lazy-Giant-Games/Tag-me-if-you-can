@@ -36,18 +36,23 @@ public class CommandControlledBot : MonoBehaviour {
 
     
     public void StartPlay() {
+        SetPathNode_2();
+        StartedRunning = true;
+    }
+
+    public void SetPathNode_2() {
         //GameManager.Instance.OnPlayClicked -= StartPlay;
         //StartAcceptingRandomCommand();
         AddMoveCommand(nodeTraverser.runningNodes[0].position);
         AddJumpCommand(nodeTraverser.jumpingNodes[0].position, nodeTraverser.jumpingNodes[1].position);
         AddMoveCommand(nodeTraverser.runningNodes[1].position);
-        
+
         AddJumpCommand(nodeTraverser.jumpingNodes[2].position, nodeTraverser.jumpingNodes[3].position);
         AddMoveCommand(nodeTraverser.runningNodes[2].position, 1f);
         AddJumpCommand(nodeTraverser.jumpingNodes[4].position, nodeTraverser.jumpingNodes[5].position);
 
         AddMoveCommand(nodeTraverser.runningNodes[3].position, 1f);
-        
+
         ////AddClimbCommand(nodeTraverser.climbingNodes[0].position, nodeTraverser.climbingNodes[1].position);
         AddMoveCommand(nodeTraverser.runningNodes[4].position, 1f);
         ////AddClimbCommand(nodeTraverser.climbingNodes[2].position, nodeTraverser.climbingNodes[3].position);
@@ -58,35 +63,42 @@ public class CommandControlledBot : MonoBehaviour {
         AddMoveCommand(nodeTraverser.runningNodes[7].position);
         AddMoveCommand(nodeTraverser.runningNodes[8].position, 1f);
         AddMoveCommand(nodeTraverser.runningNodes[9].position);
-        AddJumpCommand(nodeTraverser.jumpingNodes[10].position, nodeTraverser.jumpingNodes[11].position);
         AddMoveCommand(nodeTraverser.runningNodes[10].position, 1f);
 
-        AddJumpCommand(nodeTraverser.jumpingNodes[12].position, nodeTraverser.jumpingNodes[13].position);
+
         AddMoveCommand(nodeTraverser.runningNodes[11].position);
-        AddJumpCommand(nodeTraverser.jumpingNodes[14].position, nodeTraverser.jumpingNodes[15].position);
+        AddJumpCommand(nodeTraverser.jumpingNodes[10].position, nodeTraverser.jumpingNodes[11].position);
         AddMoveCommand(nodeTraverser.runningNodes[12].position);
         AddMoveCommand(nodeTraverser.runningNodes[13].position, 1f);
+        AddJumpCommand(nodeTraverser.jumpingNodes[12].position, nodeTraverser.jumpingNodes[13].position);
         AddMoveCommand(nodeTraverser.runningNodes[14].position);
-        AddJumpCommand(nodeTraverser.jumpingNodes[16].position, nodeTraverser.jumpingNodes[17].position);
         AddMoveCommand(nodeTraverser.runningNodes[15].position);
         AddMoveCommand(nodeTraverser.runningNodes[16].position);
         AddMoveCommand(nodeTraverser.runningNodes[17].position);
-        AddVaultCommand(nodeTraverser.vaultNodes[0].position, nodeTraverser.vaultNodes[1].position, nodeTraverser.vaultNodes[2].position);
         AddMoveCommand(nodeTraverser.runningNodes[18].position);
         AddMoveCommand(nodeTraverser.runningNodes[19].position);
+        //AddVaultCommand(nodeTraverser.vaultNodes[0].position, nodeTraverser.vaultNodes[1].position, nodeTraverser.vaultNodes[2].position);
+        AddVaultCommand(nodeTraverser.vaultNodes[3].position, nodeTraverser.vaultNodes[4].position, nodeTraverser.vaultNodes[5].position);
         AddMoveCommand(nodeTraverser.runningNodes[20].position);
         AddMoveCommand(nodeTraverser.runningNodes[21].position);
+        /*
+        
+        AddJumpCommand(nodeTraverser.jumpingNodes[14].position, nodeTraverser.jumpingNodes[15].position);
+        AddJumpCommand(nodeTraverser.jumpingNodes[16].position, nodeTraverser.jumpingNodes[17].position);
+        
+        
+        
+        
         AddMoveCommand(nodeTraverser.runningNodes[22].position, 0.5f);
         AddMoveCommand(nodeTraverser.runningNodes[23].position);
-        AddVaultCommand(nodeTraverser.vaultNodes[3].position, nodeTraverser.vaultNodes[4].position, nodeTraverser.vaultNodes[5].position);
+        
         AddMoveCommand(nodeTraverser.runningNodes[24].position, 0.5f);
         AddMoveCommand(nodeTraverser.runningNodes[25].position);
-        /*
+        
         
         AddVaultCommand(nodeTraverser.vaultNodes[6].position, nodeTraverser.vaultNodes[7].position, nodeTraverser.vaultNodes[8].position);
         
         */
-        StartedRunning = true;
     }
 
     private void ProcessCommands() {

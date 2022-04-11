@@ -31,7 +31,7 @@ public class AIMovement : MonoBehaviour {
 
 	public void SetCaptured() {
 		moveSpeed = 0f;
-		animator.PlayIdle();
+		animator.PlayEndAnimation();
 		IsCaptured = true;
 	}
 	private void Start() {

@@ -14,6 +14,7 @@ public class PlayerWin : MonoBehaviour {
 		PlayerController pc = GetComponent<PlayerController>();
 		pc.walkSpeed = 0f;
 		pc.GetComponent<Rigidbody>().constraints = RigidbodyConstraints.FreezeAll;
+		pc.animator.PlayEndAnimation(); 
 		pc.enabled = false;
 	}
 }

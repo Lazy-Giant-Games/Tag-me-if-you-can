@@ -165,4 +165,10 @@ public class PlayerAnimator : MonoBehaviour {
     public void ShowFakeHands() {
         goFakeHands.SetActive(true);
     }
+
+    public void PlayEndAnimation() {
+        if (myAnimator.GetCurrentAnimatorClipInfo(0)[0].clip.name != "root_Boy_Fall_V2") {
+            myAnimator.SetTrigger("trigEnd");
+        }
+    }
 }

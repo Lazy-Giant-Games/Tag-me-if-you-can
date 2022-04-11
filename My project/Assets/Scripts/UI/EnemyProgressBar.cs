@@ -10,6 +10,8 @@ public class EnemyProgressBar : MonoBehaviour
     public Text textDistance;
     public static Action OnCaptured;
     public AIMovement aiMovement;
+
+    private bool m_captured;
     private void Update() {
         float fillAmount = 4f / Vector3.Distance(playerTransform.position, enemyTransform.position);
         fillAmount = Mathf.Clamp(fillAmount, 0f, 1f);
@@ -17,9 +19,11 @@ public class EnemyProgressBar : MonoBehaviour
         textDistance.text = ((100f - (fillAmount * 100f)) / 4f).ToString("0") + "m";
         if (Vector3.Distance(playerTransform.position, enemyTransform.position) < 7f) {
             PlayerAnimator.isNearEnemy = true;
-            if (fillAmount >= 1f) {
+            if (fillAmount >= 1f && !m_captured) {
+                m_captured = true;
                 OnCaptured?.Invoke();
                 aiMovement.SetCaptured();
+                
             }
         } else {
             PlayerAnimator.isNearEnemy = false;
