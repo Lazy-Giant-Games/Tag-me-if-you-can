@@ -13,14 +13,21 @@ public class PlayerWin : MonoBehaviour {
 		EnemyProgressBar.OnCaptured -= OnPlayerWin;
 	}
 	public void OnPlayerWin() {
-		IsWon = true;
+		
+		
 		PlayerController pc = GetComponent<PlayerController>();
+		pc.animator.PlayRun();
 		pc.walkSpeed = 0f;
 		pc.GetComponent<Rigidbody>().constraints = RigidbodyConstraints.FreezeAll;
+		pc.GetComponent<Rigidbody>().useGravity = true;
+		pc.GetComponent<Rigidbody>().constraints = RigidbodyConstraints.None;
+		pc.GetComponent<Rigidbody>().constraints = RigidbodyConstraints.FreezeRotation;
 		pc.animator.PlayEndCatch(); 
 		pc.enabled = false;
+		IsWon = true;
 		pc.GetComponent<CameraController>().enabled = false;
 		StartCoroutine(FocusCamera());
+		
 	}
 
 	IEnumerator FocusCamera() {

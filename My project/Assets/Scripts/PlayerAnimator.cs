@@ -13,8 +13,13 @@ public class PlayerAnimator : MonoBehaviour {
     public GameObject goFakeHands;
 
     public bool forceDontShowFakeHands;
+
+    private Animator m_fakeHandsAnimator;
 	private void Awake() {
         m_groundDetector = GetComponentInChildren<GroundDetector>();
+        if (isPlayer) {
+            m_fakeHandsAnimator = goFakeHands.GetComponent<Animator>();
+        }   
     }
 	public void PlayIdle(AIMovement p_ai = null) {
         //HideFakeHands();
@@ -39,12 +44,12 @@ public class PlayerAnimator : MonoBehaviour {
                 return;
             }
             if (isNearEnemy) { //play tag run animation here replace code below if and call PlayTagRun()
-                if (myAnimator.GetCurrentAnimatorClipInfo(0)[0].clip.name != "Mvm_Boost_Root" && !isOnHighJump) {
-                    myAnimator.SetTrigger("trigRun");
-                }
+                Debug.LogError("HERE");
                 if (!goFakeHands.activeSelf) {
-                    //ShowFakeHands();
+                    ShowFakeHands();
+                    
                 }
+                m_fakeHandsAnimator.SetTrigger("trigReach");
             } else {
                 if (!goFakeHands.activeSelf) {
                     //ShowFakeHands();
@@ -182,6 +187,10 @@ public class PlayerAnimator : MonoBehaviour {
         }
     }
 
+    IEnumerator DelayedCaughtAI() {
+        yield return new WaitForSeconds(0.75f);
+        SetYPosOnDead();
+    }
     public void PlayEndSlap() {
         HideFakeHands();
         if (myAnimator.GetCurrentAnimatorClipInfo(0)[0].clip.name != "root_Girl_Slap") {
@@ -201,6 +210,18 @@ public class PlayerAnimator : MonoBehaviour {
         myAnimator.SetTrigger("trigCatch");
         AIMovement am = GameObject.FindObjectOfType<AIMovement>();
         transform.LookAt(am.transform);
-        LeanTween.move(transform.gameObject, am.transform.GetChild(1).GetChild(0).Find("Eyes").position, 0.65f);
+        LeanTween.move(transform.gameObject, am.transform.GetChild(1).GetChild(0).Find("Eyes").position, 0.65f).setOnComplete(() => {
+            SetYPosOnDead(0.75f); 
+            GetComponent<Rigidbody>().useGravity = false;
+            GetComponent<Rigidbody>().constraints = RigidbodyConstraints.FreezeAll;
+            
+        });
+        //GetComponent<Rigidbody>().constraints = RigidbodyConstraints.FreezeRotation;
+    }
+
+    void SetYPosOnDead(float p_yOffset = 1.4f) {
+        Vector3 pos = myAnimator.transform.localPosition;
+        pos.y /= p_yOffset;
+        myAnimator.transform.localPosition = pos;
     }
 }
