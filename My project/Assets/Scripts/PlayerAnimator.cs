@@ -16,9 +16,15 @@ public class PlayerAnimator : MonoBehaviour {
 	private void Awake() {
         m_groundDetector = GetComponentInChildren<GroundDetector>();
     }
-	public void PlayIdle() {
+	public void PlayIdle(AIMovement p_ai = null) {
         //HideFakeHands();
-        myAnimator.SetTrigger("trigIdle");
+        if (p_ai != null) { //for AI
+            if (!p_ai.IsCaptured) {
+                myAnimator.SetTrigger("trigIdle");
+            }
+        } else { // for Player
+            myAnimator.SetTrigger("trigIdle");
+        }
     }
 
     public void PlayRoll() {
@@ -28,6 +34,10 @@ public class PlayerAnimator : MonoBehaviour {
 
     public void PlayRun() {
         if (isPlayer) {
+            if (PlayerWin.IsWon) {
+                PlayEndAnimationAI();
+                return;
+            }
             if (isNearEnemy) { //play tag run animation here replace code below if and call PlayTagRun()
                 if (myAnimator.GetCurrentAnimatorClipInfo(0)[0].clip.name != "Mvm_Boost_Root" && !isOnHighJump) {
                     myAnimator.SetTrigger("trigRun");
@@ -147,7 +157,7 @@ public class PlayerAnimator : MonoBehaviour {
             } else {
                 goFakeHands.SetActive(true);
             }
-            if (m_groundDetector.isGrounded) {
+            if (m_groundDetector.isGrounded && !PlayerWin.IsWon) {
                 ShowFakeHands();
             } else {
                 HideFakeHands();
@@ -166,9 +176,31 @@ public class PlayerAnimator : MonoBehaviour {
         goFakeHands.SetActive(true);
     }
 
-    public void PlayEndAnimation() {
+    public void PlayEndAnimationAI() {
         if (myAnimator.GetCurrentAnimatorClipInfo(0)[0].clip.name != "root_Boy_Fall_V2") {
             myAnimator.SetTrigger("trigEnd");
         }
+    }
+
+    public void PlayEndSlap() {
+        HideFakeHands();
+        if (myAnimator.GetCurrentAnimatorClipInfo(0)[0].clip.name != "root_Girl_Slap") {
+            myAnimator.SetTrigger("trigSlap");
+        }
+    }
+
+    public void PlayEndCatch() {
+        HideFakeHands();
+        if (myAnimator.GetCurrentAnimatorClipInfo(0)[0].clip.name != "root_Boy_Fall_V2 (IN_PLACE)") {
+            StartCoroutine(DelayedCatch());
+        }
+    }
+
+    IEnumerator DelayedCatch() {
+        yield return new WaitForSeconds(0.45f);
+        myAnimator.SetTrigger("trigCatch");
+        AIMovement am = GameObject.FindObjectOfType<AIMovement>();
+        transform.LookAt(am.transform);
+        LeanTween.move(transform.gameObject, am.transform.GetChild(1).GetChild(0).Find("Eyes").position, 0.65f);
     }
 }

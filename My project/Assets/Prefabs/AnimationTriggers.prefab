@@ -4646,11 +4646,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5817599239584235108, guid: bba034ea8ae178540be08cf7d5084330, type: 3}
       propertyPath: jumpForceUpward
-      value: 250
+      value: 300
       objectReference: {fileID: 0}
     - target: {fileID: 5817599239584235108, guid: bba034ea8ae178540be08cf7d5084330, type: 3}
       propertyPath: jumpForceForward
-      value: 250
+      value: 300
       objectReference: {fileID: 0}
     - target: {fileID: 5817599239584235108, guid: bba034ea8ae178540be08cf7d5084330, type: 3}
       propertyPath: playCutsceneCamera
