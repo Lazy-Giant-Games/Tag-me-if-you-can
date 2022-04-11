@@ -44,6 +44,7 @@ GameObject:
   - component: {fileID: 7677372345300279416}
   - component: {fileID: 2894570452241625616}
   - component: {fileID: 4344191155607485197}
+  - component: {fileID: 1877025676344675312}
   m_Layer: 0
   m_Name: Chain_Top
   m_TagString: Untagged
@@ -114,6 +115,20 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
+--- !u!64 &1877025676344675312
+MeshCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3202965387862094442}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 4
+  m_Convex: 1
+  m_CookingOptions: 30
+  m_Mesh: {fileID: 3438867908157098543, guid: 7726aff87d063b04d86d10a01aa74945, type: 3}
 --- !u!1 &3459506629637850621
 GameObject:
   m_ObjectHideFlags: 0
@@ -125,6 +140,7 @@ GameObject:
   - component: {fileID: 7403036957329433589}
   - component: {fileID: 1795939014681048787}
   - component: {fileID: 7421991176831524700}
+  - component: {fileID: 4942239476459630483}
   m_Layer: 0
   m_Name: Chain
   m_TagString: Untagged
@@ -195,6 +211,20 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
+--- !u!64 &4942239476459630483
+MeshCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3459506629637850621}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 4
+  m_Convex: 1
+  m_CookingOptions: 30
+  m_Mesh: {fileID: -5049204204301148039, guid: 7726aff87d063b04d86d10a01aa74945, type: 3}
 --- !u!1 &4202434580449317233
 GameObject:
   m_ObjectHideFlags: 0
@@ -206,6 +236,7 @@ GameObject:
   - component: {fileID: 1549666850727007929}
   - component: {fileID: 6400782105836656117}
   - component: {fileID: 2542300486918997464}
+  - component: {fileID: 1606406123635886582}
   m_Layer: 0
   m_Name: Metal
   m_TagString: Untagged
@@ -276,3 +307,17 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
+--- !u!64 &1606406123635886582
+MeshCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4202434580449317233}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 4
+  m_Convex: 1
+  m_CookingOptions: 30
+  m_Mesh: {fileID: 4496885475859389300, guid: 7726aff87d063b04d86d10a01aa74945, type: 3}
