@@ -341,6 +341,7 @@ MonoBehaviour:
   isPlayer: 0
   isOnHighJump: 0
   goFakeHands: {fileID: 0}
+  goReachingHands: {fileID: 0}
   forceDontShowFakeHands: 0
 --- !u!114 &960674528567756324
 MonoBehaviour:
@@ -5301,7 +5302,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 1116395081, guid: 990ce8da5db516343b9d9233a8cf7685, type: 3}
       propertyPath: m_Volume
-      value: 0.5
+      value: 0.25
       objectReference: {fileID: 0}
     - target: {fileID: 1116395081, guid: 990ce8da5db516343b9d9233a8cf7685, type: 3}
       propertyPath: m_PlayOnAwake
@@ -5392,7 +5393,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 1116395081, guid: 990ce8da5db516343b9d9233a8cf7685, type: 3}
       propertyPath: m_Volume
-      value: 0.5
+      value: 0.25
       objectReference: {fileID: 0}
     - target: {fileID: 1116395081, guid: 990ce8da5db516343b9d9233a8cf7685, type: 3}
       propertyPath: m_PlayOnAwake

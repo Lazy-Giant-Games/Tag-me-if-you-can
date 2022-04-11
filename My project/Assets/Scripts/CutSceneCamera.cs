@@ -46,7 +46,7 @@ public class CutSceneCamera : MonoBehaviour {
 			}
 		} else {
 			float timer = 0f;
-			while (timer < 1.5f) {
+			while (timer < 0.5f) {
 				timer += Time.deltaTime;
 				Camera.main.transform.LookAt(p_targetLook);
 				yield return 0f;

@@ -5076,6 +5076,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ecafa60db37a942498214f28f2e952f7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  animator: {fileID: 0}
   status: 0
   horizontalSpeed: 0
   isPaused: 0
@@ -5128,6 +5129,7 @@ MonoBehaviour:
   dashCooldownTimer: 0
   dashTargetMarkerAir: {fileID: 1945359841972825038, guid: 43b59ace145ff3c40aa80ac97cfed5e3, type: 3}
   dashTargetMarkerWall: {fileID: 321088741093685059, guid: 803904a7e113743448f524746c4631a7, type: 3}
+  groundDetector: {fileID: 0}
   wallrunLerpTargetGetOnceTrigger: 0
 --- !u!4 &1582803929580046196
 Transform:
@@ -5284,16 +5286,24 @@ MonoBehaviour:
   m_GameObject: {fileID: 2388139173898947478}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 4f231c4fb786f3946a6b90b886c48677, type: 3}
+  m_Script: {fileID: 11500000, guid: 01614664b831546d2ae94a42149d80ac, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_HorizontalAxis: Horizontal
-  m_VerticalAxis: Vertical
-  m_SubmitButton: Submit
-  m_CancelButton: Cancel
-  m_InputActionsPerSecond: 10
-  m_RepeatDelay: 0.5
-  m_ForceModuleActive: 0
+  m_MoveRepeatDelay: 0.5
+  m_MoveRepeatRate: 0.1
+  m_ActionsAsset: {fileID: -944628639613478452, guid: ca9f5fa95ffab41fb9a615ab714db018, type: 3}
+  m_PointAction: {fileID: 1054132383583890850, guid: ca9f5fa95ffab41fb9a615ab714db018, type: 3}
+  m_MoveAction: {fileID: 3710738434707379630, guid: ca9f5fa95ffab41fb9a615ab714db018, type: 3}
+  m_SubmitAction: {fileID: 2064916234097673511, guid: ca9f5fa95ffab41fb9a615ab714db018, type: 3}
+  m_CancelAction: {fileID: -1967631576421560919, guid: ca9f5fa95ffab41fb9a615ab714db018, type: 3}
+  m_LeftClickAction: {fileID: 8056856818456041789, guid: ca9f5fa95ffab41fb9a615ab714db018, type: 3}
+  m_MiddleClickAction: {fileID: 3279352641294131588, guid: ca9f5fa95ffab41fb9a615ab714db018, type: 3}
+  m_RightClickAction: {fileID: 3837173908680883260, guid: ca9f5fa95ffab41fb9a615ab714db018, type: 3}
+  m_ScrollWheelAction: {fileID: 4502412055082496612, guid: ca9f5fa95ffab41fb9a615ab714db018, type: 3}
+  m_TrackedDevicePositionAction: {fileID: 4754684134866288074, guid: ca9f5fa95ffab41fb9a615ab714db018, type: 3}
+  m_TrackedDeviceOrientationAction: {fileID: 1025543830046995696, guid: ca9f5fa95ffab41fb9a615ab714db018, type: 3}
+  m_DeselectOnBackgroundClick: 1
+  m_PointerBehavior: 0
 --- !u!81 &2807270874290314437
 AudioListener:
   m_ObjectHideFlags: 0
@@ -5422,6 +5432,7 @@ MonoBehaviour:
   headbobHorizontalStrength: 0.03
   headbobSpeed: 24
   speedLinesMaxSpeed: 9
+  speedLines: {fileID: 0}
 --- !u!1 &5417199370167580939
 GameObject:
   m_ObjectHideFlags: 0
@@ -10316,6 +10327,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e435740d816f4194f829e6b3d9a87fd2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  animator: {fileID: 0}
   forward: w
   backward: s
   right: d
@@ -10325,6 +10337,10 @@ MonoBehaviour:
   crouch: left ctrl
   dash: left shift
   moveInputDir: {x: 0, y: 0}
+  isPlayer: 0
+  isAI: 0
+  pressJumpFromTrigger: 0
+  pressSlideFromTrigger: 0
 --- !u!114 &7974160765152675809
 MonoBehaviour:
   m_ObjectHideFlags: 0

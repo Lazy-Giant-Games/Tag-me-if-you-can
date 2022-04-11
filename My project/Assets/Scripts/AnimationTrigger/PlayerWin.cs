@@ -5,6 +5,7 @@ using UnityEngine;
 public class PlayerWin : MonoBehaviour {
 
 	public static bool IsWon;
+	public GameObject goFightCloud;
 	private void OnEnable() {
 		EnemyProgressBar.OnCaptured += OnPlayerWin;
 	}
@@ -35,6 +36,10 @@ public class PlayerWin : MonoBehaviour {
 		Camera.main.transform.parent = null;
 		float timer = 0f;
 		while (timer < 3f) {
+			if (timer > 1.5f && !goFightCloud.activeSelf) {
+				goFightCloud.SetActive(true);
+				goFightCloud.transform.position = GameObject.FindObjectOfType<AIMovement>().transform.position;
+			}
 			timer += Time.deltaTime;
 			Camera.main.transform.LookAt(am.transform);
 			yield return 0;

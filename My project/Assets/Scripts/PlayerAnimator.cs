@@ -11,14 +11,19 @@ public class PlayerAnimator : MonoBehaviour {
     public bool isOnHighJump;
 
     public GameObject goFakeHands;
+    private Animator m_fakeHandsAnimator;
+
+    public GameObject goReachingHands;
+    private Animator m_reachingHandsAnimator;
 
     public bool forceDontShowFakeHands;
 
-    private Animator m_fakeHandsAnimator;
+    
 	private void Awake() {
         m_groundDetector = GetComponentInChildren<GroundDetector>();
         if (isPlayer) {
             m_fakeHandsAnimator = goFakeHands.GetComponent<Animator>();
+            m_reachingHandsAnimator = goReachingHands.GetComponent<Animator>();
         }   
     }
 	public void PlayIdle(AIMovement p_ai = null) {
@@ -43,13 +48,20 @@ public class PlayerAnimator : MonoBehaviour {
                 PlayEndAnimationAI();
                 return;
             }
+            if (CutSceneCamera.IsOnCutScene) {
+                HideFakeHands();
+                goReachingHands.SetActive(false);
+                return;
+            }
             if (isNearEnemy) { //play tag run animation here replace code below if and call PlayTagRun()
                 Debug.LogError("HERE");
-                if (!goFakeHands.activeSelf) {
-                    ShowFakeHands();
-                    
+                if (!goReachingHands.activeSelf) {
+                    HideFakeHands();
+                    goReachingHands.SetActive(true);
                 }
-                m_fakeHandsAnimator.SetTrigger("trigReach");
+                if (m_reachingHandsAnimator.GetCurrentAnimatorClipInfo(0)[0].clip.name != "root_Hand_Reaching") {
+                    m_reachingHandsAnimator.SetTrigger("trigReach");
+                }
             } else {
                 if (!goFakeHands.activeSelf) {
                     //ShowFakeHands();
@@ -66,9 +78,7 @@ public class PlayerAnimator : MonoBehaviour {
     }
 
     public void PlayTagRun() {
-        if (myAnimator.GetCurrentAnimatorClipInfo(0)[0].clip.name != "Esc_Slide_All") {
-            myAnimator.SetTrigger("trigSlide");
-        }
+        
     }
     public void PlayFalling() {
         //HideFakeHands();
@@ -153,14 +163,15 @@ public class PlayerAnimator : MonoBehaviour {
         }
         if (isPlayer) {
             if (forceDontShowFakeHands) {
-                HideFakeHands();
+                goReachingHands.gameObject.SetActive(false);
+				HideFakeHands();
                 return;
             }
             if (myAnimator.GetBool("isSliding")) {
                 HideFakeHands();
                 return;
             } else {
-                goFakeHands.SetActive(true);
+                ShowFakeHands();
             }
             if (m_groundDetector.isGrounded && !PlayerWin.IsWon) {
                 ShowFakeHands();
@@ -178,6 +189,7 @@ public class PlayerAnimator : MonoBehaviour {
         goFakeHands.SetActive(false);
     }
     public void ShowFakeHands() {
+        goReachingHands.SetActive(false);
         goFakeHands.SetActive(true);
     }
 

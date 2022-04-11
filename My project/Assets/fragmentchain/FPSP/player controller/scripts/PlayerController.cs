@@ -366,7 +366,7 @@ public class PlayerController : MonoBehaviour
         if (ceilingDetector.canStand && groundDetector.isGrounded && input.InputDir() != Vector2.zero && !movement.isDashing) 
         {
             ChangeStatus(Status.walking);
-            animator.PlayRun();
+            animator?.PlayRun();
         }
         if (groundDetector.isGrounded && (input.PressedCrouch()) && new Vector3 (rb.velocity.x, 0, rb.velocity.z).magnitude < slideThreshold && !movement.isDashing)
         {
@@ -375,27 +375,27 @@ public class PlayerController : MonoBehaviour
         if ((input.PressedCrouch() || input.pressSlideFromTrigger) && new Vector3 (rb.velocity.x, 0, rb.velocity.z).magnitude > slideThreshold && !movement.isDashing)
         {
             ChangeStatus(Status.sliding);
-            animator.PlaySlide();
+            animator?.PlaySlide();
             input.pressSlideFromTrigger = false;
         }
         if(input.InputDir().y > 0 && groundDetector.distToGround >= 0.5f && (wallrunDetector.contactR || wallrunDetector.contactL) && (currentCamRotation.y >= -wallrunMaxAngle && currentCamRotation.y <= wallrunMaxAngle) && new Vector3(rb.velocity.x, 0, rb.velocity.z).magnitude > wallrunSpeedThreshold && rb.velocity.y < 2.1 && wallrunReady && !movement.isDashing)
         {
             ChangeStatus(Status.wallrunning);
             if (wallrunDetector.contactL) {
-                animator.WallRunLeft();
+                animator?.WallRunLeft();
             } else if (wallrunDetector.contactR) {
-                animator.WallRunRight();
+                animator?.WallRunRight();
             }
         }
         if (input.InputDir().y > 0 && frontDetector.angleToPlayer < maxClimbApproachAngle && frontDetector.wallAngle > minClimbWallAngle && frontDetector.wallAngle < maxClimbWallAngle && frontDetector.obstacleHeightFromPlayer > 1.2 && frontDetector.distanceToObstacle < climbApproachDistance && rb.velocity.y > -0.25f && status != Status.sliding && !movement.isDashing)
         {
             ChangeStatus(Status.climbing);
-            animator.PlayClimb();
+            animator?.PlayClimb();
         }
         if (ceilingDetector.distToCeiling > 2 && input.InputDir().y > 0 && frontDetector.obstacleDetected && frontDetector.angleToPlayer < maxVaultApproachAngle && frontDetector.wallAngle > minVaultWallAngle && frontDetector.wallAngle < maxVaultWallAngle && frontDetector.obstacleHeightFromPlayer <= vaultHeight && frontDetector.distanceToObstacle < vaultApproachDistance && !movement.isDashing)
         {
             ChangeStatus(Status.vaulting);
-            animator.PlayVault(); //change with vault
+            animator?.PlayVault(); //change with vault
         }
         if((status == Status.airborne || status == Status.dashholding) && input.HoldDash() && !movement.isDashing && dashCooldownTimer >= dashCooldown)
         {

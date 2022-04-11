@@ -20,7 +20,7 @@ public class JumpTrigger : AnimationTrigger {
 		rb.Sleep();
 		rb.velocity = Vector3.zero;
 		rb.isKinematic = false;
-		rb.useGravity = true;
+		//rb.useGravity = true;
 		if (jumpAnimationToPlay == JUMP_ANIMATION.HIGH_JUMP) {
 			p_input.animator.PlayHighJump();
 			m_doRoll = true;
@@ -41,7 +41,7 @@ public class JumpTrigger : AnimationTrigger {
 	IEnumerator CheckIfGrounded(PlayerController pc, PlayerInput pi, Rigidbody rb) {
 		//pi.animator.forceDontShowFakeHands = true;
 		GroundDetector gd = pc.GetComponentInChildren<GroundDetector>();
-		yield return new WaitForSeconds(0.5f);
+		//yield return new WaitForSeconds(0.5f);
 		while (!gd.isGrounded) {
 			yield return 0;
 		}
@@ -51,7 +51,7 @@ public class JumpTrigger : AnimationTrigger {
 		
 		pc.enabled = true;
 		pi.isPlayer = true;
-		rb.useGravity = false;
+		//rb.useGravity = false;
 		//pi.animator.forceDontShowFakeHands = false;
 	}
 
@@ -65,7 +65,7 @@ public class JumpTrigger : AnimationTrigger {
 		rb.Sleep();
 		rb.velocity = Vector3.zero;
 		rb.isKinematic = false;
-		rb.useGravity = true;
+		//rb.useGravity = true;
 		if (jumpAnimationToPlay == JUMP_ANIMATION.HIGH_JUMP) {
 			p_input.animator.PlayHighJump();
 			/*if (playCutsceneCamera) {
