@@ -1,7 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-
+using UnityEngine.InputSystem;
 public class PlayerAnimator : MonoBehaviour {
     public Animator myAnimator;
     private GroundDetector m_groundDetector;
@@ -50,23 +50,26 @@ public class PlayerAnimator : MonoBehaviour {
             }
             if (CutSceneCamera.IsOnCutScene) {
                 HideFakeHands();
-                goReachingHands.SetActive(false);
+                //goReachingHands.SetActive(false);
                 return;
             }
             if (isNearEnemy) { //play tag run animation here replace code below if and call PlayTagRun()
-                Debug.LogError("HERE");
-                if (!goReachingHands.activeSelf) {
-                    HideFakeHands();
-                    goReachingHands.SetActive(true);
-                }
-                if (m_reachingHandsAnimator.GetCurrentAnimatorClipInfo(0)[0].clip.name != "root_Hand_Reaching") {
-                    m_reachingHandsAnimator.SetTrigger("trigReach");
-                }
+                //Debug.LogError("HERE");
+                //if (!goReachingHands.activeSelf) {
+                //    HideFakeHands();
+                //    goReachingHands.SetActive(true);
+                //}
+                
+                //if (m_reachingHandsAnimator.GetCurrentAnimatorClipInfo(0)[0].clip.name != "root_Hand_Reaching") {
+                //    Debug.LogError(m_reachingHandsAnimator.GetCurrentAnimatorClipInfo(0)[0].clip.name + " -- "); 
+                    //m_reachingHandsAnimator.SetTrigger("trigReach");
+                //}
             } else {
                 if (!goFakeHands.activeSelf) {
                     //ShowFakeHands();
                 }
                 if (myAnimator.GetCurrentAnimatorClipInfo(0)[0].clip.name != "Mvm_Boost_Root" && !isOnHighJump) {
+                    //.LogError("BBBB " + m_reachingHandsAnimator.GetCurrentAnimatorClipInfo(0)[0].clip.name);
                     myAnimator.SetTrigger("trigRun");
                 }
             }
@@ -156,7 +159,25 @@ public class PlayerAnimator : MonoBehaviour {
         myAnimator.SetBool("isClimbSlide", true);
     }
 
+    bool m_forceReachingHands = false;
 	private void Update() {
+        if (isPlayer) {
+            if (Keyboard.current.xKey.isPressed) {
+                if (!goReachingHands.activeSelf) {
+                    HideFakeHands();
+                    goReachingHands.SetActive(true);
+                }
+                if (m_reachingHandsAnimator.GetCurrentAnimatorClipInfo(0)[0].clip.name != "root_Hand_Reaching") {
+                    Debug.LogError(m_reachingHandsAnimator.GetCurrentAnimatorClipInfo(0)[0].clip.name + " -- ");
+                    m_reachingHandsAnimator.SetTrigger("trigReach");
+
+                }
+                return;
+            } else {
+                goReachingHands.SetActive(false);
+            }
+        }
+        
 
         if (!CameraController.GameStarted) {
             return;
@@ -223,7 +244,7 @@ public class PlayerAnimator : MonoBehaviour {
         AIMovement am = GameObject.FindObjectOfType<AIMovement>();
         transform.LookAt(am.transform);
         LeanTween.move(transform.gameObject, am.transform.GetChild(1).GetChild(0).Find("Eyes").position, 0.65f).setOnComplete(() => {
-            SetYPosOnDead(0.75f); 
+            //SetYPosOnDead(0.65f); 
             GetComponent<Rigidbody>().useGravity = false;
             GetComponent<Rigidbody>().constraints = RigidbodyConstraints.FreezeAll;
             

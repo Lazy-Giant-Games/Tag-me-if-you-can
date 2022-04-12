@@ -11,7 +11,7 @@ public class JumpTrigger : AnimationTrigger {
 
 	private bool m_doRoll;
 	public override void DoInputForPlayer(PlayerInput p_input) {
-		Debug.LogError("JUMP");
+		//Debug.LogError("JUMP");
 		p_input.pressJumpFromTrigger = true;
 		p_input.isPlayer = false;
 		PlayerController pc = p_input.GetComponent<PlayerController>();
@@ -56,7 +56,7 @@ public class JumpTrigger : AnimationTrigger {
 	}
 
 	public override void DoInputForAI(PlayerInput p_input) {
-		Debug.LogError("JUMP");
+		//Debug.LogError("JUMP");
 		p_input.pressJumpFromTrigger = true;
 		p_input.isPlayer = false;
 		PlayerController pc = p_input.GetComponent<PlayerController>();

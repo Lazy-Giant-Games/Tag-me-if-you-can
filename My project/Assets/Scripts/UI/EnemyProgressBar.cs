@@ -17,7 +17,7 @@ public class EnemyProgressBar : MonoBehaviour
         fillAmount = Mathf.Clamp(fillAmount, 0f, 1f);
 
         textDistance.text = ((100f - (fillAmount * 100f)) / 4f).ToString("0") + "m";
-        if (Vector3.Distance(playerTransform.position, enemyTransform.position) < 15f) {
+        if (Vector3.Distance(playerTransform.position, enemyTransform.position) < 10f) {
             PlayerAnimator.isNearEnemy = true;
             if (fillAmount >= 1f && !m_captured) {
                 m_captured = true;
