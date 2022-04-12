@@ -244,11 +244,13 @@ public class PlayerAnimator : MonoBehaviour {
         AIMovement am = GameObject.FindObjectOfType<AIMovement>();
         transform.LookAt(am.transform);
         LeanTween.move(transform.gameObject, am.transform.GetChild(1).GetChild(0).Find("Eyes").position, 0.65f).setOnComplete(() => {
-            //SetYPosOnDead(0.65f); 
-            GetComponent<Rigidbody>().useGravity = false;
-            GetComponent<Rigidbody>().constraints = RigidbodyConstraints.FreezeAll;
+            //SetYPosOnDead(1.25f); 
+            
             
         });
+        yield return new WaitForSeconds(1f);
+        GetComponent<Rigidbody>().useGravity = false;
+        GetComponent<Rigidbody>().constraints = RigidbodyConstraints.FreezeAll;
         //GetComponent<Rigidbody>().constraints = RigidbodyConstraints.FreezeRotation;
     }
 

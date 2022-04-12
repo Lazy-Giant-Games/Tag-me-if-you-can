@@ -34,11 +34,17 @@ public class PlayerWin : MonoBehaviour {
 	IEnumerator FocusCamera() {
 		AIMovement am = GameObject.FindObjectOfType<AIMovement>();
 		Camera.main.transform.parent = null;
+		Vector3 pos = Vector3.zero;
 		float timer = 0f;
 		while (timer < 3f) {
-			if (timer > 1.5f && !goFightCloud.activeSelf) {
+			if (timer > 1f && !goFightCloud.activeSelf) {
 				goFightCloud.SetActive(true);
-				goFightCloud.transform.position = GameObject.FindObjectOfType<AIMovement>().transform.position;
+				
+			}
+			if (goFightCloud.activeSelf) {
+				pos = am.transform.position;
+				pos.y -= 0.5f;
+				goFightCloud.transform.position = pos;
 			}
 			timer += Time.deltaTime;
 			Camera.main.transform.LookAt(am.transform);
