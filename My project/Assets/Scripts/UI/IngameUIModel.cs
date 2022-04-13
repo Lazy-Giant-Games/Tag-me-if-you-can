@@ -9,7 +9,7 @@ public class IngameUIModel : MVCUIModel {
     public Button btnRestart;
 
     public Image imgGameProgressBar; //how near the player to enemy
-
+    public Image imgFade;
     private void OnEnable() {
         btnRestart.onClick.AddListener(OnClickRestart);
     }

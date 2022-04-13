@@ -1,19 +1,20 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-
+using TagMeIfYouCan.UI;
 public class EndSceneAnimator : MonoBehaviour
 {
     public bool isAI;
     public Animator myAnimator;
 
     public GameObject jumpTarget;
-
     public GameObject goFightCloud;
+    public IngameUIController ingameUIController;
     private void OnEnable() {
         if (isAI) {
             PlayShock();
         } else {
+            ingameUIController.DoFadeOut();
             PlayEndCatch();
         }
 	}

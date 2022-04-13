@@ -3,7 +3,7 @@ using UnityEngine;
 using UnityEngine.SceneManagement;
 using System.Collections.Generic;
 
-namespace TagMeIfYouCan {
+namespace TagMeIfYouCan.UI {
     public class IngameUIController : MVCUIController, IngameUIView.IListener {
         [SerializeField]
         private IngameUIModel m_ingameUIModel;
@@ -24,6 +24,10 @@ namespace TagMeIfYouCan {
 
                 InitUI(p_ui.UIModel, p_ui);
             });
+        }
+
+        public void DoFadeOut() {
+            m_ingameUIView.FadeOut();
         }
 
 		#region IngameUIView.IListener

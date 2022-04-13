@@ -5,7 +5,7 @@ using UnityEngine;
 public class PlayerWin : MonoBehaviour {
 
 	public static bool IsWon;
-	
+	public GameObject endingScene;
 	private void OnEnable() {
 		EnemyProgressBar.OnCaptured += OnPlayerWin;
 	}
@@ -27,8 +27,10 @@ public class PlayerWin : MonoBehaviour {
 		pc.enabled = false;
 		IsWon = true;
 		pc.GetComponent<CameraController>().enabled = false;
+		endingScene.SetActive(true);
+		Camera.main.enabled = false;
 		//StartCoroutine(FocusCamera());
-		
+
 	}
 
 	IEnumerator FocusCamera() {

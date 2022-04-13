@@ -1,6 +1,7 @@
 using System;
 using TagMeIfYouCan.UI;
 using UnityEngine;
+using System.Collections;
 
 public class IngameUIView : MVCUIView {
     #region interface for listener
@@ -32,6 +33,21 @@ public class IngameUIView : MVCUIView {
         }
     }
     #endregion
+    public void FadeOut() {
+        StartCoroutine(DoFadeOut());
+    }
+    private IEnumerator DoFadeOut() {
+        Color c = UIModel.imgFade.color;
+        c.a = 1f;
+        UIModel.imgFade.color = c;
+        while (c.a > 0f) {
+            c.a -= Time.deltaTime * 4f;
+            yield return 0;
+            UIModel.imgFade.color = c;
+        }
+        c.a = 0f;
+        UIModel.imgFade.color = c;
+    }
 
     public void UpdateGameProgressBarValue(float p_value) {
         UIModel.imgGameProgressBar.fillAmount = p_value;

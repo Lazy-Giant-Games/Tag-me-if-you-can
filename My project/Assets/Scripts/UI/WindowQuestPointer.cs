@@ -16,7 +16,7 @@ public class WindowQuestPointer : MonoBehaviour {
         target = p_enemy;
     }
     private void Update() {
-        if (target == null) {
+        if (target == null || Camera.main == null || !Camera.main.enabled) {
             return;
         }
         if (!target.StartedRunning) {
