@@ -74,17 +74,17 @@ public class CommandControlledBot : MonoBehaviour {
         AddJumpCommand(nodeTraverser.jumpingNodes_b[12].position, nodeTraverser.jumpingNodes_b[13].position);
         AddMoveCommand(nodeTraverser.runningNodes_b[14].position);
         AddMoveCommand(nodeTraverser.runningNodes_b[15].position);
-        AddMoveCommand(nodeTraverser.runningNodes_b[16].position);
+        AddMoveCommand(nodeTraverser.runningNodes_b[16].position, - 1f);
         
         AddVaultCommand(nodeTraverser.vaultNodes_b[0].position, nodeTraverser.vaultNodes_b[1].position, nodeTraverser.vaultNodes_b[2].position);
-        AddMoveCommand(nodeTraverser.runningNodes_b[17].position);
+        AddMoveCommand(nodeTraverser.runningNodes_b[17].position, 0.85f);
         AddMoveCommand(nodeTraverser.runningNodes_b[18].position);
         AddMoveCommand(nodeTraverser.runningNodes_b[19].position);
         AddMoveCommand(nodeTraverser.runningNodes_b[20].position);
         AddMoveCommand(nodeTraverser.runningNodes_b[21].position);
         AddVaultCommand(nodeTraverser.vaultNodes_b[3].position, nodeTraverser.vaultNodes_b[4].position, nodeTraverser.vaultNodes_b[5].position);
-        AddMoveCommand(nodeTraverser.runningNodes_b[22].position);
-        AddMoveCommand(nodeTraverser.runningNodes_b[23].position);
+        AddMoveCommand(nodeTraverser.runningNodes_b[22].position, 1.3f);
+        AddMoveCommand(nodeTraverser.runningNodes_b[23].position, 1.25f);
         /*
         
         
@@ -222,7 +222,7 @@ internal class MoveCommand : Command {
     IEnumerator Move() {
         //Quaternion lookRotation = Quaternion.LookRotation((m_destination - m_aiMovement.transform.position).normalized);
         m_aiMovement.transform.LookAt(m_destination, m_aiMovement.transform.up);
-        while (Vector3.Distance(m_character.transform.position, m_destination) > m_checkDistance) {
+        while (Vector3.Distance(m_character.transform.position, m_destination) > m_checkDistance && !m_aiMovement.IsCaptured) {
             //m_aiMovement.transform.rotation = Quaternion.Lerp(m_character.transform.rotation, lookRotation, Time.deltaTime * 10f);
 
             //instant

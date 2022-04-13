@@ -1,7 +1,7 @@
 using TagMeIfYouCan.UI;
 using UnityEngine;
 using UnityEngine.SceneManagement;
-using System.Collections.Generic;
+using System.Collections;
 
 namespace TagMeIfYouCan {
     public class PostGameUIController : MVCUIController, PostGameUIView.IListener {
@@ -52,6 +52,11 @@ namespace TagMeIfYouCan {
         }
 
         void OnCapture() {
+            StartCoroutine(DelayedUIDisplay());
+        }
+
+        IEnumerator DelayedUIDisplay() {
+            yield return new WaitForSeconds(2f);
             m_ingameUIController.HideUI();
             ShowUI();
             m_postGameUIView.ShowWinUI();

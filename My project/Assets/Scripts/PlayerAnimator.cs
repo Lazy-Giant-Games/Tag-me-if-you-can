@@ -37,6 +37,10 @@ public class PlayerAnimator : MonoBehaviour {
         }
     }
 
+    public void PlayShock() {
+        Debug.LogError("Play Shock");
+        myAnimator.SetTrigger("trigShock");
+    }
     public void PlayRoll() {
         //HideFakeHands();
         myAnimator.SetTrigger("trigRoll");
@@ -45,7 +49,7 @@ public class PlayerAnimator : MonoBehaviour {
     public void PlayRun() {
         if (isPlayer) {
             if (PlayerWin.IsWon) {
-                PlayEndAnimationAI();
+                //PlayEndAnimationAI();
                 return;
             }
             if (CutSceneCamera.IsOnCutScene) {
@@ -168,7 +172,7 @@ public class PlayerAnimator : MonoBehaviour {
                     goReachingHands.SetActive(true);
                 }
                 if (m_reachingHandsAnimator.GetCurrentAnimatorClipInfo(0)[0].clip.name != "root_Hand_Reaching") {
-                    Debug.LogError(m_reachingHandsAnimator.GetCurrentAnimatorClipInfo(0)[0].clip.name + " -- ");
+                    //Debug.LogError(m_reachingHandsAnimator.GetCurrentAnimatorClipInfo(0)[0].clip.name + " -- ");
                     m_reachingHandsAnimator.SetTrigger("trigReach");
 
                 }
@@ -239,16 +243,17 @@ public class PlayerAnimator : MonoBehaviour {
     }
 
     IEnumerator DelayedCatch() {
-        yield return new WaitForSeconds(0.45f);
+        
         myAnimator.SetTrigger("trigCatch");
         AIMovement am = GameObject.FindObjectOfType<AIMovement>();
         transform.LookAt(am.transform);
-        LeanTween.move(transform.gameObject, am.transform.GetChild(1).GetChild(0).Find("Eyes").position, 0.65f).setOnComplete(() => {
-            //SetYPosOnDead(1.25f); 
-            
-            
-        });
-        yield return new WaitForSeconds(1f);
+        yield return new WaitForSeconds(0.45f);
+        while (Vector3.Distance(transform.position, am.transform.GetChild(1).GetChild(0).Find("Eyes").position) > 0.25f) {
+            transform.position = Vector3.MoveTowards(transform.position, am.transform.GetChild(1).GetChild(0).Find("Eyes").position, 10f * Time.deltaTime);
+            yield return 0;
+        }
+        
+        //yield return new WaitForSeconds(1f);
         GetComponent<Rigidbody>().useGravity = false;
         GetComponent<Rigidbody>().constraints = RigidbodyConstraints.FreezeAll;
         //GetComponent<Rigidbody>().constraints = RigidbodyConstraints.FreezeRotation;

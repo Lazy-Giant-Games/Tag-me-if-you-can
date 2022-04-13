@@ -28,11 +28,16 @@ public class AIMovement : MonoBehaviour {
 		MyNavMeshAgent = GetComponent<NavMeshAgent>();
 		MyCollider = GetComponent<Collider>();
 	}
-
 	public void SetCaptured() {
 		moveSpeed = 0f;
-		animator.PlayEndAnimationAI();
+		animator.PlayShock();
+		StartCoroutine(PlayEndAnimationNext());
 		IsCaptured = true;
+	}
+
+	IEnumerator PlayEndAnimationNext() {
+		yield return new WaitForSeconds(1.25f);
+		animator.PlayEndAnimationAI();
 	}
 	private void Start() {
 		m_initialSpeed = moveSpeed;

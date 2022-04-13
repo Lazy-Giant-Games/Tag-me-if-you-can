@@ -19,7 +19,7 @@ public class PlayerWin : MonoBehaviour {
 		PlayerController pc = GetComponent<PlayerController>();
 		pc.animator.PlayRun();
 		pc.walkSpeed = 0f;
-		pc.GetComponent<Rigidbody>().constraints = RigidbodyConstraints.FreezeAll;
+		//pc.GetComponent<Rigidbody>().constraints = RigidbodyConstraints.FreezeAll;
 		pc.GetComponent<Rigidbody>().useGravity = true;
 		pc.GetComponent<Rigidbody>().constraints = RigidbodyConstraints.None;
 		pc.GetComponent<Rigidbody>().constraints = RigidbodyConstraints.FreezeRotation;
@@ -33,17 +33,18 @@ public class PlayerWin : MonoBehaviour {
 
 	IEnumerator FocusCamera() {
 		AIMovement am = GameObject.FindObjectOfType<AIMovement>();
+		Transform eyes = am.transform.GetChild(1).GetChild(0).Find("Eyes");
 		Camera.main.transform.parent = null;
 		Vector3 pos = Vector3.zero;
 		float timer = 0f;
-		while (timer < 3f) {
+		while (timer < 5f) {
 			if (timer > 1f && !goFightCloud.activeSelf) {
 				goFightCloud.SetActive(true);
 				
 			}
 			if (goFightCloud.activeSelf) {
-				pos = am.transform.position;
-				pos.y -= 0.5f;
+				pos = transform.position;
+				pos.y -= 1.5f;
 				goFightCloud.transform.position = pos;
 			}
 			timer += Time.deltaTime;
