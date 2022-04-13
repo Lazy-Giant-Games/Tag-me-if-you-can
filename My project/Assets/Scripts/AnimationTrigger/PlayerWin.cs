@@ -5,7 +5,7 @@ using UnityEngine;
 public class PlayerWin : MonoBehaviour {
 
 	public static bool IsWon;
-	public GameObject goFightCloud;
+	
 	private void OnEnable() {
 		EnemyProgressBar.OnCaptured += OnPlayerWin;
 	}
@@ -27,7 +27,7 @@ public class PlayerWin : MonoBehaviour {
 		pc.enabled = false;
 		IsWon = true;
 		pc.GetComponent<CameraController>().enabled = false;
-		StartCoroutine(FocusCamera());
+		//StartCoroutine(FocusCamera());
 		
 	}
 
@@ -38,15 +38,6 @@ public class PlayerWin : MonoBehaviour {
 		Vector3 pos = Vector3.zero;
 		float timer = 0f;
 		while (timer < 5f) {
-			if (timer > 1f && !goFightCloud.activeSelf) {
-				goFightCloud.SetActive(true);
-				
-			}
-			if (goFightCloud.activeSelf) {
-				pos = transform.position;
-				pos.y -= 1.5f;
-				goFightCloud.transform.position = pos;
-			}
 			timer += Time.deltaTime;
 			Camera.main.transform.LookAt(am.transform);
 			yield return 0;
