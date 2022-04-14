@@ -2,7 +2,6 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
-using UnityEngine.InputSystem;
 public class AIMovement : MonoBehaviour {
 
 	public bool IsGameDone { set; get; }
@@ -65,13 +64,13 @@ public class AIMovement : MonoBehaviour {
 		moveSpeed = Mathf.Clamp(moveSpeed, 2f, 20f);
 	}
 	private void Update() {
-		if (Keyboard.current.leftArrowKey.isPressed) {
+		if (Input.GetKey(KeyCode.LeftArrow)) {
 			ReduceSpeed(0.15f);
 		}
-		if (Keyboard.current.rightArrowKey.isPressed) {
+		if (Input.GetKey(KeyCode.RightArrow)) {
 			IncreaseSpeed(0.15f);
 		}
-		if (Keyboard.current.upArrowKey.isPressed) {
+		if (Input.GetKey(KeyCode.UpArrow)) {
 			moveSpeed = m_initialSpeed;
 		}
 	}

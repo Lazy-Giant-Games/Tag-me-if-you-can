@@ -1,7 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.InputSystem;
 public class PlayerAnimator : MonoBehaviour {
     public Animator myAnimator;
     private GroundDetector m_groundDetector;
@@ -137,7 +136,7 @@ public class PlayerAnimator : MonoBehaviour {
     }
 	private void Update() {
         if (isPlayer) {
-            if (Keyboard.current.xKey.isPressed) {
+            if (Input.GetKey(KeyCode.X)) {
                 if (!goReachingHands.activeSelf) {
                     HideFakeHands();
                     goReachingHands.SetActive(true);

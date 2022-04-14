@@ -13,7 +13,6 @@ public class JumpTrigger : AnimationTrigger {
 	public override void DoInputForPlayer(PlayerInput p_input) {
 		//Debug.LogError("JUMP");
 		p_input.pressJumpFromTrigger = true;
-		p_input.isPlayer = false;
 		PlayerController pc = p_input.GetComponent<PlayerController>();
 		pc.enabled = false;
 		Rigidbody rb = p_input.GetComponent<Rigidbody>();
@@ -51,34 +50,7 @@ public class JumpTrigger : AnimationTrigger {
 		}
 		
 		pc.enabled = true;
-		pi.isPlayer = true;
 		rb.useGravity = false;
 		//pi.animator.forceDontShowFakeHands = false;
-	}
-
-	public override void DoInputForAI(PlayerInput p_input) {
-		//Debug.LogError("JUMP");
-		p_input.pressJumpFromTrigger = true;
-		p_input.isPlayer = false;
-		PlayerController pc = p_input.GetComponent<PlayerController>();
-		pc.enabled = false;
-		Rigidbody rb = p_input.GetComponent<Rigidbody>();
-		rb.Sleep();
-		rb.velocity = Vector3.zero;
-		rb.isKinematic = false;
-		rb.useGravity = true;
-		if (jumpAnimationToPlay == JUMP_ANIMATION.HIGH_JUMP) {
-			p_input.animator.PlayHighJump();
-			/*if (playCutsceneCamera) {
-				p_input.GetComponent<CutSceneCamera>().DoCutSceneCameraForJump(pc.transform);
-			}*/
-		} else {
-			p_input.animator.PlayLowJump();
-			/*if (playCutsceneCamera) {
-				p_input.GetComponent<CutSceneCamera>().DoCutSceneCameraForJump(pc.transform, false);
-			}*/
-		}
-		rb.AddForce(((p_input.transform.forward) * jumpForceForward + ((p_input.transform.up) * jumpForceUpward)));
-		StartCoroutine(CheckIfGrounded(pc, p_input, rb));
 	}
 }

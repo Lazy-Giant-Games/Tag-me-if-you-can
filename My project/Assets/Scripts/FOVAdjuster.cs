@@ -1,7 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.InputSystem;
 public class FOVAdjuster : MonoBehaviour {
     private Camera m_camera;
 
@@ -23,10 +22,10 @@ public class FOVAdjuster : MonoBehaviour {
 
 	// Update is called once per frame
 	void Update() {
-        if (Keyboard.current.iKey.isPressed) {
+        if (Input.GetKey(KeyCode.I)) {
             m_camera.fieldOfView += factor * Time.deltaTime;
             m_camera.fieldOfView = Mathf.Clamp(m_camera.fieldOfView, m_minFOV, m_maxFOV);
-        } else if (Keyboard.current.oKey.isPressed) {
+        } else if (Input.GetKey(KeyCode.O)) {
             m_camera.fieldOfView -= factor * Time.deltaTime;
             m_camera.fieldOfView = Mathf.Clamp(m_camera.fieldOfView, m_minFOV, m_maxFOV);
         } else {
