@@ -33,6 +33,11 @@ public class IngameUIView : MVCUIView {
         }
     }
     #endregion
+
+    public IEnumerator ShowTutorialForSeconds(float p_sec) {
+        yield return new WaitForSeconds(p_sec);
+        UIModel.goTutorial.SetActive(false);
+    }
     public void FadeOut() {
         StartCoroutine(DoFadeOut());
     }

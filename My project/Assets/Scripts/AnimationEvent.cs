@@ -6,6 +6,6 @@ public class AnimationEvent : MonoBehaviour {
     public PlayerAnimator playerAanimator;
 
     public void OnHighJumpDone() {
-        //playerAanimator.isOnHighJump = false;
+        playerAanimator.goFakeLegs.SetActive(false);
     }
 }

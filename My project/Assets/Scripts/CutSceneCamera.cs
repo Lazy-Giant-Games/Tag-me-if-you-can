@@ -59,15 +59,34 @@ public class CutSceneCamera : MonoBehaviour {
 		IsOnCutScene = false;
 	}
 
-	public void DoCutSceneCameraForSlide(Transform p_controller, PlayerInput p_pi) {
+	IEnumerator WaitTilGroundedDontModeCamera(Transform p_targetLook, PlayerInput p_pi, bool p_dontCheckGrounded = false) {
+
+		yield return new WaitForSeconds(0.1f);
+		if (!p_dontCheckGrounded) {
+			while (!droundDetector.isGrounded) {
+				
+				yield return 0f;
+			}
+		}
+
+		Time.timeScale = 1f;
+		IsOnCutScene = false;
+	}
+
+	public void DoCutSceneCameraForSlide(Transform p_controller, PlayerInput p_pi, bool p_playCutsceneCamera = false) {
 		Debug.LogError("SLIDE");
 		IsOnCutScene = true;
 		Time.timeScale = 1f;
 		p_pi.animator.forceDontShowFakeHands = true;
 		//LeanTween.rotate(Camera.main.gameObject, pc.transform.position - Camera.main.transform.position, 1f);
-		LeanTween.moveLocal(Camera.main.gameObject, slidePosition.localPosition, 0.25f).setOnComplete(() => {
-			StartCoroutine(WaitTilGrounded(p_controller.transform, p_pi, true));
-		});
+		if (p_playCutsceneCamera) {
+			LeanTween.moveLocal(Camera.main.gameObject, slidePosition.localPosition, 0.25f).setOnComplete(() => {
+				StartCoroutine(WaitTilGrounded(p_controller.transform, p_pi, true));
+			});
+		} else {
+			StartCoroutine(WaitTilGroundedDontModeCamera(p_controller.transform, p_pi, true));
+		}
+		
 	}
 	public void DoCutSceneCameraForJump(PlayerController p_controller, PlayerInput p_pi) {
 		Debug.LogError("JUMP");

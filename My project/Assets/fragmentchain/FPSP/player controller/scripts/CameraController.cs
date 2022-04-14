@@ -167,7 +167,7 @@ public class CameraController : MonoBehaviour
             yield return null;
         }
         wallrunCamTiltCounter = 0;
-        yield return null;
+        
     }
     public IEnumerator WallrunCamAlign(Quaternion currRot, bool rightSide)
     {

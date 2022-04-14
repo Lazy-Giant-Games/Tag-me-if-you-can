@@ -1,6 +1,7 @@
 using System;
 using TagMeIfYouCan.UI;
 using UnityEngine.UI;
+using UnityEngine;
 
 public class IngameUIModel : MVCUIModel {
 
@@ -10,6 +11,8 @@ public class IngameUIModel : MVCUIModel {
 
     public Image imgGameProgressBar; //how near the player to enemy
     public Image imgFade;
+
+    public GameObject goTutorial;
     private void OnEnable() {
         btnRestart.onClick.AddListener(OnClickRestart);
     }

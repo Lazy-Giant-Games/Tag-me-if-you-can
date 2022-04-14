@@ -12,6 +12,7 @@ public class PlayerAnimator : MonoBehaviour {
     public GameObject goFakeHands;
 
     public GameObject goReachingHands;
+    public GameObject goFakeLegs;
     private Animator m_reachingHandsAnimator;
     public bool forceDontShowFakeHands;
 
@@ -29,6 +30,7 @@ public class PlayerAnimator : MonoBehaviour {
                 myAnimator.SetTrigger("trigIdle");
             }
         } else { // for Player
+            goFakeLegs.SetActive(false);
             myAnimator.SetTrigger("trigIdle");
         }
     }
@@ -36,10 +38,13 @@ public class PlayerAnimator : MonoBehaviour {
         myAnimator.SetTrigger("trigShock");
     }
     public void PlayRoll() {
+        PlayRun();
+        return;
         myAnimator.SetTrigger("trigRoll");
     }
     public void PlayRun() {
         if (isPlayer) {
+            goFakeLegs.SetActive(false);
             if (PlayerWin.IsWon) {
                 return;
             }
@@ -48,16 +53,19 @@ public class PlayerAnimator : MonoBehaviour {
                 return;
             }
             if (isNearEnemy) { //play tag run animation here replace code below if and call PlayTagRun()
-                //Debug.LogError("HERE");
-                //if (!goReachingHands.activeSelf) {
-                //    HideFakeHands();
-                //    goReachingHands.SetActive(true);
-                //}
-                
+                               //Debug.LogError("HERE");
+                               //if (!goReachingHands.activeSelf) {
+                               //    HideFakeHands();
+                               //    goReachingHands.SetActive(true);
+                               //}
+
                 //if (m_reachingHandsAnimator.GetCurrentAnimatorClipInfo(0)[0].clip.name != "root_Hand_Reaching") {
                 //    Debug.LogError(m_reachingHandsAnimator.GetCurrentAnimatorClipInfo(0)[0].clip.name + " -- "); 
-                    //m_reachingHandsAnimator.SetTrigger("trigReach");
+                //m_reachingHandsAnimator.SetTrigger("trigReach");
                 //}
+                if (myAnimator.GetCurrentAnimatorClipInfo(0)[0].clip.name != "Mvm_Boost_Root" && !isOnHighJump) {
+                    myAnimator.SetTrigger("trigRun");
+                }
             } else {
 
                 if (myAnimator.GetCurrentAnimatorClipInfo(0)[0].clip.name != "Mvm_Boost_Root" && !isOnHighJump) {
@@ -73,6 +81,7 @@ public class PlayerAnimator : MonoBehaviour {
     public void PlayHighJump() {
         if (isPlayer) {
             feedbacker.PlayObstacleFeedback();
+            goFakeLegs.SetActive(true);
         }
         isOnHighJump = true;
         myAnimator.SetTrigger("trigHighJump");
@@ -99,6 +108,7 @@ public class PlayerAnimator : MonoBehaviour {
         if (myAnimator.GetCurrentAnimatorClipInfo(0)[0].clip.name != "Esc_Slide_All") {
             if (isPlayer) {
                 feedbacker.PlayObstacleFeedback();
+                goFakeLegs.SetActive(false);
             }
             isOnHighJump = false;
             myAnimator.SetTrigger("trigSlide");
@@ -110,6 +120,7 @@ public class PlayerAnimator : MonoBehaviour {
         if (myAnimator.GetCurrentAnimatorClipInfo(0)[0].clip.name != "Esc_Slide_All") {
             if (isPlayer) {
                 feedbacker.PlayObstacleFeedback();
+                //goFakeLegs.SetActive(false);
             }
             isOnHighJump = false;
             myAnimator.SetTrigger("trigSlide");
@@ -123,9 +134,15 @@ public class PlayerAnimator : MonoBehaviour {
         myAnimator.SetBool("isSliding", false);
     }
     public void WallRunLeft() {
+        if (isPlayer) {
+            goFakeLegs.SetActive(false);
+        }
         myAnimator.SetTrigger("trigWallRunLeft");
     }
     public void WallRunRight() {
+        if (isPlayer) {
+            goFakeLegs.SetActive(false);
+        }
         myAnimator.SetTrigger("trigWallRunRight");
     }
     public void ContinueToRunning(bool p_continue) {
@@ -161,11 +178,13 @@ public class PlayerAnimator : MonoBehaviour {
             }
             if (myAnimator.GetBool("isSliding")) {
                 HideFakeHands();
+                
                 return;
             } else {
                 ShowFakeHands();
             }
             if (m_groundDetector.isGrounded && !PlayerWin.IsWon) {
+
                 ShowFakeHands();
             } else {
                 HideFakeHands();

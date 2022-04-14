@@ -16,10 +16,10 @@ public class JumpTrigger : AnimationTrigger {
 		PlayerController pc = p_input.GetComponent<PlayerController>();
 		pc.enabled = false;
 		Rigidbody rb = p_input.GetComponent<Rigidbody>();
-		rb.Sleep();
-		rb.velocity = Vector3.zero;
-		rb.isKinematic = false;
-		rb.useGravity = true;
+		//rb.Sleep();
+		//rb.velocity = Vector3.zero;
+		//rb.isKinematic = false;
+		//rb.useGravity = true;
 		if (jumpAnimationToPlay == JUMP_ANIMATION.HIGH_JUMP) {
 			p_input.animator.PlayHighJump();
 			m_doRoll = true;
@@ -33,23 +33,24 @@ public class JumpTrigger : AnimationTrigger {
 				p_input.GetComponent<CutSceneCamera>().DoCutSceneCameraForJump(pc, p_input);
 			}
 		}
-		rb.AddForce(((p_input.transform.forward) * jumpForceForward+ ((p_input.transform.up) * jumpForceUpward)));
+		//rb.AddForce(((p_input.transform.forward) * jumpForceForward+ ((p_input.transform.up) * jumpForceUpward)));
 		StartCoroutine(CheckIfGrounded(pc, p_input, rb));
 	}
 
 	IEnumerator CheckIfGrounded(PlayerController pc, PlayerInput pi, Rigidbody rb) {
 		//pi.animator.forceDontShowFakeHands = true;
 		GroundDetector gd = pc.GetComponentInChildren<GroundDetector>();
-		yield return new WaitForSeconds(0.05f);
+		yield return new WaitForSeconds(0.25f);
 		while (!gd.isGrounded) {
 			yield return 0;
 		}
+		pc.animator.isOnHighJump = false;
 		if (m_doRoll) {
 			pc.animator.PlayRoll();
 		}
 		
 		pc.enabled = true;
-		rb.useGravity = false;
+		//rb.useGravity = true;
 		//pi.animator.forceDontShowFakeHands = false;
 	}
 }

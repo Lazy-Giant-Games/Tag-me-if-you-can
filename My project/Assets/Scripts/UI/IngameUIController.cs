@@ -23,6 +23,7 @@ namespace TagMeIfYouCan.UI {
                 m_ingameUIView.Subscribe(this);
 
                 InitUI(p_ui.UIModel, p_ui);
+                StartCoroutine(m_ingameUIView.ShowTutorialForSeconds(3f));
             });
         }
 

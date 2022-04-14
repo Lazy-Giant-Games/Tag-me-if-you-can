@@ -373,6 +373,7 @@ MonoBehaviour:
   btnRestart: {fileID: 6207236725059284521}
   imgGameProgressBar: {fileID: 0}
   imgFade: {fileID: 9071613437032263890}
+  goTutorial: {fileID: 3084755428881690928}
 --- !u!95 &1894787374
 Animator:
   serializedVersion: 3
