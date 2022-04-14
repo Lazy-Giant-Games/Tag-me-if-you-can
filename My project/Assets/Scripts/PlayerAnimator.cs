@@ -11,18 +11,15 @@ public class PlayerAnimator : MonoBehaviour {
     public bool isOnHighJump;
 
     public GameObject goFakeHands;
-    private Animator m_fakeHandsAnimator;
 
     public GameObject goReachingHands;
     private Animator m_reachingHandsAnimator;
-
     public bool forceDontShowFakeHands;
 
-    
+    public ObstacleFeedback feedbacker;
 	private void Awake() {
         m_groundDetector = GetComponentInChildren<GroundDetector>();
         if (isPlayer) {
-            m_fakeHandsAnimator = goFakeHands.GetComponent<Animator>();
             m_reachingHandsAnimator = goReachingHands.GetComponent<Animator>();
         }   
     }
@@ -36,25 +33,19 @@ public class PlayerAnimator : MonoBehaviour {
             myAnimator.SetTrigger("trigIdle");
         }
     }
-
     public void PlayShock() {
-        Debug.LogError("Play Shock");
         myAnimator.SetTrigger("trigShock");
     }
     public void PlayRoll() {
-        //HideFakeHands();
         myAnimator.SetTrigger("trigRoll");
     }
-
     public void PlayRun() {
         if (isPlayer) {
             if (PlayerWin.IsWon) {
-                //PlayEndAnimationAI();
                 return;
             }
             if (CutSceneCamera.IsOnCutScene) {
                 HideFakeHands();
-                //goReachingHands.SetActive(false);
                 return;
             }
             if (isNearEnemy) { //play tag run animation here replace code below if and call PlayTagRun()
@@ -69,11 +60,8 @@ public class PlayerAnimator : MonoBehaviour {
                     //m_reachingHandsAnimator.SetTrigger("trigReach");
                 //}
             } else {
-                if (!goFakeHands.activeSelf) {
-                    //ShowFakeHands();
-                }
+
                 if (myAnimator.GetCurrentAnimatorClipInfo(0)[0].clip.name != "Mvm_Boost_Root" && !isOnHighJump) {
-                    //.LogError("BBBB " + m_reachingHandsAnimator.GetCurrentAnimatorClipInfo(0)[0].clip.name);
                     myAnimator.SetTrigger("trigRun");
                 }
             }
@@ -83,44 +71,36 @@ public class PlayerAnimator : MonoBehaviour {
             }
         }
     }
-
-    public void PlayTagRun() {
-        
-    }
-    public void PlayFalling() {
-        //HideFakeHands();
-        Debug.LogError(isOnHighJump);
-        if (myAnimator.GetCurrentAnimatorClipInfo(0)[0].clip.name != "Jump_Down_C_Loop" && !isOnHighJump) {
-            myAnimator.SetTrigger("trigFalling");
-        }
-    }
-
     public void PlayHighJump() {
-        //HideFakeHands();
+        if (isPlayer) {
+            feedbacker.PlayObstacleFeedback();
+        }
         isOnHighJump = true;
         myAnimator.SetTrigger("trigHighJump");
     }
 
     public void PlayLowJump() {
-        //HideFakeHands();
+        if (isPlayer) {
+            feedbacker.PlayObstacleFeedback();
+        }
         myAnimator.SetTrigger("trigLowJump");
     }
 
     public void PlayClimb() {
         if (myAnimator.GetCurrentAnimatorClipInfo(0)[0].clip.name != "Wall_Vertical_Boost") {
-            //HideFakeHands();
             myAnimator.SetTrigger("trigClimb");
         }
     }
 
     public void PlayClimbExit() {
-        //HideFakeHands();
         myAnimator.SetTrigger("trigClimbExit");
     }
 
     public void PlaySlide() {
         if (myAnimator.GetCurrentAnimatorClipInfo(0)[0].clip.name != "Esc_Slide_All") {
-            //HideFakeHands();
+            if (isPlayer) {
+                feedbacker.PlayObstacleFeedback();
+            }
             isOnHighJump = false;
             myAnimator.SetTrigger("trigSlide");
             myAnimator.SetBool("isSliding", true);
@@ -129,41 +109,32 @@ public class PlayerAnimator : MonoBehaviour {
 
     public void PlayVault() {
         if (myAnimator.GetCurrentAnimatorClipInfo(0)[0].clip.name != "Esc_Slide_All") {
-            //HideFakeHands();
+            if (isPlayer) {
+                feedbacker.PlayObstacleFeedback();
+            }
             isOnHighJump = false;
             myAnimator.SetTrigger("trigSlide");
         }
     }
-
     public void SlideOffAfterSec(float p_timer) {
         StartCoroutine(SlideOff(p_timer));
 	}
-
     IEnumerator SlideOff(float p_timer) {
-        //forceDontShowFakeHands = true;
         yield return new WaitForSeconds(p_timer);
         myAnimator.SetBool("isSliding", false);
-        //forceDontShowFakeHands = false;
     }
     public void WallRunLeft() {
-        //HideFakeHands();
         myAnimator.SetTrigger("trigWallRunLeft");
     }
-
     public void WallRunRight() {
-        //HideFakeHands();
         myAnimator.SetTrigger("trigWallRunRight");
     }
-
     public void ContinueToRunning(bool p_continue) {
         myAnimator.SetBool("isGrounded", p_continue);
     }
-
     public void ContinueToSliding() {
         myAnimator.SetBool("isClimbSlide", true);
     }
-
-    bool m_forceReachingHands = false;
 	private void Update() {
         if (isPlayer) {
             if (Keyboard.current.xKey.isPressed) {
@@ -172,9 +143,7 @@ public class PlayerAnimator : MonoBehaviour {
                     goReachingHands.SetActive(true);
                 }
                 if (m_reachingHandsAnimator.GetCurrentAnimatorClipInfo(0)[0].clip.name != "root_Hand_Reaching") {
-                    //Debug.LogError(m_reachingHandsAnimator.GetCurrentAnimatorClipInfo(0)[0].clip.name + " -- ");
                     m_reachingHandsAnimator.SetTrigger("trigReach");
-
                 }
                 return;
             } else {
@@ -182,7 +151,6 @@ public class PlayerAnimator : MonoBehaviour {
             }
         }
         
-
         if (!CameraController.GameStarted) {
             return;
         }
@@ -216,52 +184,5 @@ public class PlayerAnimator : MonoBehaviour {
     public void ShowFakeHands() {
         goReachingHands.SetActive(false);
         goFakeHands.SetActive(true);
-    }
-
-    public void PlayEndAnimationAI() {
-        if (myAnimator.GetCurrentAnimatorClipInfo(0)[0].clip.name != "root_Boy_Fall_V2") {
-            myAnimator.SetTrigger("trigEnd");
-        }
-    }
-
-    IEnumerator DelayedCaughtAI() {
-        yield return new WaitForSeconds(0.75f);
-        SetYPosOnDead();
-    }
-    public void PlayEndSlap() {
-        HideFakeHands();
-        if (myAnimator.GetCurrentAnimatorClipInfo(0)[0].clip.name != "root_Girl_Slap") {
-            myAnimator.SetTrigger("trigSlap");
-        }
-    }
-
-    public void PlayEndCatch() {
-        HideFakeHands();
-        if (myAnimator.GetCurrentAnimatorClipInfo(0)[0].clip.name != "root_Boy_Fall_V2 (IN_PLACE)") {
-            StartCoroutine(DelayedCatch());
-        }
-    }
-
-    IEnumerator DelayedCatch() {
-        
-        myAnimator.SetTrigger("trigCatch");
-        AIMovement am = GameObject.FindObjectOfType<AIMovement>();
-        transform.LookAt(am.transform);
-        yield return new WaitForSeconds(0.45f);
-        while (Vector3.Distance(transform.position, am.transform.GetChild(1).GetChild(0).Find("Eyes").position) > 0.25f) {
-            transform.position = Vector3.MoveTowards(transform.position, am.transform.GetChild(1).GetChild(0).Find("Eyes").position, 10f * Time.deltaTime);
-            yield return 0;
-        }
-        
-        //yield return new WaitForSeconds(1f);
-        GetComponent<Rigidbody>().useGravity = false;
-        GetComponent<Rigidbody>().constraints = RigidbodyConstraints.FreezeAll;
-        //GetComponent<Rigidbody>().constraints = RigidbodyConstraints.FreezeRotation;
-    }
-
-    void SetYPosOnDead(float p_yOffset = 1.4f) {
-        Vector3 pos = myAnimator.transform.localPosition;
-        pos.y /= p_yOffset;
-        myAnimator.transform.localPosition = pos;
     }
 }

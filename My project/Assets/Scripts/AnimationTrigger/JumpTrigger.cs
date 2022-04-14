@@ -46,6 +46,7 @@ public class JumpTrigger : AnimationTrigger {
 			yield return 0;
 		}
 		if (m_doRoll) {
+			Debug.LogError("ROLL");
 			pc.animator.PlayRoll();
 		}
 		

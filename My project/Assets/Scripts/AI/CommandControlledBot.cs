@@ -211,7 +211,6 @@ internal class MoveCommand : Command {
     public override void Execute() {
         if (m_aiMovement.IsCaptured) {
             m_aiMovement.moveSpeed = 0f;
-            m_aiMovement.animator.PlayEndAnimationAI();
             return;
         }
         m_aiMovement.ReduceSpeed(m_speedReducer);
@@ -255,7 +254,6 @@ internal class JumpCommand : Command {
     public override void Execute() {
         if (m_aiMovement.IsCaptured) {
             m_aiMovement.moveSpeed = 0f;
-            m_aiMovement.animator.PlayEndAnimationAI();
             return;
         }
         m_aiMovement.ReduceSpeed();
@@ -299,7 +297,6 @@ internal class ClimbCommand : Command {
     public override void Execute() {
         if (m_aiMovement.IsCaptured) {
             m_aiMovement.moveSpeed = 0f;
-            m_aiMovement.animator.PlayEndAnimationAI();
             return;
         }
         m_aiMovement.animator.PlayHighJump();
@@ -349,7 +346,6 @@ internal class VaultCommand : Command {
     public override void Execute() {
         if (m_aiMovement.IsCaptured) {
             m_aiMovement.moveSpeed = 0f;
-            m_aiMovement.animator.PlayEndAnimationAI();
             return;
         }
         Vault();
