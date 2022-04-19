@@ -69,7 +69,7 @@ MonoBehaviour:
     max: 0.5
   intensity:
     m_OverrideState: 1
-    m_Value: 0.4
+    m_Value: 0.3
     min: 0
     max: 4
   useMultiBounce:
@@ -95,7 +95,7 @@ MonoBehaviour:
     m_Value: 150
   distanceFalloff:
     m_OverrideState: 0
-    m_Value: 50
+    m_Value: 63.16
   perPixelNormals:
     m_OverrideState: 0
     m_Value: 2
@@ -124,7 +124,7 @@ MonoBehaviour:
     m_Value: 0
   saturation:
     m_OverrideState: 0
-    m_Value: 1
+    m_Value: 0.39
     min: 0
     max: 4
   brightnessMask:
