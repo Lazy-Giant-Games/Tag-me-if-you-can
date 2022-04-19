@@ -5,6 +5,9 @@ using UnityEngine;
 public class ObstacleFeedback : MonoBehaviour {
     public ParticleSystem goFeedback;
     public void PlayObstacleFeedback() {
-        goFeedback.Play();
+        if (!goFeedback.isPlaying) {
+            goFeedback.Play();
+        }
+        
     }
 }
