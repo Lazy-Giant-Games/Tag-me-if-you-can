@@ -214,6 +214,7 @@ internal class MoveCommand : Command {
             return;
         }
         m_aiMovement.ReduceSpeed(m_speedReducer);
+        //Debug.LogError("Do Run");
         m_aiMovement.animator.PlayRun();
         m_aiMovement.StartCoroutine(Move());
     }

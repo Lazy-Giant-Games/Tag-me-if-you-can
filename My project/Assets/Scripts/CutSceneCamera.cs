@@ -60,7 +60,6 @@ public class CutSceneCamera : MonoBehaviour {
 	}
 
 	IEnumerator WaitTilGroundedDontModeCamera(Transform p_targetLook, PlayerInput p_pi, bool p_dontCheckGrounded = false) {
-
 		yield return new WaitForSeconds(0.1f);
 		if (!p_dontCheckGrounded) {
 			while (!droundDetector.isGrounded) {
@@ -68,7 +67,6 @@ public class CutSceneCamera : MonoBehaviour {
 				yield return 0f;
 			}
 		}
-
 		Time.timeScale = 1f;
 		IsOnCutScene = false;
 	}
@@ -77,9 +75,10 @@ public class CutSceneCamera : MonoBehaviour {
 		Debug.LogError("SLIDE");
 		IsOnCutScene = true;
 		Time.timeScale = 1f;
-		p_pi.animator.forceDontShowFakeHands = true;
+		//p_pi.animator.forceDontShowFakeHands = true;
 		//LeanTween.rotate(Camera.main.gameObject, pc.transform.position - Camera.main.transform.position, 1f);
 		if (p_playCutsceneCamera) {
+			return;
 			LeanTween.moveLocal(Camera.main.gameObject, slidePosition.localPosition, 0.25f).setOnComplete(() => {
 				StartCoroutine(WaitTilGrounded(p_controller.transform, p_pi, true));
 			});

@@ -17,6 +17,11 @@ public class PlayerAnimator : MonoBehaviour {
     public bool forceDontShowFakeHands;
 
     public ObstacleFeedback feedbacker;
+    public Transform modelParent;
+
+    private float m_slideForwardOffset = 1;
+
+    public AudioSource audioSource;
 	private void Awake() {
         m_groundDetector = GetComponentInChildren<GroundDetector>();
         if (isPlayer) {
@@ -32,6 +37,9 @@ public class PlayerAnimator : MonoBehaviour {
         } else { // for Player
             goFakeLegs.SetActive(false);
             myAnimator.SetTrigger("trigIdle");
+            if (isPlayer) {
+                audioSource.enabled = false;
+            }
         }
     }
     public void PlayShock() {
@@ -65,15 +73,18 @@ public class PlayerAnimator : MonoBehaviour {
                 //}
                 if (myAnimator.GetCurrentAnimatorClipInfo(0)[0].clip.name != "Mvm_Boost_Root" && !isOnHighJump) {
                     myAnimator.SetTrigger("trigRun");
+                    
                 }
+                
             } else {
 
                 if (myAnimator.GetCurrentAnimatorClipInfo(0)[0].clip.name != "Mvm_Boost_Root" && !isOnHighJump) {
                     myAnimator.SetTrigger("trigRun");
+                    
                 }
             }
         } else {
-            if (myAnimator.GetCurrentAnimatorClipInfo(0)[0].clip.name != "Mvm_Boost_Root" && !isOnHighJump) {
+            if (myAnimator.GetCurrentAnimatorClipInfo(0)[0].clip.name != "Mvm_Boost_Root") {
                 myAnimator.SetTrigger("trigRun");
             }
         }
@@ -82,6 +93,9 @@ public class PlayerAnimator : MonoBehaviour {
         if (isPlayer) {
             feedbacker.PlayObstacleFeedback();
             goFakeLegs.SetActive(true);
+            if (isPlayer) {
+                audioSource.enabled = false;
+            }
         }
         isOnHighJump = true;
         myAnimator.SetTrigger("trigHighJump");
@@ -89,6 +103,9 @@ public class PlayerAnimator : MonoBehaviour {
 
     public void PlayLowJump() {
         if (isPlayer) {
+            if (isPlayer) {
+                audioSource.enabled = false;
+            }
             feedbacker.PlayObstacleFeedback();
         }
         myAnimator.SetTrigger("trigLowJump");
@@ -109,6 +126,12 @@ public class PlayerAnimator : MonoBehaviour {
             if (isPlayer) {
                 feedbacker.PlayObstacleFeedback();
                 goFakeLegs.SetActive(false);
+                Vector3 pos = modelParent.transform.localPosition;
+                pos.z += m_slideForwardOffset;
+                modelParent.transform.localPosition = pos;
+                if (isPlayer) {
+                    audioSource.enabled = false;
+                }
             }
             isOnHighJump = false;
             myAnimator.SetTrigger("trigSlide");
@@ -120,6 +143,9 @@ public class PlayerAnimator : MonoBehaviour {
         if (myAnimator.GetCurrentAnimatorClipInfo(0)[0].clip.name != "Esc_Slide_All") {
             if (isPlayer) {
                 feedbacker.PlayObstacleFeedback();
+                if (isPlayer) {
+                    audioSource.enabled = false;
+                }
                 //goFakeLegs.SetActive(false);
             }
             isOnHighJump = false;
@@ -132,6 +158,9 @@ public class PlayerAnimator : MonoBehaviour {
     IEnumerator SlideOff(float p_timer) {
         yield return new WaitForSeconds(p_timer);
         myAnimator.SetBool("isSliding", false);
+        Vector3 pos = modelParent.transform.localPosition;
+        pos.z -= m_slideForwardOffset;
+        modelParent.transform.localPosition = pos;
     }
     public void WallRunLeft() {
         if (isPlayer) {
@@ -178,13 +207,14 @@ public class PlayerAnimator : MonoBehaviour {
             }
             if (myAnimator.GetBool("isSliding")) {
                 HideFakeHands();
-                
                 return;
             } else {
                 ShowFakeHands();
             }
             if (m_groundDetector.isGrounded && !PlayerWin.IsWon) {
-
+                if (isPlayer) {
+                    audioSource.enabled = true;
+                }
                 ShowFakeHands();
             } else {
                 HideFakeHands();
@@ -198,6 +228,9 @@ public class PlayerAnimator : MonoBehaviour {
 
     public void HideFakeHands() {
         goFakeHands.SetActive(false);
+        if (isPlayer) {
+            audioSource.enabled = false;
+        }
     }
     public void ShowFakeHands() {
         goReachingHands.SetActive(false);
