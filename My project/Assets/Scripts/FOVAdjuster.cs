@@ -8,7 +8,7 @@ public class FOVAdjuster : MonoBehaviour {
     float m_minFOV;
     float m_maxFOV;
 
-    public float m_minFOVDifference = -30;
+    public float m_minFOVDifference = 30;
     public float m_maxFOVDifference = 30;
     public float factor;
     void Awake() {

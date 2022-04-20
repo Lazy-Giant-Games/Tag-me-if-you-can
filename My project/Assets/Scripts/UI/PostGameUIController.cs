@@ -17,10 +17,12 @@ namespace TagMeIfYouCan {
             FallingGameOver.OnFalling += OnFell;
             //GroundDetector.OnFatalFall += OnFell;
             EnemyProgressBar.OnCaptured += OnCapture;
+            CommandControlledBot.onRunnerDone += OnFell;
 
         }
 
 		private void OnDisable() {
+            CommandControlledBot.onRunnerDone -= OnFell;
             FallingGameOver.OnFalling -= OnFell;
             //GroundDetector.OnFatalFall -= OnFell;
             EnemyProgressBar.OnCaptured -= OnCapture;
@@ -63,7 +65,7 @@ namespace TagMeIfYouCan {
         }
 
         #region IngameUIView.IListener
-        public void OnClickPlay() { SceneManager.LoadScene("GameLevel"); }
+        public void OnClickPlay() { SceneManager.LoadScene("GamePlayLevel"); }
         #endregion
     }
 }

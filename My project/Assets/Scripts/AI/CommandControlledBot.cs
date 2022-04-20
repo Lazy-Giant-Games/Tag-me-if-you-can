@@ -3,7 +3,10 @@ using System.Collections.Generic;
 using UnityEngine;
 using System.Linq;
 using UnityEngine.AI;
+using System;
 public class CommandControlledBot : MonoBehaviour {
+
+    public static Action onRunnerDone; 
 
     private NavMeshAgent m_AIPlayer;
     private Queue<Command> m_commands = new Queue<Command>();
@@ -14,6 +17,8 @@ public class CommandControlledBot : MonoBehaviour {
     public NodeTraverser nodeTraverser;
     private float m_initialSpeed;
     public bool StartedRunning { set; get; }
+
+    private bool m_runnerDone = false;
     private void Awake() {
         aiMovement = GetComponent<AIMovement>();
         m_AIPlayer = GetComponent<NavMeshAgent>();
@@ -60,17 +65,17 @@ public class CommandControlledBot : MonoBehaviour {
         AddMoveCommand(nodeTraverser.runningNodes_b[4].position, 1f);
         ////AddClimbCommand(nodeTraverser.climbingNodes_b[2].position, nodeTraverser.climbingNodes_b[3].position);
         AddJumpCommand(nodeTraverser.jumpingNodes_b[6].position, nodeTraverser.jumpingNodes_b[7].position);
-        AddMoveCommand(nodeTraverser.runningNodes_b[5].position, 1f);
+        AddMoveCommand(nodeTraverser.runningNodes_b[5].position, 1.5f);
         AddJumpCommand(nodeTraverser.jumpingNodes_b[8].position, nodeTraverser.jumpingNodes_b[9].position);
         AddMoveCommand(nodeTraverser.runningNodes_b[6].position);
         AddMoveCommand(nodeTraverser.runningNodes_b[7].position);
         AddMoveCommand(nodeTraverser.runningNodes_b[8].position, 1f);
         AddMoveCommand(nodeTraverser.runningNodes_b[9].position);
-        AddMoveCommand(nodeTraverser.runningNodes_b[10].position, 1f);
+        AddMoveCommand(nodeTraverser.runningNodes_b[10].position, 1.5f);
         AddMoveCommand(nodeTraverser.runningNodes_b[11].position);
         AddJumpCommand(nodeTraverser.jumpingNodes_b[10].position, nodeTraverser.jumpingNodes_b[11].position);
         AddMoveCommand(nodeTraverser.runningNodes_b[12].position);
-        AddMoveCommand(nodeTraverser.runningNodes_b[13].position, 1f);
+        AddMoveCommand(nodeTraverser.runningNodes_b[13].position, 1.5f);
         AddJumpCommand(nodeTraverser.jumpingNodes_b[12].position, nodeTraverser.jumpingNodes_b[13].position);
         AddMoveCommand(nodeTraverser.runningNodes_b[14].position);
         AddMoveCommand(nodeTraverser.runningNodes_b[15].position);
@@ -101,7 +106,7 @@ public class CommandControlledBot : MonoBehaviour {
         AddMoveCommand(nodeTraverser.runningNodes[1].position);
 
         AddJumpCommand(nodeTraverser.jumpingNodes[2].position, nodeTraverser.jumpingNodes[3].position);
-        AddMoveCommand(nodeTraverser.runningNodes[2].position, 1f);
+        AddMoveCommand(nodeTraverser.runningNodes[2].position);
         AddJumpCommand(nodeTraverser.jumpingNodes[4].position, nodeTraverser.jumpingNodes[5].position);
 
         AddMoveCommand(nodeTraverser.runningNodes[3].position, 1f);
@@ -110,11 +115,11 @@ public class CommandControlledBot : MonoBehaviour {
         AddMoveCommand(nodeTraverser.runningNodes[4].position, 1f);
         ////AddClimbCommand(nodeTraverser.climbingNodes[2].position, nodeTraverser.climbingNodes[3].position);
         AddJumpCommand(nodeTraverser.jumpingNodes[6].position, nodeTraverser.jumpingNodes[7].position);
-        AddMoveCommand(nodeTraverser.runningNodes[5].position, 1f);
+        AddMoveCommand(nodeTraverser.runningNodes[5].position, 1.5f);
         AddJumpCommand(nodeTraverser.jumpingNodes[8].position, nodeTraverser.jumpingNodes[9].position);
         AddMoveCommand(nodeTraverser.runningNodes[6].position);
         AddMoveCommand(nodeTraverser.runningNodes[7].position);
-        AddMoveCommand(nodeTraverser.runningNodes[8].position, 1f);
+        AddMoveCommand(nodeTraverser.runningNodes[8].position, 1.5f);
         AddMoveCommand(nodeTraverser.runningNodes[9].position);
         AddJumpCommand(nodeTraverser.jumpingNodes[10].position, nodeTraverser.jumpingNodes[11].position);
         AddMoveCommand(nodeTraverser.runningNodes[10].position, 1f);
@@ -123,21 +128,21 @@ public class CommandControlledBot : MonoBehaviour {
         AddMoveCommand(nodeTraverser.runningNodes[11].position);
         AddJumpCommand(nodeTraverser.jumpingNodes[14].position, nodeTraverser.jumpingNodes[15].position);
         AddMoveCommand(nodeTraverser.runningNodes[12].position);
-        AddMoveCommand(nodeTraverser.runningNodes[13].position, 1f);
+        AddMoveCommand(nodeTraverser.runningNodes[13].position, 1.5f);
         AddMoveCommand(nodeTraverser.runningNodes[14].position);
         AddJumpCommand(nodeTraverser.jumpingNodes[16].position, nodeTraverser.jumpingNodes[17].position);
         AddMoveCommand(nodeTraverser.runningNodes[15].position);
-        AddMoveCommand(nodeTraverser.runningNodes[16].position);
+        AddMoveCommand(nodeTraverser.runningNodes[16].position, 1.5f);
         AddMoveCommand(nodeTraverser.runningNodes[17].position);
         AddVaultCommand(nodeTraverser.vaultNodes[0].position, nodeTraverser.vaultNodes[1].position, nodeTraverser.vaultNodes[2].position);
         AddMoveCommand(nodeTraverser.runningNodes[18].position);
         AddMoveCommand(nodeTraverser.runningNodes[19].position);
         AddMoveCommand(nodeTraverser.runningNodes[20].position);
         AddMoveCommand(nodeTraverser.runningNodes[21].position);
-        AddMoveCommand(nodeTraverser.runningNodes[22].position, 0.5f);
+        AddMoveCommand(nodeTraverser.runningNodes[22].position, 1.5f);
         AddMoveCommand(nodeTraverser.runningNodes[23].position);
         AddVaultCommand(nodeTraverser.vaultNodes[3].position, nodeTraverser.vaultNodes[4].position, nodeTraverser.vaultNodes[5].position);
-        AddMoveCommand(nodeTraverser.runningNodes[24].position, 0.5f);
+        AddMoveCommand(nodeTraverser.runningNodes[24].position, 1.5f);
         AddMoveCommand(nodeTraverser.runningNodes[25].position);
 
         StartedRunning = true;
@@ -147,13 +152,19 @@ public class CommandControlledBot : MonoBehaviour {
             return;
         }
 
-        if (m_commands.Any() == false) {
+        if (m_commands.Any() == false || m_runnerDone) {
             return;
         }
 
         m_currentCommand = m_commands.Dequeue();
         m_currentCommand.Execute();
-        
+
+        if (m_commands.Count <= 0) {
+            if (!aiMovement.IsCaptured) {
+                onRunnerDone?.Invoke();
+                m_runnerDone = true;
+            }
+        }
     }
 
     public void ClearAllCommand() {

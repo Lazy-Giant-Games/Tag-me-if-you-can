@@ -1,29 +1,25 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using TagMeIfYouCan;
+
 public class PlayerWin : MonoBehaviour {
 
 	public static bool IsWon;
 	public GameObject endingScene;
-
-	private void Update() {
-		if (Input.GetKeyDown(KeyCode.G) && !IsWon) {
-			OnPlayerLose();
-		}
-	}
 	private void OnEnable() {
 		EnemyProgressBar.OnCaptured += OnPlayerWin;
+		CommandControlledBot.onRunnerDone += OnPlayerLose;
 	}
 
 	private void OnDisable() {
 		EnemyProgressBar.OnCaptured -= OnPlayerWin;
+		CommandControlledBot.onRunnerDone -= OnPlayerLose;
 	}
 	public void OnPlayerWin() {
 		PlayerController pc = GetComponent<PlayerController>();
 		pc.animator.PlayRun();
 		pc.walkSpeed = 0f;
-		//pc.GetComponent<Rigidbody>().constraints = RigidbodyConstraints.FreezeAll;
+		pc.GetComponent<Rigidbody>().constraints = RigidbodyConstraints.FreezeAll;
 		pc.enabled = false;
 		IsWon = true;
 		pc.GetComponent<CameraController>().enabled = false;
@@ -39,6 +35,5 @@ public class PlayerWin : MonoBehaviour {
 		pc.enabled = false;
 		IsWon = true;
 		pc.GetComponent<CameraController>().enabled = false;
-		GameObject.FindObjectOfType<PostGameUIController>().OnFell();
 	}
 }
