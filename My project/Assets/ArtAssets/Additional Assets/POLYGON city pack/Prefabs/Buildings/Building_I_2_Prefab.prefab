@@ -14,7 +14,7 @@ GameObject:
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
+  m_StaticEditorFlags: 1
   m_IsActive: 1
 --- !u!4 &4370792754970456
 Transform:
@@ -45,7 +45,7 @@ GameObject:
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
+  m_StaticEditorFlags: 1
   m_IsActive: 1
 --- !u!4 &4823119686916548
 Transform:
@@ -79,7 +79,7 @@ GameObject:
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
+  m_StaticEditorFlags: 1
   m_IsActive: 1
 --- !u!4 &4003022234379868
 Transform:
@@ -126,7 +126,7 @@ MeshRenderer:
   - {fileID: 2100000, guid: c4d3a0c81c5ffb34889379e1a1cf85bb, type: 2}
   - {fileID: 2100000, guid: 26df91506bf83b343b8083c5322323ae, type: 2}
   - {fileID: 2100000, guid: 2100b85841ac32940a50ec36409b49c0, type: 2}
-  - {fileID: 2100000, guid: 27ea7a9aca4c40c419f2319d8e2585da, type: 2}
+  - {fileID: 2100000, guid: aad47d22ec7090e4388a49a91d3935e3, type: 2}
   - {fileID: 2100000, guid: 26df91506bf83b343b8083c5322323ae, type: 2}
   - {fileID: 2100000, guid: f36f940b2b1846549a636ffb199a0d0a, type: 2}
   - {fileID: 2100000, guid: aad47d22ec7090e4388a49a91d3935e3, type: 2}
@@ -190,7 +190,7 @@ GameObject:
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
+  m_StaticEditorFlags: 1
   m_IsActive: 1
 --- !u!4 &4357323429042996
 Transform:
@@ -235,7 +235,7 @@ MeshRenderer:
   m_Materials:
   - {fileID: 2100000, guid: 1af4b0d855a4f694baba51a55f5c6cc9, type: 2}
   - {fileID: 2100000, guid: a24246a9c9212cf45b5e44dbfeec8931, type: 2}
-  - {fileID: 2100000, guid: 5188c7492ef51d143a7128aa9700788a, type: 2}
+  - {fileID: 2100000, guid: a24246a9c9212cf45b5e44dbfeec8931, type: 2}
   - {fileID: 2100000, guid: f36f940b2b1846549a636ffb199a0d0a, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0

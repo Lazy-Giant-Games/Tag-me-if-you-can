@@ -443,7 +443,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: '{fade}<wiggle>YOU MISSED HIM!</wiggle>{/fade}'
+  m_text: '{fade}<wiggle>HE GOT AWAY!</wiggle>{/fade}'
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 14e31c3eefcb3334ab2923d15209dd30, type: 2}
   m_sharedMaterial: {fileID: -7791298904572765764, guid: 14e31c3eefcb3334ab2923d15209dd30, type: 2}
@@ -733,7 +733,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &3912909372262472951
 RectTransform:
   m_ObjectHideFlags: 0
