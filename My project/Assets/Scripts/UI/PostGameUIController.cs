@@ -45,7 +45,7 @@ namespace TagMeIfYouCan {
             });
         }
 
-        void OnFell() {
+        public void OnFell() {
             m_ingameUIController.HideUI();
             ShowUI();
             m_postGameUIView.ShowLoseUI();

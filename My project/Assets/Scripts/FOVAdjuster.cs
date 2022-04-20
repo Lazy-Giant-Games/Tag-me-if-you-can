@@ -8,6 +8,8 @@ public class FOVAdjuster : MonoBehaviour {
     float m_minFOV;
     float m_maxFOV;
 
+    public float m_minFOVDifference = -30;
+    public float m_maxFOVDifference = 30;
     public float factor;
     void Awake() {
         m_camera = Camera.main;
@@ -15,8 +17,8 @@ public class FOVAdjuster : MonoBehaviour {
 
 	private void Start() {
         m_initialFOV = m_camera.fieldOfView;
-        m_minFOV = m_initialFOV - 30;
-        m_maxFOV = m_initialFOV + 30;
+        m_minFOV = m_initialFOV - m_minFOVDifference;
+        m_maxFOV = m_initialFOV + m_maxFOVDifference;
 
     }
 
