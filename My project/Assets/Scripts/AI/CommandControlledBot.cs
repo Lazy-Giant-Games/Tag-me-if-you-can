@@ -41,6 +41,7 @@ public class CommandControlledBot : MonoBehaviour {
 
     
     public void StartPlay() {
+        nodeTraverser.RandomizePath();
         if (nodeTraverser.targetPath == NodeTraverser.PATH.RIGHT_PATH) {
             SetPathNode_2();
         } else {

@@ -65,6 +65,7 @@ namespace TagMeIfYouCan {
         void OnReadyPlayTrigger() {
             m_aiBoyAnimation.onTurnDone -= OnReadyPlayTrigger;
             StartCoroutine(OnReadyPlay());
+            ClikManager.Instance.CallClikEventGameStart();
         }
 
         IEnumerator OnReadyPlay() {

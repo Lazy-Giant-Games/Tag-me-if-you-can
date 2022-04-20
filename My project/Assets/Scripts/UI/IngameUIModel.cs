@@ -20,6 +20,7 @@ public class IngameUIModel : MVCUIModel {
         btnRestart.onClick.RemoveListener(OnClickRestart);
     }
     private void OnClickRestart() {
+        Debug.LogError("RESTART");
         onClickRestart?.Invoke();
     }
 }

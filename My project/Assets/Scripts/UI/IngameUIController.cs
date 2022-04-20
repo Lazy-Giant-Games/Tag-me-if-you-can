@@ -32,7 +32,7 @@ namespace TagMeIfYouCan.UI {
         }
 
 		#region IngameUIView.IListener
-		public void OnClickRestart() { SceneManager.LoadScene("LevelScene"); }
+		public void OnClickRestart() { SceneManager.LoadScene("GamePlayLevel"); }
         #endregion
     }
 }

@@ -48,6 +48,7 @@ namespace TagMeIfYouCan {
         }
 
         public void OnFell() {
+            ClikManager.Instance.CallClikEventGameLose();
             m_ingameUIController.HideUI();
             ShowUI();
             m_postGameUIView.ShowLoseUI();
@@ -58,6 +59,7 @@ namespace TagMeIfYouCan {
         }
 
         IEnumerator DelayedUIDisplay() {
+            ClikManager.Instance.CallClikEventGameWin();
             yield return new WaitForSeconds(2.5f);
             m_ingameUIController.HideUI();
             ShowUI();
