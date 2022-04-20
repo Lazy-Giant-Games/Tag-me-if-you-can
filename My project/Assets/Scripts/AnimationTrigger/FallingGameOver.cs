@@ -14,15 +14,14 @@ public class FallingGameOver : MonoBehaviour {
 		m_animator = GetComponent<PlayerAnimator>();
 	}
 	private void Update() {  
-		return;
-		if (Physics.Raycast(transform.position, -Vector3.up, out hit)) {
+		if (Physics.Raycast(transform.position, -Vector3.up, out hit, 5f)) {
 			Debug.DrawLine(transform.position, hit.point, Color.cyan);
 			m_floatingTimer = 0f;
 		} else {
 			//m_animator.PlayFalling();
 			if (!isDead) {
 				m_floatingTimer += Time.deltaTime;
-				if (m_floatingTimer >= 2f) {
+				if (m_floatingTimer >= 1.5f) {
 					Camera.main.transform.parent = null;
 					Camera.main.transform.LookAt(m_animator.transform);
 					OnFalling?.Invoke();
