@@ -52,44 +52,44 @@ public class CommandControlledBot : MonoBehaviour {
     }
 
     public void SetPathNode_2() {
-        AddMoveCommand(nodeTraverser.runningNodes_b[0].position);
+        AddMoveCommand(nodeTraverser.runningNodes_b[0].position, 2f);
         AddJumpCommand(nodeTraverser.jumpingNodes_b[0].position, nodeTraverser.jumpingNodes_b[1].position);
-        AddMoveCommand(nodeTraverser.runningNodes_b[1].position);
+        AddMoveCommand(nodeTraverser.runningNodes_b[1].position, 0.75f);
 
         AddJumpCommand(nodeTraverser.jumpingNodes_b[2].position, nodeTraverser.jumpingNodes_b[3].position);
-        AddMoveCommand(nodeTraverser.runningNodes_b[2].position, 1f);
+        AddMoveCommand(nodeTraverser.runningNodes_b[2].position, 0.75f);
         AddJumpCommand(nodeTraverser.jumpingNodes_b[4].position, nodeTraverser.jumpingNodes_b[5].position);
 
-        AddMoveCommand(nodeTraverser.runningNodes_b[3].position, 1f);
+        AddMoveCommand(nodeTraverser.runningNodes_b[3].position, 0.25f);
 
         ////AddClimbCommand(nodeTraverser.climbingNodes_b[0].position, nodeTraverser.climbingNodes_b[1].position);
-        AddMoveCommand(nodeTraverser.runningNodes_b[4].position, 1f);
+        AddMoveCommand(nodeTraverser.runningNodes_b[4].position, 0.25f);
         ////AddClimbCommand(nodeTraverser.climbingNodes_b[2].position, nodeTraverser.climbingNodes_b[3].position);
         AddJumpCommand(nodeTraverser.jumpingNodes_b[6].position, nodeTraverser.jumpingNodes_b[7].position);
-        AddMoveCommand(nodeTraverser.runningNodes_b[5].position, 1.5f);
+        AddMoveCommand(nodeTraverser.runningNodes_b[5].position);
         AddJumpCommand(nodeTraverser.jumpingNodes_b[8].position, nodeTraverser.jumpingNodes_b[9].position);
-        AddMoveCommand(nodeTraverser.runningNodes_b[6].position);
+        AddMoveCommand(nodeTraverser.runningNodes_b[6].position, 0.25f);
         AddMoveCommand(nodeTraverser.runningNodes_b[7].position);
-        AddMoveCommand(nodeTraverser.runningNodes_b[8].position, 1f);
+        AddMoveCommand(nodeTraverser.runningNodes_b[8].position, 0.25f);
         AddMoveCommand(nodeTraverser.runningNodes_b[9].position);
-        AddMoveCommand(nodeTraverser.runningNodes_b[10].position, 1.5f);
+        AddMoveCommand(nodeTraverser.runningNodes_b[10].position, 0.25f);
         AddMoveCommand(nodeTraverser.runningNodes_b[11].position);
         AddJumpCommand(nodeTraverser.jumpingNodes_b[10].position, nodeTraverser.jumpingNodes_b[11].position);
         AddMoveCommand(nodeTraverser.runningNodes_b[12].position);
-        AddMoveCommand(nodeTraverser.runningNodes_b[13].position, 1.5f);
+        AddMoveCommand(nodeTraverser.runningNodes_b[13].position, 0.5f);
         AddJumpCommand(nodeTraverser.jumpingNodes_b[12].position, nodeTraverser.jumpingNodes_b[13].position);
         AddMoveCommand(nodeTraverser.runningNodes_b[14].position);
         AddMoveCommand(nodeTraverser.runningNodes_b[15].position);
-        AddMoveCommand(nodeTraverser.runningNodes_b[16].position, - 1f);
+        AddMoveCommand(nodeTraverser.runningNodes_b[16].position, - 0.75f);
         
         AddVaultCommand(nodeTraverser.vaultNodes_b[0].position, nodeTraverser.vaultNodes_b[1].position, nodeTraverser.vaultNodes_b[2].position);
-        AddMoveCommand(nodeTraverser.runningNodes_b[17].position, 0.85f);
+        AddMoveCommand(nodeTraverser.runningNodes_b[17].position, 1.5f);
         AddMoveCommand(nodeTraverser.runningNodes_b[18].position);
-        AddMoveCommand(nodeTraverser.runningNodes_b[19].position);
+        AddMoveCommand(nodeTraverser.runningNodes_b[19].position, 0.75f);
         AddMoveCommand(nodeTraverser.runningNodes_b[20].position);
         AddMoveCommand(nodeTraverser.runningNodes_b[21].position);
         AddVaultCommand(nodeTraverser.vaultNodes_b[3].position, nodeTraverser.vaultNodes_b[4].position, nodeTraverser.vaultNodes_b[5].position);
-        AddMoveCommand(nodeTraverser.runningNodes_b[22].position, 1.3f);
+        AddMoveCommand(nodeTraverser.runningNodes_b[22].position, 1f);
         AddMoveCommand(nodeTraverser.runningNodes_b[23].position, 1.25f);
         /*
         

@@ -16,11 +16,16 @@ public class NodeTraverser : MonoBehaviour {
     public List<Transform> climbingNodes_b = new List<Transform>();
     public List<Transform> vaultNodes_b = new List<Transform>();
 
+    public bool randomizePath;
+
 	public void RandomizePath() {
-        if (UnityEngine.Random.Range(0, 100) > 50) {
-            targetPath = PATH.LEFT_PATH;
-        } else {
-            targetPath = PATH.RIGHT_PATH;
+        if (randomizePath) {
+            if (UnityEngine.Random.Range(0, 100) > 50) {
+                targetPath = PATH.LEFT_PATH;
+            } else {
+                targetPath = PATH.RIGHT_PATH;
+            }
         }
+        
 	}
 }
