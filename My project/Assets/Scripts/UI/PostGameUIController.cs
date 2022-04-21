@@ -14,18 +14,19 @@ namespace TagMeIfYouCan {
 
         #region Mono Calls
         private void OnEnable() {
-            FallingGameOver.OnFalling += OnFell;
+            FallingGameOver.OnFalling += ShowFailScreen;
             //GroundDetector.OnFatalFall += OnFell;
             EnemyProgressBar.OnCaptured += OnCapture;
-            CommandControlledBot.onRunnerDone += OnFell;
-
+            CommandControlledBot.onRunnerDone += ShowFailScreen;
+            PlayerWin.forcedFailScreen += ShowFailScreen;
         }
 
 		private void OnDisable() {
-            CommandControlledBot.onRunnerDone -= OnFell;
-            FallingGameOver.OnFalling -= OnFell;
+            CommandControlledBot.onRunnerDone -= ShowFailScreen;
+            FallingGameOver.OnFalling -= ShowFailScreen;
             //GroundDetector.OnFatalFall -= OnFell;
             EnemyProgressBar.OnCaptured -= OnCapture;
+            PlayerWin.forcedFailScreen -= ShowFailScreen;
         }
 		private void Start() {
             InstantiateUI();
@@ -47,8 +48,13 @@ namespace TagMeIfYouCan {
             });
         }
 
-        public void OnFell() {
+        public void ShowFailScreen() {
+            StartCoroutine(DelayedLoseUIDisplay());            
+        }
+
+        IEnumerator DelayedLoseUIDisplay() {
             ClikManager.Instance.CallClikEventGameLose();
+            yield return new WaitForSeconds(2.5f);
             m_ingameUIController.HideUI();
             ShowUI();
             m_postGameUIView.ShowLoseUI();

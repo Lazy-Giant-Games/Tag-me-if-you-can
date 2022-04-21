@@ -2,8 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using TagMeIfYouCan.UI;
-public class EndSceneAnimator : MonoBehaviour
-{
+public class EndSceneAnimator : MonoBehaviour {
 
     public GameObject goFightCloud;
     public GameObject girlPosition;

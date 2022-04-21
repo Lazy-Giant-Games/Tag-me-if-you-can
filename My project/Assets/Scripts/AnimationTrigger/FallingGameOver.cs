@@ -13,7 +13,10 @@ public class FallingGameOver : MonoBehaviour {
 	private void Awake() {
 		m_animator = GetComponent<PlayerAnimator>();
 	}
-	private void Update() {  
+	private void Update() {
+		if (Camera.main == null || !Camera.main.enabled) {
+			return;
+		}
 		if (Physics.Raycast(transform.position, -Vector3.up, out hit, 5f)) {
 			Debug.DrawLine(transform.position, hit.point, Color.cyan);
 			m_floatingTimer = 0f;

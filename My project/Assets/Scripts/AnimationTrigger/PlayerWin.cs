@@ -1,11 +1,14 @@
 using System.Collections;
-using System.Collections.Generic;
+using System;
 using UnityEngine;
 
 public class PlayerWin : MonoBehaviour {
 
+	public static Action forcedFailScreen;
 	public static bool IsWon;
 	public GameObject endingScene;
+
+	public FailSceneAnimator failSceneAnimator;
 	private void OnEnable() {
 		EnemyProgressBar.OnCaptured += OnPlayerWin;
 		CommandControlledBot.onRunnerDone += OnPlayerLose;
@@ -35,5 +38,14 @@ public class PlayerWin : MonoBehaviour {
 		pc.enabled = false;
 		IsWon = true;
 		pc.GetComponent<CameraController>().enabled = false;
+		failSceneAnimator.FailSceneTrigger();
+		Camera.main.enabled = false;
+	}
+
+	private void Update() {
+		if (Input.GetKeyDown(KeyCode.G) && !IsWon) {
+			OnPlayerLose();
+			forcedFailScreen?.Invoke();
+		}
 	}
 }
