@@ -11,15 +11,16 @@ public class EnemyProgressBar : MonoBehaviour
     public static Action OnCaptured;
     public AIMovement aiMovement;
 
+    public float distanceChecker = 10f;
     private bool m_captured;
     private void Update() {
         float fillAmount = 4f / Vector3.Distance(playerTransform.position, enemyTransform.position);
         fillAmount = Mathf.Clamp(fillAmount, 0f, 1f);
 
         textDistance.text = ((100f - (fillAmount * 100f)) / 4f).ToString("0") + "m";
-        if (Vector3.Distance(playerTransform.position, enemyTransform.position) < 10f) {
+        if (Vector3.Distance(playerTransform.position, enemyTransform.position) < distanceChecker) {
             PlayerAnimator.isNearEnemy = true;
-            if (fillAmount >= 1f && !m_captured) {
+            if (fillAmount >= 1f && !m_captured && distanceChecker > 0f) {
                 m_captured = true;
                 OnCaptured?.Invoke();
                 aiMovement.SetCaptured();
