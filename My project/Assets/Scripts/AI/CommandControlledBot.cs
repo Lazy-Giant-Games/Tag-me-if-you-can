@@ -104,10 +104,10 @@ public class CommandControlledBot : MonoBehaviour {
         //StartAcceptingRandomCommand();
         AddMoveCommand(nodeTraverser.runningNodes[0].position);
         AddJumpCommand(nodeTraverser.jumpingNodes[0].position, nodeTraverser.jumpingNodes[1].position);
-        AddMoveCommand(nodeTraverser.runningNodes[1].position);
+        AddMoveCommand(nodeTraverser.runningNodes[1].position, 1f);
 
         AddJumpCommand(nodeTraverser.jumpingNodes[2].position, nodeTraverser.jumpingNodes[3].position);
-        AddMoveCommand(nodeTraverser.runningNodes[2].position);
+        AddMoveCommand(nodeTraverser.runningNodes[2].position, 1f);
         AddJumpCommand(nodeTraverser.jumpingNodes[4].position, nodeTraverser.jumpingNodes[5].position);
 
         AddMoveCommand(nodeTraverser.runningNodes[3].position, 1f);
@@ -120,20 +120,20 @@ public class CommandControlledBot : MonoBehaviour {
         AddJumpCommand(nodeTraverser.jumpingNodes[8].position, nodeTraverser.jumpingNodes[9].position);
         AddMoveCommand(nodeTraverser.runningNodes[6].position);
         AddMoveCommand(nodeTraverser.runningNodes[7].position);
-        AddMoveCommand(nodeTraverser.runningNodes[8].position, 1.5f);
+        AddMoveCommand(nodeTraverser.runningNodes[8].position);
         AddMoveCommand(nodeTraverser.runningNodes[9].position);
         AddJumpCommand(nodeTraverser.jumpingNodes[10].position, nodeTraverser.jumpingNodes[11].position);
-        AddMoveCommand(nodeTraverser.runningNodes[10].position, 1f);
+        AddMoveCommand(nodeTraverser.runningNodes[10].position);
 
         AddJumpCommand(nodeTraverser.jumpingNodes[12].position, nodeTraverser.jumpingNodes[13].position);
         AddMoveCommand(nodeTraverser.runningNodes[11].position);
         AddJumpCommand(nodeTraverser.jumpingNodes[14].position, nodeTraverser.jumpingNodes[15].position);
         AddMoveCommand(nodeTraverser.runningNodes[12].position);
-        AddMoveCommand(nodeTraverser.runningNodes[13].position, 1.5f);
+        AddMoveCommand(nodeTraverser.runningNodes[13].position);
         AddMoveCommand(nodeTraverser.runningNodes[14].position);
         AddJumpCommand(nodeTraverser.jumpingNodes[16].position, nodeTraverser.jumpingNodes[17].position);
         AddMoveCommand(nodeTraverser.runningNodes[15].position);
-        AddMoveCommand(nodeTraverser.runningNodes[16].position, 1.5f);
+        AddMoveCommand(nodeTraverser.runningNodes[16].position);
         AddMoveCommand(nodeTraverser.runningNodes[17].position);
         AddVaultCommand(nodeTraverser.vaultNodes[0].position, nodeTraverser.vaultNodes[1].position, nodeTraverser.vaultNodes[2].position);
         AddMoveCommand(nodeTraverser.runningNodes[18].position);
