@@ -5,7 +5,7 @@ using UnityEngine;
 public class Level1CommandSetter : PathNodeCommandSetter {
     #region per level pathnodes setup
     public override void SetPathNodeRight() {
-        commandControlledBot.AddMoveCommand(nodeTraverser.runningNodes_b[0].position, 8f);
+        commandControlledBot.AddMoveCommand(nodeTraverser.runningNodes_b[0].position, 2f);
         commandControlledBot.AddJumpCommand(nodeTraverser.jumpingNodes_b[0].position, nodeTraverser.jumpingNodes_b[1].position);
         commandControlledBot.AddMoveCommand(nodeTraverser.runningNodes_b[1].position, 0.75f);
 
@@ -48,7 +48,7 @@ public class Level1CommandSetter : PathNodeCommandSetter {
     public override void SetPathNodeLeft() {
         //GameManager.Instance.OnPlayClicked -= StartPlay;
         //StartAcceptingRandomCommand();
-        commandControlledBot.AddMoveCommand(nodeTraverser.runningNodes[0].position, 8f);
+        commandControlledBot.AddMoveCommand(nodeTraverser.runningNodes[0].position);
         commandControlledBot.AddJumpCommand(nodeTraverser.jumpingNodes[0].position, nodeTraverser.jumpingNodes[1].position);
         commandControlledBot.AddMoveCommand(nodeTraverser.runningNodes[1].position, 1f);
 

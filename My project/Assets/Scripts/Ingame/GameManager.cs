@@ -9,8 +9,12 @@ public class GameManager : MonoBehaviour {
 
     public static GameManager Instance = null;
 
+	[HideInInspector]
 	public int currentLevel = 0;
 	private int m_runningLevelForDisplay = 1;
+	
+	[Header("0 - 5")]
+	public int forceStartingLevel;
 	private void OnEnable() {
 		if (Instance == null) {
 			Instance = this;
@@ -22,11 +26,12 @@ public class GameManager : MonoBehaviour {
 			Instance = null;
 		}
 	}
-
 	public int GetLevelForDisplay() {
 		return m_runningLevelForDisplay;
 	}
 	private void Start() {
+		currentLevel = forceStartingLevel;
+		m_runningLevelForDisplay = currentLevel + 1;
 		LoadCurrentScene();
 	}
 	public void GoToNextLevel() {
@@ -39,5 +44,14 @@ public class GameManager : MonoBehaviour {
 	}
 	public void LoadCurrentScene() {
 		UnityEngine.SceneManagement.SceneManager.LoadScene("GamePlayLevel_" + currentLevel.ToString());
+	}
+	public bool DoesLevelHasAI() {
+		switch (currentLevel) {
+			case 0:
+			case 1:
+			return true;
+			default:
+			return false;
+		}
 	}
 }

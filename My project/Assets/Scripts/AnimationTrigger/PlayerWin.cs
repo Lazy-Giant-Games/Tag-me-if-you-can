@@ -12,11 +12,13 @@ public class PlayerWin : MonoBehaviour {
 	private void OnEnable() {
 		EnemyProgressBar.OnCaptured += OnPlayerWin;
 		CommandControlledBot.onRunnerDone += OnPlayerLose;
+		FinishLine.OnFinishLineReached += OnPlayerWin;
 	}
 
 	private void OnDisable() {
 		EnemyProgressBar.OnCaptured -= OnPlayerWin;
 		CommandControlledBot.onRunnerDone -= OnPlayerLose;
+		FinishLine.OnFinishLineReached -= OnPlayerWin;
 	}
 	public void OnPlayerWin() {
 		PlayerController pc = GetComponent<PlayerController>();

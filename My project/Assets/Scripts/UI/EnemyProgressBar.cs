@@ -24,7 +24,6 @@ public class EnemyProgressBar : MonoBehaviour
                 m_captured = true;
                 OnCaptured?.Invoke();
                 aiMovement.SetCaptured();
-                
             }
         } else {
             PlayerAnimator.isNearEnemy = false;

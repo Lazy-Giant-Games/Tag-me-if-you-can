@@ -43,10 +43,10 @@ namespace TagMeIfYouCan {
             MainMenuUIView.Create(_canvas, m_mainMenuUIModel, (p_ui) => {
                 m_mainMenuUIView = p_ui;
                 m_mainMenuUIView.Subscribe(this);
-
                 InitUI(p_ui.UIModel, p_ui);
-
-                m_aiBoyAnimation.onTurnDone += OnReadyPlayTrigger;
+                if (GameManager.Instance.DoesLevelHasAI()) {
+                    m_aiBoyAnimation.onTurnDone += OnReadyPlayTrigger;
+                }
             });
         }
 
@@ -54,11 +54,13 @@ namespace TagMeIfYouCan {
         public void OnClickPlay() {
             HideUI();
             m_ingameUIController.InstantiateUI();
-            
-            
-            m_aiBoyAnimation.PlayShock();
-            m_aiGirlAnimation.PlayShock();
-            emojis.ForEach((eachObject) => eachObject.SetActive(true));
+            if (GameManager.Instance.DoesLevelHasAI()) {
+                m_aiBoyAnimation.PlayShock();
+                m_aiGirlAnimation.PlayShock();
+                emojis.ForEach((eachObject) => eachObject.SetActive(true));
+            } else {
+                OnReadyPlayTrigger();
+            }
         }
         #endregion
 
@@ -71,18 +73,17 @@ namespace TagMeIfYouCan {
         IEnumerator OnReadyPlay() {
             yield return new WaitForSeconds(0.5f);
             runnerObject.SetActive(true);
-            GameObject.FindObjectOfType<PathNodeCommandSetter>().StartPlay();
-            m_aiBoyAnimation.transform.parent.gameObject.SetActive(false);
+            if (GameManager.Instance.DoesLevelHasAI()) {
+                GameObject.FindObjectOfType<PathNodeCommandSetter>().StartPlay();
+                m_aiBoyAnimation.transform.parent.gameObject.SetActive(false);
+            }
             CutSceneCamera.Instance.GoToFPSCamera();
             yield return new WaitForSeconds(0.5f);
             CameraController.GameStarted = true;
             speedLines.SetActive(true);
             m_playerController.GetComponent<CameraController>().enabled = true;
             m_playerController.enabled = true;
-            
-            
             m_playerController.animator.PlayRun();
-            
         }
     }
 }
