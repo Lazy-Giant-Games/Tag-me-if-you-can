@@ -71,7 +71,7 @@ namespace TagMeIfYouCan {
         IEnumerator OnReadyPlay() {
             yield return new WaitForSeconds(0.5f);
             runnerObject.SetActive(true);
-            m_ai.StartPlay();
+            GameObject.FindObjectOfType<PathNodeCommandSetter>().StartPlay();
             m_aiBoyAnimation.transform.parent.gameObject.SetActive(false);
             CutSceneCamera.Instance.GoToFPSCamera();
             yield return new WaitForSeconds(0.5f);

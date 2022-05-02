@@ -14,7 +14,7 @@ public class CommandControlledBot : MonoBehaviour {
     private bool m_dontAcceptCommand;
     public AIMovement aiMovement;
 
-    public NodeTraverser nodeTraverser;
+    public PathNodeCommandSetter pathNodeCommandSetter;
     private float m_initialSpeed;
     public bool StartedRunning { set; get; }
 
@@ -38,117 +38,7 @@ public class CommandControlledBot : MonoBehaviour {
     private void Update() {
         ProcessCommands();
     }
-
-    
-    public void StartPlay() {
-        nodeTraverser.RandomizePath();
-        if (nodeTraverser.targetPath == NodeTraverser.PATH.RIGHT_PATH) {
-            SetPathNode_2();
-        } else {
-            SetPathNode_1();
-        }
-        
-        StartedRunning = true;
-    }
-
-    public void SetPathNode_2() {
-        AddMoveCommand(nodeTraverser.runningNodes_b[0].position, 2f);
-        AddJumpCommand(nodeTraverser.jumpingNodes_b[0].position, nodeTraverser.jumpingNodes_b[1].position);
-        AddMoveCommand(nodeTraverser.runningNodes_b[1].position, 0.75f);
-
-        AddJumpCommand(nodeTraverser.jumpingNodes_b[2].position, nodeTraverser.jumpingNodes_b[3].position);
-        AddMoveCommand(nodeTraverser.runningNodes_b[2].position, 0.75f);
-        AddJumpCommand(nodeTraverser.jumpingNodes_b[4].position, nodeTraverser.jumpingNodes_b[5].position);
-
-        AddMoveCommand(nodeTraverser.runningNodes_b[3].position, 0.25f);
-
-        ////AddClimbCommand(nodeTraverser.climbingNodes_b[0].position, nodeTraverser.climbingNodes_b[1].position);
-        AddMoveCommand(nodeTraverser.runningNodes_b[4].position, 0.25f);
-        ////AddClimbCommand(nodeTraverser.climbingNodes_b[2].position, nodeTraverser.climbingNodes_b[3].position);
-        AddJumpCommand(nodeTraverser.jumpingNodes_b[6].position, nodeTraverser.jumpingNodes_b[7].position);
-        AddMoveCommand(nodeTraverser.runningNodes_b[5].position);
-        AddJumpCommand(nodeTraverser.jumpingNodes_b[8].position, nodeTraverser.jumpingNodes_b[9].position);
-        AddMoveCommand(nodeTraverser.runningNodes_b[6].position, 0.25f);
-        AddMoveCommand(nodeTraverser.runningNodes_b[7].position);
-        AddMoveCommand(nodeTraverser.runningNodes_b[8].position, 0.25f);
-        AddMoveCommand(nodeTraverser.runningNodes_b[9].position);
-        AddMoveCommand(nodeTraverser.runningNodes_b[10].position, 0.25f);
-        AddMoveCommand(nodeTraverser.runningNodes_b[11].position);
-        AddJumpCommand(nodeTraverser.jumpingNodes_b[10].position, nodeTraverser.jumpingNodes_b[11].position);
-        AddMoveCommand(nodeTraverser.runningNodes_b[12].position);
-        AddMoveCommand(nodeTraverser.runningNodes_b[13].position, 0.5f);
-        AddJumpCommand(nodeTraverser.jumpingNodes_b[12].position, nodeTraverser.jumpingNodes_b[13].position);
-        AddMoveCommand(nodeTraverser.runningNodes_b[14].position);
-        AddMoveCommand(nodeTraverser.runningNodes_b[15].position);
-        AddMoveCommand(nodeTraverser.runningNodes_b[16].position, - 0.75f);
-        
-        AddVaultCommand(nodeTraverser.vaultNodes_b[0].position, nodeTraverser.vaultNodes_b[1].position, nodeTraverser.vaultNodes_b[2].position);
-        AddMoveCommand(nodeTraverser.runningNodes_b[17].position, 1.5f);
-        AddMoveCommand(nodeTraverser.runningNodes_b[18].position);
-        AddMoveCommand(nodeTraverser.runningNodes_b[19].position, 0.75f);
-        AddMoveCommand(nodeTraverser.runningNodes_b[20].position);
-        AddMoveCommand(nodeTraverser.runningNodes_b[21].position);
-        AddVaultCommand(nodeTraverser.vaultNodes_b[3].position, nodeTraverser.vaultNodes_b[4].position, nodeTraverser.vaultNodes_b[5].position);
-        AddMoveCommand(nodeTraverser.runningNodes_b[22].position, 1f);
-        AddMoveCommand(nodeTraverser.runningNodes_b[23].position, 1.25f);
-        /*
-        
-        
-        //
-        
-        */
-    }
-
-    public void SetPathNode_1() {
-        //GameManager.Instance.OnPlayClicked -= StartPlay;
-        //StartAcceptingRandomCommand();
-        AddMoveCommand(nodeTraverser.runningNodes[0].position);
-        AddJumpCommand(nodeTraverser.jumpingNodes[0].position, nodeTraverser.jumpingNodes[1].position);
-        AddMoveCommand(nodeTraverser.runningNodes[1].position, 1f);
-
-        AddJumpCommand(nodeTraverser.jumpingNodes[2].position, nodeTraverser.jumpingNodes[3].position);
-        AddMoveCommand(nodeTraverser.runningNodes[2].position, 1f);
-        AddJumpCommand(nodeTraverser.jumpingNodes[4].position, nodeTraverser.jumpingNodes[5].position);
-
-        AddMoveCommand(nodeTraverser.runningNodes[3].position, 1f);
-
-        ////AddClimbCommand(nodeTraverser.climbingNodes[0].position, nodeTraverser.climbingNodes[1].position);
-        AddMoveCommand(nodeTraverser.runningNodes[4].position, 1f);
-        ////AddClimbCommand(nodeTraverser.climbingNodes[2].position, nodeTraverser.climbingNodes[3].position);
-        AddJumpCommand(nodeTraverser.jumpingNodes[6].position, nodeTraverser.jumpingNodes[7].position);
-        AddMoveCommand(nodeTraverser.runningNodes[5].position, 1.5f);
-        AddJumpCommand(nodeTraverser.jumpingNodes[8].position, nodeTraverser.jumpingNodes[9].position);
-        AddMoveCommand(nodeTraverser.runningNodes[6].position);
-        AddMoveCommand(nodeTraverser.runningNodes[7].position);
-        AddMoveCommand(nodeTraverser.runningNodes[8].position);
-        AddMoveCommand(nodeTraverser.runningNodes[9].position);
-        AddJumpCommand(nodeTraverser.jumpingNodes[10].position, nodeTraverser.jumpingNodes[11].position);
-        AddMoveCommand(nodeTraverser.runningNodes[10].position);
-
-        AddJumpCommand(nodeTraverser.jumpingNodes[12].position, nodeTraverser.jumpingNodes[13].position);
-        AddMoveCommand(nodeTraverser.runningNodes[11].position);
-        AddJumpCommand(nodeTraverser.jumpingNodes[14].position, nodeTraverser.jumpingNodes[15].position);
-        AddMoveCommand(nodeTraverser.runningNodes[12].position);
-        AddMoveCommand(nodeTraverser.runningNodes[13].position);
-        AddMoveCommand(nodeTraverser.runningNodes[14].position);
-        AddJumpCommand(nodeTraverser.jumpingNodes[16].position, nodeTraverser.jumpingNodes[17].position);
-        AddMoveCommand(nodeTraverser.runningNodes[15].position);
-        AddMoveCommand(nodeTraverser.runningNodes[16].position);
-        AddMoveCommand(nodeTraverser.runningNodes[17].position);
-        AddVaultCommand(nodeTraverser.vaultNodes[0].position, nodeTraverser.vaultNodes[1].position, nodeTraverser.vaultNodes[2].position);
-        AddMoveCommand(nodeTraverser.runningNodes[18].position);
-        AddMoveCommand(nodeTraverser.runningNodes[19].position);
-        AddMoveCommand(nodeTraverser.runningNodes[20].position);
-        AddMoveCommand(nodeTraverser.runningNodes[21].position);
-        AddMoveCommand(nodeTraverser.runningNodes[22].position, 1.5f);
-        AddMoveCommand(nodeTraverser.runningNodes[23].position);
-        AddVaultCommand(nodeTraverser.vaultNodes[3].position, nodeTraverser.vaultNodes[4].position, nodeTraverser.vaultNodes[5].position);
-        AddMoveCommand(nodeTraverser.runningNodes[24].position, 1.5f);
-        AddMoveCommand(nodeTraverser.runningNodes[25].position);
-
-        StartedRunning = true;
-    }
-    private void ProcessCommands() {
+	private void ProcessCommands() {
         if (m_currentCommand != null && m_currentCommand.IsFinished == false) {
             return;
         }
@@ -167,7 +57,6 @@ public class CommandControlledBot : MonoBehaviour {
             }
         }
     }
-
     public void ClearAllCommand() {
         m_dontAcceptCommand = true;
         StopAllCoroutines();
@@ -178,7 +67,6 @@ public class CommandControlledBot : MonoBehaviour {
         m_commands.Clear();
         m_currentCommand = null;
     }
-
     public void StartAcceptingRandomCommand() {
         m_dontAcceptCommand = false;
         StopCoroutine("AddRandomCommand");
@@ -204,6 +92,8 @@ public class CommandControlledBot : MonoBehaviour {
         m_commands.Enqueue(mc);
     }
 }
+
+#region command specific classes
 internal class MoveCommand : Command {
     private Vector3 m_destination;
     private readonly NavMeshAgent m_character;
@@ -375,3 +265,4 @@ internal class VaultCommand : Command {
     public override bool IsFinished => m_isFinished || m_aiMovement.IsCaptured;
     public override void PrematurelyFinish() { m_character.isStopped = true; }
 }
+#endregion

@@ -12,6 +12,8 @@ namespace TagMeIfYouCan {
         [SerializeField]
         private IngameUIController m_ingameUIController;
 
+        private bool m_isWon;
+
         #region Mono Calls
         private void OnEnable() {
             FallingGameOver.OnFalling += ShowFailScreen;
@@ -62,6 +64,7 @@ namespace TagMeIfYouCan {
 
         void OnCapture() {
             StartCoroutine(DelayedUIDisplay());
+            m_isWon = true;
         }
 
         IEnumerator DelayedUIDisplay() {
@@ -73,7 +76,13 @@ namespace TagMeIfYouCan {
         }
 
         #region IngameUIView.IListener
-        public void OnClickPlay() { SceneManager.LoadScene("GamePlayLevel"); }
+        public void OnClickPlay() {
+            if (m_isWon) {
+                GameManager.Instance.GoToNextLevel();
+            } else {
+                GameManager.Instance.LoadCurrentScene();
+            }
+        }
         #endregion
     }
 }

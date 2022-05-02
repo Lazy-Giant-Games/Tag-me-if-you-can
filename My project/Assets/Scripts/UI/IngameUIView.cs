@@ -34,6 +34,9 @@ public class IngameUIView : MVCUIView {
     }
     #endregion
 
+    public void SetLevelText(int p_currentLevel) {
+        UIModel.txtLevel.text = "Level " + p_currentLevel.ToString();
+    }
     public IEnumerator ShowTutorialForSeconds(float p_sec) {
         yield return new WaitForSeconds(p_sec);
         UIModel.goTutorial.SetActive(false);

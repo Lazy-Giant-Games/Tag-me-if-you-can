@@ -13,6 +13,8 @@ public class IngameUIModel : MVCUIModel {
     public Image imgFade;
 
     public GameObject goTutorial;
+
+    public Text txtLevel;
     private void OnEnable() {
         btnRestart.onClick.AddListener(OnClickRestart);
     }

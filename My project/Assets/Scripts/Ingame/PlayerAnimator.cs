@@ -1,0 +1,239 @@
+using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
+public class PlayerAnimator : MonoBehaviour {
+    public Animator myAnimator;
+    private GroundDetector m_groundDetector;
+    public bool isPlayer;
+
+    public static bool isNearEnemy;
+    public bool isOnHighJump;
+
+    public GameObject goFakeHands;
+
+    public GameObject goReachingHands;
+    public GameObject goFakeLegs;
+    private Animator m_reachingHandsAnimator;
+    public bool forceDontShowFakeHands;
+
+    public ObstacleFeedback feedbacker;
+    public Transform modelParent;
+
+    private float m_slideForwardOffset = 1;
+
+    public AudioSource audioSource;
+	private void Awake() {
+        m_groundDetector = GetComponentInChildren<GroundDetector>();
+        if (isPlayer) {
+            m_reachingHandsAnimator = goReachingHands.GetComponent<Animator>();
+        }   
+    }
+	public void PlayIdle(AIMovement p_ai = null) {
+        //HideFakeHands();
+        if (p_ai != null) { //for AI
+            if (!p_ai.IsCaptured) {
+                myAnimator.SetTrigger("trigIdle");
+            }
+        } else { // for Player
+            goFakeLegs.SetActive(false);
+            myAnimator.SetTrigger("trigIdle");
+            if (isPlayer) {
+                audioSource.enabled = false;
+            }
+        }
+    }
+    public void PlayShock() {
+        myAnimator.SetTrigger("trigShock");
+    }
+    public void PlayRoll() {
+        PlayRun();
+        return;
+        myAnimator.SetTrigger("trigRoll");
+    }
+    public void PlayRun() {
+        if (isPlayer) {
+            goFakeLegs.SetActive(false);
+            if (PlayerWin.IsWon) {
+                return;
+            }
+            if (CutSceneCamera.IsOnCutScene) {
+                HideFakeHands();
+                return;
+            }
+            if (isNearEnemy) { //play tag run animation here replace code below if and call PlayTagRun()
+                               //Debug.LogError("HERE");
+                               //if (!goReachingHands.activeSelf) {
+                               //    HideFakeHands();
+                               //    goReachingHands.SetActive(true);
+                               //}
+
+                //if (m_reachingHandsAnimator.GetCurrentAnimatorClipInfo(0)[0].clip.name != "root_Hand_Reaching") {
+                //    Debug.LogError(m_reachingHandsAnimator.GetCurrentAnimatorClipInfo(0)[0].clip.name + " -- "); 
+                //m_reachingHandsAnimator.SetTrigger("trigReach");
+                //}
+                if (myAnimator.GetCurrentAnimatorClipInfo(0)[0].clip.name != "Mvm_Boost_Root" && !isOnHighJump) {
+                    myAnimator.SetTrigger("trigRun");
+                    
+                }
+                
+            } else {
+
+                if (myAnimator.GetCurrentAnimatorClipInfo(0)[0].clip.name != "Mvm_Boost_Root" && !isOnHighJump) {
+                    myAnimator.SetTrigger("trigRun");
+                    
+                }
+            }
+        } else {
+            if (myAnimator.GetCurrentAnimatorClipInfo(0)[0].clip.name != "Mvm_Boost_Root") {
+                myAnimator.SetTrigger("trigRun");
+            }
+        }
+    }
+    public void PlayHighJump() {
+        if (isPlayer) {
+            feedbacker.PlayObstacleFeedback();
+            goFakeLegs.SetActive(true);
+            if (isPlayer) {
+                audioSource.enabled = false;
+            }
+        }
+        isOnHighJump = true;
+        myAnimator.SetTrigger("trigHighJump");
+    }
+
+    public void PlayLowJump() {
+        if (isPlayer) {
+            if (isPlayer) {
+                audioSource.enabled = false;
+            }
+            feedbacker.PlayObstacleFeedback();
+        }
+        myAnimator.SetTrigger("trigLowJump");
+    }
+
+    public void PlayClimb() {
+        if (myAnimator.GetCurrentAnimatorClipInfo(0)[0].clip.name != "Wall_Vertical_Boost") {
+            myAnimator.SetTrigger("trigClimb");
+        }
+    }
+
+    public void PlayClimbExit() {
+        myAnimator.SetTrigger("trigClimbExit");
+    }
+
+    public void PlaySlide() {
+        if (myAnimator.GetCurrentAnimatorClipInfo(0)[0].clip.name != "Esc_Slide_All") {
+            if (isPlayer) {
+                feedbacker.PlayObstacleFeedback();
+                goFakeLegs.SetActive(false);
+                Vector3 pos = modelParent.transform.localPosition;
+                pos.z += m_slideForwardOffset;
+                modelParent.transform.localPosition = pos;
+                if (isPlayer) {
+                    audioSource.enabled = false;
+                }
+            }
+            isOnHighJump = false;
+            myAnimator.SetTrigger("trigSlide");
+            myAnimator.SetBool("isSliding", true);
+        }
+    }
+
+    public void PlayVault() {
+        if (myAnimator.GetCurrentAnimatorClipInfo(0)[0].clip.name != "Esc_Slide_All") {
+            if (isPlayer) {
+                feedbacker.PlayObstacleFeedback();
+                if (isPlayer) {
+                    audioSource.enabled = false;
+                }
+                //goFakeLegs.SetActive(false);
+            }
+            isOnHighJump = false;
+            myAnimator.SetTrigger("trigSlide");
+        }
+    }
+    public void SlideOffAfterSec(float p_timer) {
+        StartCoroutine(SlideOff(p_timer));
+	}
+    IEnumerator SlideOff(float p_timer) {
+        yield return new WaitForSeconds(p_timer);
+        myAnimator.SetBool("isSliding", false);
+        Vector3 pos = modelParent.transform.localPosition;
+        pos.z -= m_slideForwardOffset;
+        modelParent.transform.localPosition = pos;
+    }
+    public void WallRunLeft() {
+        if (isPlayer) {
+            goFakeLegs.SetActive(false);
+        }
+        myAnimator.SetTrigger("trigWallRunLeft");
+    }
+    public void WallRunRight() {
+        if (isPlayer) {
+            goFakeLegs.SetActive(false);
+        }
+        myAnimator.SetTrigger("trigWallRunRight");
+    }
+    public void ContinueToRunning(bool p_continue) {
+        myAnimator.SetBool("isGrounded", p_continue);
+    }
+    public void ContinueToSliding() {
+        myAnimator.SetBool("isClimbSlide", true);
+    }
+	private void Update() {
+        if (isPlayer) {
+            if (Input.GetKey(KeyCode.X)) {
+                if (!goReachingHands.activeSelf) {
+                    HideFakeHands();
+                    goReachingHands.SetActive(true);
+                }
+                if (m_reachingHandsAnimator.GetCurrentAnimatorClipInfo(0)[0].clip.name != "root_Hand_Reaching") {
+                    m_reachingHandsAnimator.SetTrigger("trigReach");
+                }
+                return;
+            } else {
+                goReachingHands.SetActive(false);
+            }
+        }
+        
+        if (!CameraController.GameStarted) {
+            return;
+        }
+        if (isPlayer) {
+            if (forceDontShowFakeHands) {
+                goReachingHands.gameObject.SetActive(false);
+				HideFakeHands();
+                return;
+            }
+            if (myAnimator.GetBool("isSliding")) {
+                HideFakeHands();
+                return;
+            } else {
+                ShowFakeHands();
+            }
+            if (m_groundDetector.isGrounded && !PlayerWin.IsWon) {
+                if (isPlayer) {
+                    audioSource.enabled = true;
+                }
+                ShowFakeHands();
+            } else {
+                HideFakeHands();
+            }
+        }
+        
+        if (isPlayer) {
+            ContinueToRunning(m_groundDetector.isGrounded);
+        }
+    }
+
+    public void HideFakeHands() {
+        goFakeHands.SetActive(false);
+        if (isPlayer) {
+            audioSource.enabled = false;
+        }
+    }
+    public void ShowFakeHands() {
+        goReachingHands.SetActive(false);
+        goFakeHands.SetActive(true);
+    }
+}

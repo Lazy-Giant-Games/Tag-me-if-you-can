@@ -24,6 +24,7 @@ namespace TagMeIfYouCan.UI {
 
                 InitUI(p_ui.UIModel, p_ui);
                 StartCoroutine(m_ingameUIView.ShowTutorialForSeconds(3f));
+                m_ingameUIView.SetLevelText(GameManager.Instance.GetLevelForDisplay());
             });
         }
 
