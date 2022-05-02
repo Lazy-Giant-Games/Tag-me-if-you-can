@@ -172,7 +172,7 @@ Material:
     - _ZWrite: 0
     m_Colors:
     - Color_e2c8dc900a334505a657c22edf71474b: {r: 0.6603774, g: 0.6603774, b: 0.6603774, a: 1}
-    - _BaseColor: {r: 1, g: 1, b: 1, a: 0.8862745}
+    - _BaseColor: {r: 1, g: 1, b: 1, a: 0.64705884}
     - _Color: {r: 1, g: 1, b: 1, a: 1}
     - _ColorDim: {r: 1, g: 1, b: 1, a: 1}
     - _ColorDimCurve: {r: 0.85023, g: 0.85034, b: 0.8504499, a: 0.85056}
