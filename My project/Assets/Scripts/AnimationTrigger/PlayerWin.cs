@@ -29,7 +29,9 @@ public class PlayerWin : MonoBehaviour {
 		IsWon = true;
 		pc.GetComponent<CameraController>().enabled = false;
 		endingScene.SetActive(true);
-		Camera.main.enabled = false;
+		if (Camera.main != null) {
+			Camera.main.enabled = false;
+		}
 	}
 
 	public void OnPlayerLose() {

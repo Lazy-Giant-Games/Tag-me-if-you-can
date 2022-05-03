@@ -53,6 +53,7 @@ public class GameManager : MonoBehaviour {
 		LoadCurrentScene();
 	}
 	public void LoadCurrentScene() {
+		ResetFlags();
 		UnityEngine.SceneManagement.SceneManager.LoadScene("GamePlayLevel_" + currentLevel.ToString());
 	}
 	public bool DoesLevelHasAI() {
@@ -63,5 +64,9 @@ public class GameManager : MonoBehaviour {
 			default:
 			return false;
 		}
+	}
+
+	public void ResetFlags() {
+		PlayerWin.IsWon = false;
 	}
 }
