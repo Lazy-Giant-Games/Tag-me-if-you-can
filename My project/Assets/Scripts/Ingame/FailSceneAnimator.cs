@@ -15,6 +15,7 @@ public class FailSceneAnimator : MonoBehaviour {
         FallingGameOver.OnFalling -= FailSceneTrigger;
     }
 	public void FailSceneTrigger() {
+        GameObject.Find("Finish_Line").SetActive(false);
         StartCoroutine(DelayedWalk());
     }
     IEnumerator DelayedWalk() {

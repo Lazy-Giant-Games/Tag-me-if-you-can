@@ -9,6 +9,9 @@ public class PostGameUIModel : MVCUIModel {
     public Button btnPlay;
     public GameObject goWin;
     public GameObject goLose;
+
+    public GameObject goTxtCaughtHim;
+    public GameObject goTxtFinishLine;
     private void OnEnable() {
         btnPlay.onClick.AddListener(OnClickPlay);
     }

@@ -47,6 +47,9 @@ namespace TagMeIfYouCan {
                 if (GameManager.Instance.DoesLevelHasAI()) {
                     m_aiBoyAnimation.onTurnDone += OnReadyPlayTrigger;
                 }
+				if (!GameManager.Instance.showUI) {
+                    m_mainMenuUIView.UIModel.HideHideableUIs();
+                }
             });
         }
 

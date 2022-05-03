@@ -21,6 +21,7 @@ namespace TagMeIfYouCan {
             EnemyProgressBar.OnCaptured += OnCapture;
             CommandControlledBot.onRunnerDone += ShowFailScreen;
             PlayerWin.forcedFailScreen += ShowFailScreen;
+            FinishLine.OnFinishLineReached += OnCapture;
         }
 
 		private void OnDisable() {
@@ -29,6 +30,7 @@ namespace TagMeIfYouCan {
             //GroundDetector.OnFatalFall -= OnFell;
             EnemyProgressBar.OnCaptured -= OnCapture;
             PlayerWin.forcedFailScreen -= ShowFailScreen;
+            FinishLine.OnFinishLineReached -= OnCapture;
         }
 		private void Start() {
             InstantiateUI();
@@ -53,7 +55,6 @@ namespace TagMeIfYouCan {
         public void ShowFailScreen() {
             StartCoroutine(DelayedLoseUIDisplay());            
         }
-
         IEnumerator DelayedLoseUIDisplay() {
             ClikManager.Instance.CallClikEventGameLose();
             yield return new WaitForSeconds(2.5f);
@@ -63,16 +64,24 @@ namespace TagMeIfYouCan {
         }
 
         void OnCapture() {
-            StartCoroutine(DelayedUIDisplay());
+            if (GameManager.Instance.DoesLevelHasAI()) {
+                StartCoroutine(DelayedUIDisplay());
+            } else {
+                StartCoroutine(DelayedUIDisplay(0.5f));
+            }
             m_isWon = true;
         }
 
-        IEnumerator DelayedUIDisplay() {
+        IEnumerator DelayedUIDisplay(float delay = 2.5f) {
             ClikManager.Instance.CallClikEventGameWin();
-            yield return new WaitForSeconds(2.5f);
+            yield return new WaitForSeconds(delay);
             m_ingameUIController.HideUI();
             ShowUI();
-            m_postGameUIView.ShowWinUI();
+            if (GameManager.Instance.DoesLevelHasAI()) {
+                m_postGameUIView.ShowWinUI();
+            } else {
+                m_postGameUIView.ShowWinUI(false);
+            }
         }
 
         #region IngameUIView.IListener

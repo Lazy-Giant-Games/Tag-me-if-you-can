@@ -15,6 +15,8 @@ public class GameManager : MonoBehaviour {
 	
 	[Header("0 - 5")]
 	public int forceStartingLevel;
+
+	public bool showUI;
 	private void OnEnable() {
 		if (Instance == null) {
 			Instance = this;
@@ -48,7 +50,7 @@ public class GameManager : MonoBehaviour {
 	public bool DoesLevelHasAI() {
 		switch (currentLevel) {
 			case 0:
-			case 1:
+			case 2:
 			return true;
 			default:
 			return false;

@@ -33,9 +33,15 @@ public class PostGameUIView : MVCUIView {
     }
     #endregion
 
-    public void ShowWinUI() {
+    public void ShowWinUI(bool p_showcaughtHim = true) {
         UIModel.goWin.SetActive(true);
         UIModel.goLose.SetActive(false);
+
+        if (p_showcaughtHim) {
+            UIModel.goTxtCaughtHim.SetActive(true);
+        } else {
+            UIModel.goTxtFinishLine.SetActive(true);
+        }
     }
 
     public void ShowLoseUI() {

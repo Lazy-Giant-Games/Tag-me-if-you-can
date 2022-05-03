@@ -389,6 +389,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f1beeb02b0149474488166a68b7df45e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  hideableUIs:
+  - {fileID: 5342931310605952008}
+  - {fileID: 1157450019366128118}
   parentDisplay: {fileID: 9167050618524576093}
   btnPlay: {fileID: 3700448958843499010}
 --- !u!1 &5335928273879434894
