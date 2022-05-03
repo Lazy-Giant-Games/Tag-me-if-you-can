@@ -23,7 +23,8 @@ public class GameManager : MonoBehaviour {
 	[Header("Checking randomizePath will ignore targetPath")]
 	public bool randomizePath;
 	public PATH targetPath = PATH.RIGHT_PATH;
-	
+
+	public float fallingTimerToGameOver = 2.5f;
 	private void OnEnable() {
 		if (Instance == null) {
 			Instance = this;
