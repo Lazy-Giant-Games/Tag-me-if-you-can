@@ -154,8 +154,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   MAX_LEVEL: 6
   currentLevel: 0
-  forceStartingLevel: 1
-  showUI: 0
+  forceStartingLevel: 2
+  showUI: 1
+  randomizePath: 0
+  targetPath: 1
 --- !u!4 &1147068118
 Transform:
   m_ObjectHideFlags: 0

@@ -8,10 +8,9 @@ public class PathNodeCommandSetter : MonoBehaviour {
 
     public virtual void SetPathNodeLeft() { }
     public virtual void SetPathNodeRight() { }
-
     public void StartPlay() {
         nodeTraverser.RandomizePath();
-        if (nodeTraverser.targetPath == NodeTraverser.PATH.RIGHT_PATH) {
+        if (GameManager.Instance.targetPath == GameManager.PATH.RIGHT_PATH) {
             SetPathNodeRight();
         } else {
             SetPathNodeLeft();

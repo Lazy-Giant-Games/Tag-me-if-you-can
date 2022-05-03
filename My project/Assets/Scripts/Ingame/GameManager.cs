@@ -4,6 +4,8 @@ using UnityEngine;
 
 public class GameManager : MonoBehaviour {
 
+	public enum PATH { LEFT_PATH, RIGHT_PATH }
+
 	[HideInInspector]
 	public int MAX_LEVEL = 6;
 
@@ -15,8 +17,13 @@ public class GameManager : MonoBehaviour {
 	
 	[Header("0 - 5")]
 	public int forceStartingLevel;
-
 	public bool showUI;
+
+	[Space]
+	[Header("Checking randomizePath will ignore targetPath")]
+	public bool randomizePath;
+	public PATH targetPath = PATH.RIGHT_PATH;
+	
 	private void OnEnable() {
 		if (Instance == null) {
 			Instance = this;

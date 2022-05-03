@@ -3,8 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class NodeTraverser : MonoBehaviour {
-    public enum PATH { LEFT_PATH, RIGHT_PATH }
-    public PATH targetPath = PATH.RIGHT_PATH;
+    
 
     public List<Transform> runningNodes = new List<Transform>();
     public List<Transform> jumpingNodes = new List<Transform>();
@@ -16,14 +15,14 @@ public class NodeTraverser : MonoBehaviour {
     public List<Transform> climbingNodes_b = new List<Transform>();
     public List<Transform> vaultNodes_b = new List<Transform>();
 
-    public bool randomizePath;
+    
 
 	public void RandomizePath() {
-        if (randomizePath) {
+        if (GameManager.Instance.randomizePath) {
             if (UnityEngine.Random.Range(0, 100) > 50) {
-                targetPath = PATH.LEFT_PATH;
+                GameManager.Instance.targetPath = GameManager.PATH.LEFT_PATH;
             } else {
-                targetPath = PATH.RIGHT_PATH;
+                GameManager.Instance.targetPath = GameManager.PATH.RIGHT_PATH;
             }
         }
         
