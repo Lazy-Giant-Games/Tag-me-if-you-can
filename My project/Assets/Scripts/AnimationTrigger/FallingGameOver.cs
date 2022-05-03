@@ -25,9 +25,14 @@ public class FallingGameOver : MonoBehaviour {
 			if (!isDead) {
 				m_floatingTimer += Time.deltaTime;
 				if (m_floatingTimer >= 1.5f) {
-					Camera.main.transform.parent = null;
-					Camera.main.transform.LookAt(m_animator.transform);
-					OnFalling?.Invoke();
+					if (GameManager.Instance.DoesLevelHasAI()) {
+						Camera.main.transform.parent = null;
+						Camera.main.transform.LookAt(m_animator.transform);
+						OnFalling?.Invoke();
+					} else {
+						GameManager.Instance.LoadCurrentScene();
+					}
+					
 				}
 			}
 		}
