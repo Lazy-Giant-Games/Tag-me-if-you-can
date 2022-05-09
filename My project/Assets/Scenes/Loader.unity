@@ -158,6 +158,7 @@ MonoBehaviour:
   showUI: 1
   randomizePath: 0
   targetPath: 1
+  fallingTimerToGameOver: 2.5
 --- !u!4 &1147068118
 Transform:
   m_ObjectHideFlags: 0
