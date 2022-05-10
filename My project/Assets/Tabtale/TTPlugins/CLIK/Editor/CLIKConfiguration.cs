@@ -41,6 +41,7 @@ public class CLIKConfiguration : EditorWindow
         public const string CONFIG_FN_RATEUS = "rateUs";
         public const string CONFIG_FN_OPENADS = "openads";
         public const string CONFIG_FN_PROMOTION = "promotion";
+        public const string CONFIG_FN_FACEBOOK = "facebook";
         
         public const string PACAKAGES_ANALYTICS = "analytics";
         public const string PACAKAGES_APPSFLYER = "appsflyer";
@@ -421,6 +422,35 @@ public class CLIKConfiguration : EditorWindow
         Dictionary<string, object> ToDict();
         string GetServiceName();
         void LoadFromFile();
+    }
+    
+    [Serializable]
+    private class FacebookConfig : IConfig
+    {
+        public bool included;
+        public string fbAppID;
+        public string fbAppName;
+        public string fbClientID;
+        
+        public Dictionary<string, object> ToDict()
+        {
+            return new Dictionary<string, object>()
+            {
+                {"fbAppID", fbAppID},
+                {"fbAppName", fbAppName},
+                {"fbClientID", fbClientID}
+            };
+        }
+
+        public string GetServiceName()
+        {
+            return Constants.CONFIG_FN_FACEBOOK;
+        }
+
+        public void LoadFromFile()
+        {
+            LoadConfigFromFile(this);
+        }
     }
 
     private class GlobalConfig : IConfig
@@ -1098,6 +1128,7 @@ public class CLIKConfiguration : EditorWindow
         public OpenAdsConfig openAdsConfig = new OpenAdsConfig();
         public PromotionConfig promotionConfig = new PromotionConfig();
         public GlobalConfig globalConfig = new GlobalConfig();
+        public FacebookConfig facebookConfig = new FacebookConfig();
         
 
         private List<IConfig> _configs;
@@ -1120,6 +1151,7 @@ public class CLIKConfiguration : EditorWindow
             _configs.Add(rateUsConfig);
             _configs.Add(openAdsConfig);
             _configs.Add(promotionConfig);
+            _configs.Add(facebookConfig);
         }
         
         
@@ -1328,6 +1360,7 @@ public class CLIKConfiguration : EditorWindow
         includedServices.privacySettings = false;
         includedServices.rateUs = false;
         includedServices.promotion = false;
+        includedServices.facebook = false;
     }
     
     private static TTPIncludedServicesScriptableObject GetInclusionScriptableObject(bool reset = false)
@@ -1418,6 +1451,7 @@ public class CLIKConfiguration : EditorWindow
         curObj.rateUs = objToCpy.rateUs;
         curObj.openAds = objToCpy.openAds;
         curObj.promotion = objToCpy.promotion;
+        curObj.facebook = objToCpy.facebook;
         EditorUtility.SetDirty(curObj);
         AssetDatabase.SaveAssets();
         var saved = GetInclusionScriptableObject();
@@ -1445,6 +1479,7 @@ public class CLIKConfiguration : EditorWindow
         ttpIncludedServices.rateUs = _configuration.rateUsConfig.included;
         ttpIncludedServices.openAds = _configuration.openAdsConfig.included;
         ttpIncludedServices.promotion = _configuration.promotionConfig.included;
+        ttpIncludedServices.facebook = _configuration.facebookConfig.included;
 
         var dic = new Dictionary<string, bool>()
         {
@@ -1458,7 +1493,8 @@ public class CLIKConfiguration : EditorWindow
             {"ttpIncludedServices.privacySettings", _configuration.privacySettingsConfig.included},
             {"ttpIncludedServices.rateUs", _configuration.rateUsConfig.included},
             {"ttpIncludedServices.openAds", _configuration.openAdsConfig.included},
-            {"ttpIncludedServices.promotion", _configuration.promotionConfig.included}
+            {"ttpIncludedServices.promotion", _configuration.promotionConfig.included},
+            {"ttpIncludedServices.facebook", _configuration.facebookConfig.included}
         };
 
         var msg = "";   
@@ -1703,10 +1739,23 @@ public class CLIKConfiguration : EditorWindow
             var plistPath = Path.Combine(report.summary.outputPath, "Info.plist");
             var plist = new PlistDocument();
             var globalConfig = new GlobalConfig();
+            var facebookConfig = new FacebookConfig();
             globalConfig.LoadFromFile();
             plist.ReadFromFile(plistPath);
             plist.root.SetString("GADApplicationIdentifier", globalConfig.admobAppId);
             plist.root.SetString("AppLovinSdkKey", "yRHC8kgWwG5S4lOh7Dx_pZB2iEBLVWMSzde5MKbGahifQ6MTKIT7tk9ZzLvTsFwptZvDuVTTBB8cHU9bohkeQu");
+            facebookConfig.LoadFromFile();
+            if (facebookConfig.included && !string.IsNullOrEmpty(facebookConfig.fbAppName) 
+                                        && !string.IsNullOrEmpty(facebookConfig.fbAppID)
+                                        && !string.IsNullOrEmpty(facebookConfig.fbClientID))
+            {
+                plist.root.CreateArray("URL types").AddDict().CreateArray("URL Schemes").AddString("fb" + (facebookConfig.fbAppID));
+                plist.root.SetString("FacebookAppID", facebookConfig.fbAppID);
+                plist.root.SetString("FacebookDisplayName", facebookConfig.fbAppName);
+                plist.root.SetString("FacebookClientToken", facebookConfig.fbClientID);
+                plist.root.SetBoolean("FacebookAutoLogAppEventsEnabled", true);
+            }
+
             File.WriteAllText(plistPath, plist.WriteToString());
         }
     }
@@ -1741,13 +1790,15 @@ public class CLIKConfiguration : EditorWindow
             
             var services = new List<string>
             {
-                "TT_Plugins_Core",
-
+                "TT_Plugins_Core"
             };
+            if (includedServices.facebook)
+            {
+                services.Add("TT_Plugins_Facebook");
+            }
             if (includedServices.appsFlyer)
             {
                 services.Add("TT_Plugins_AppsFlyer");
-                
             }
             if (includedServices.crashTool)
             {

@@ -254,9 +254,17 @@ namespace Tabtale.TTPlugins
             {
                 rootDict.SetBoolean("UIViewControllerBasedStatusBarAppearance", false);
             }
-            
 
             File.WriteAllText(plistPath, plist.WriteToString());
+
+#if UNITY_2019_4_OR_NEWER
+            Debug.Log("TTPPostProcessSettings::Update UnityFramework include");
+            string mainAppPath = Path.Combine(path, "MainApp", "main.mm");
+            string mainContent = File.ReadAllText(mainAppPath);
+            Debug.Log(mainContent);
+            string newContent = mainContent.Replace("#include <UnityFramework/UnityFramework.h>", @"#include ""../UnityFramework/UnityFramework.h""");
+            File.WriteAllText(mainAppPath, newContent);
+#endif
         }
 
         private static string GetTargetGUID(PBXProject proj)

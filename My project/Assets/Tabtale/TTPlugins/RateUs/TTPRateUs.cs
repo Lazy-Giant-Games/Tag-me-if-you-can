@@ -1,5 +1,4 @@
 ﻿#if TTP_RATEUS
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using System;
@@ -11,7 +10,6 @@ using System.Runtime.InteropServices;
 
 namespace Tabtale.TTPlugins
 {
-
     public class TTPRateUs
     {
 #if UNITY_IOS && !TTP_DEV_MODE
@@ -25,9 +23,6 @@ namespace Tabtale.TTPlugins
         private const string PLAYER_PREFS_NEVER = "TTPRateUsNeverShow";
         private const string PLAYER_PREFS_LATER = "TTPRateUsLaterNextTime";
 
-        private static bool _neverShow;
-        private static DateTime? _nextShowTime = null;
-        private static double _coolDown = -1;
         private static string _iconFileExtenstion;
         private static TTPRateUsCanvas _rateUsCanvas;
         private static TTPRateUsNotConnectedCanvas _notConnectedCanvas;
@@ -45,7 +40,7 @@ namespace Tabtale.TTPlugins
             }
             else
             {
-                LogPopUpEvent("rateUsButton", false, false, false, true, "NA");
+                LogPopUpEvent("rateUsButton", false, true, "NA");
                 InformNoInternet();
             }
 
@@ -66,15 +61,14 @@ namespace Tabtale.TTPlugins
 
         static void Later()
         {
-            Debug.Log("TTPRateUs::Later:Cooldown=" + Cooldown);
-            LogPopUpEvent("rateUsPopup", true, false, false, false, "later");
-            NextShowTime = DateTime.Now.AddMinutes(Cooldown);
+            Debug.Log("TTPRateUs::Later:");
         }
 
         static void SuggestRateUs()
         {
             Debug.Log("TTPRateUs::SuggestRateUs:");
-            if (UnityEngine.Application.platform == UnityEngine.RuntimePlatform.IPhonePlayer)
+            LogPopUpEvent("rateUsPopup", true, false, "NA");
+            if (Application.platform == RuntimePlatform.IPhonePlayer)
             {
 #if UNITY_IOS && !TTP_DEV_MODE
                 ttpRateUsDisplayRateUsModal();        
@@ -147,15 +141,13 @@ namespace Tabtale.TTPlugins
         private static void GoToRateFromPopup()
         {
             Debug.Log("TTPRateUs::GoToRateFromPopup:");
-            LogPopUpEvent("rateUsPopup", true, false, false, false, "rate");
-            Never(false);
             GoToRate();
         }
 
         private static void GoToRateFromButton()
         {
             Debug.Log("TTPRateUs::GoToRateFromButton:");
-            LogPopUpEvent("rateUsButton", true, false, false, false, "rate");
+            LogPopUpEvent("rateUsButton", true, false, "rate");
             GoToRate();
         }
 
@@ -166,8 +158,8 @@ namespace Tabtale.TTPlugins
             {
                 return;
             }
-            if (UnityEngine.Application.platform == UnityEngine.RuntimePlatform.Android ||
-                        UnityEngine.Application.platform == UnityEngine.RuntimePlatform.IPhonePlayer)
+            if (Application.platform == RuntimePlatform.Android ||
+                        Application.platform == RuntimePlatform.IPhonePlayer)
             {
 #if UNITY_IOS && !TTP_DEV_MODE
                 ttpRateUsGoToStore();
@@ -189,39 +181,20 @@ namespace Tabtale.TTPlugins
             Debug.Log("TTPRateUs::GoToRate");
 #endif
         }
-
-
+        
         private static bool ShouldSuggestRateUs()
         {
             Debug.Log("TTPRateUs::ShouldSuggestRateUs:");
             if (!TTPCore.IsConnectedToTheInternet())
             {
-                LogPopUpEvent("rateUsPopup", false, false, false, true, "NA");
+                LogPopUpEvent("rateUsPopup", false, true, "NA");
                 Debug.Log("TTPRateUs::ShouldSuggestRateUs: not connected to the internet. will not show.");
-                return false;
-            }
-            if (_neverShow)
-            {
-                LogPopUpEvent("rateUsPopup", false, true, false, false, "NA");
-                Debug.Log("TTPRateUs::ShouldSuggestRateUs: neverShow marked. will not show.");
-                return false;
-            }
-            if (PlayerPrefs.GetInt(PLAYER_PREFS_NEVER, 0) == 1)
-            {
-                LogPopUpEvent("rateUsPopup", false, true, false, false, "NA");
-                Debug.Log("TTPRateUs::ShouldSuggestRateUs: neverShow marked in persistency. will not show.");
-                Never(true);
-                return false;
-            }
-            if (NextShowTime != null && DateTime.Now.CompareTo(NextShowTime) < 0)
-            {
-                LogPopUpEvent("rateUsPopup", false, false, true, false, "NA");
-                Debug.Log("TTPRateUs::ShouldSuggestRateUs: coolDown has not passed. will not show.");
                 return false;
             }
 #if TTP_POPUPMGR        
             if(!TTPPopupMgr.ShouldShow("RateUs"))
             {
+                LogPopUpEvent("rateUsPopup", false, false, "NA");
                 Debug.Log("TTPRateUs::ShouldSuggestRateUs: PopupMgr return false. will not show.");
                 return false;
             }
@@ -229,23 +202,11 @@ namespace Tabtale.TTPlugins
             return true;
         }
 
-        private static void Never(bool sendAnalytics)
-        {
-            if (sendAnalytics)
-            {
-                LogPopUpEvent("rateUsPopup", true, false, false, false, "never");
-            }
-            Debug.Log("TTPRateUs::Never");
-            _neverShow = true;
-            PlayerPrefs.SetInt(PLAYER_PREFS_NEVER, 1);
-        }
-
         private static void Closed()
         {
 #if TTP_POPUPMGR
             TTPPopupMgr.OnClosed("rateus");
 #endif
-
             Debug.Log("TTPRateUs::Closed");
         }
 
@@ -253,28 +214,6 @@ namespace Tabtale.TTPlugins
         private class RateUsConfiguration
         {
             public string iconUrl = ".png";
-            public double coolDown = 0;
-        }
-
-
-        private static double Cooldown
-        {
-            get
-            {
-                if (_coolDown <= -1)
-                {
-                    string configurationJson = ((TTPCore.ITTPCoreInternal)TTPCore.Impl).GetConfigurationJson("rateUs");
-                    if (!string.IsNullOrEmpty(configurationJson))
-                    {
-                        RateUsConfiguration configuration = JsonUtilityWrapper.FromJson<RateUsConfiguration>(configurationJson);
-                        if (configuration != null)
-                        {
-                            _coolDown = configuration.coolDown;
-                        }
-                    }
-                }
-                return _coolDown;
-            }
         }
 
         private static string IconFileExtenstion
@@ -297,34 +236,12 @@ namespace Tabtale.TTPlugins
             }
         }
 
-        private static DateTime? NextShowTime
-        {
-            get
-            {
-                if(_nextShowTime == null)
-                {
-                    string timeStr = PlayerPrefs.GetString(PLAYER_PREFS_LATER);
-                    if(!string.IsNullOrEmpty(timeStr))
-                        _nextShowTime = DateTime.Parse(timeStr);
-                }
-                return _nextShowTime;
-            }
-            set
-            {
-                PlayerPrefs.SetString(PLAYER_PREFS_LATER, _nextShowTime.ToString());
-                _nextShowTime = value;
-            }
-        }
-
-        private static void LogPopUpEvent(string eventName, bool show, bool never, bool later, bool noInternet, string response)
+        private static void LogPopUpEvent(string eventName, bool show, bool noInternet, string response)
         {
             Debug.Log("TTPRateUs::LogPopUpEvent:eventName=" + eventName + " response=" + response);
-#if UNITY_ANDROID
             IDictionary<string, object> logEventParams = new Dictionary<string, object>()
             {
                 {"showrateus", show},
-                {"never", never},
-                {"later", later},
                 {"noInternet", noInternet},
                 {"response", response}
             };
@@ -349,7 +266,6 @@ namespace Tabtale.TTPlugins
             {
                 Debug.LogWarning("CallAnalyticsByReflection:: could not find TTPAnalytics class");
             }
-#endif
         }
     }
 }

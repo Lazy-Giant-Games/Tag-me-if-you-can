@@ -54,7 +54,7 @@ public class CameraController : MonoBehaviour
         speedLines = GameObject.Find("SpeedLines").GetComponent<ParticleSystem>();
 
         //Initial Values
-        initialMouseSensitivity = mouseSensitivity;
+        initialMouseSensitivity = mouseSensitivity = GameManager.Instance.mouseSensitivity;
         initalCamLocalPos = cam.transform.localPosition;
     }
     void Update()

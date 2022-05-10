@@ -19,6 +19,8 @@ public class GameManager : MonoBehaviour {
 	public int forceStartingLevel;
 	public bool showUI;
 
+	public float mouseSensitivity;
+
 	[Space]
 	[Header("Checking randomizePath will ignore targetPath")]
 	public bool randomizePath;

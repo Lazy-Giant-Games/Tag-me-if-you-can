@@ -1,4 +1,5 @@
 #if TTP_INTERSTITIALS
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -21,6 +22,7 @@ namespace Tabtale.TTPlugins
         /// <summary>
         /// Interstitials are ready for showing event
         /// </summary>
+        [Obsolete("Please call Show(location) directly. There is no need to be notified about readiness of interstitials.", false)]
         public static event System.Action<bool> ReadyEvent;
 
         /// <summary>
@@ -102,7 +104,7 @@ namespace Tabtale.TTPlugins
         /// Indicates that interstitials are ready to show
         /// </summary>
         /// <returns>True - interstitials are ready</returns>
-        [System.Obsolete]
+        [Obsolete("Please call Show(location) directly. There is no need to be check the readiness of interstitials.", false)]
         public static bool IsReady()
         {
             if (Impl != null)

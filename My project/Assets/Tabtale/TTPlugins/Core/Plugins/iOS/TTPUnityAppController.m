@@ -34,6 +34,8 @@ IMPL_APP_CONTROLLER_SUBCLASS(TTPUnityAppController)
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
     
+    [[TTPUnityServiceManager sharedInstance] didFinishLaunchingWithOptions:launchOptions application:application];
+    
     long long milliseconds = (long long)([[NSDate date] timeIntervalSince1970] * 1000.0);
     [[NSUserDefaults standardUserDefaults] setObject:[NSNumber numberWithLongLong:milliseconds] forKey:@"lunchTimeInMili"];
     

@@ -1,1 +1,17 @@
-{"store":"google","gameEngine":"unity","audienceModeBuildOnly":"non-children","orientation":"portrait","geoLocationServer":"ttplugins.ttpsdk.info","appId":"","bundleId":"com.lazygiantgames.tagmeifyoucan","testMode":false,"askForTracking":false,"isAdMob":true,"appBuildConfig":{"admob":{"application":""}}}
+{
+  "store": "apple",
+  "gameEngine": "unity",
+  "audienceModeBuildOnly": "non-children",
+  "orientation": "portrait",
+  "geoLocationServer": "ttplugins.ttpsdk.info",
+  "appId": "1622145519",
+  "bundleId": "com.lazygiantgames.tagmeifyoucan",
+  "testMode": false,
+  "askForTracking": true,
+  "isAdMob": true,
+  "appBuildConfig": {
+    "admob": {
+      "application": ""
+    }
+  }
+}

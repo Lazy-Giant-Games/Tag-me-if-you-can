@@ -17,6 +17,7 @@ namespace Tabtale.TTPlugins
         public bool openAds = false;
         public bool rvInter = false;
         public bool promotion = false;
+        public bool facebook = false;
     }
 
 }
